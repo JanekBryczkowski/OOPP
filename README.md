@@ -10,7 +10,7 @@ Add your own name (do not add the names for others!) to the section below.
 
 | Profile Picture | Name | Email |
 |---|---|---|
-| https://secure.gravatar.com/avatar/d9cc94be817d0c81aefea51e98e5cb72?s=800&d=identicon | Hanna Heinczinger | H.Heinczinger-1@student.tudelft.nl |
+| ![](https://secure.gravatar.com/avatar/d9cc94be817d0c81aefea51e98e5cb72?s=800&d=identicon) | Hanna Heinczinger | H.Heinczinger-1@student.tudelft.nl |
 | https://secure.gravatar.com/avatar/eca7483a7280ef03212048c69afca93a?s=800&d=identicon | Daniël Franke | D.T.L.Franke@student.tudelft.nl|
 | https://secure.gravatar.com/avatar/0c862191b02bebea6cd830f0a90dd93f?s=800&d=identicon | Pavlos Markesinis | P.Markesinis@student.tudelft.nl |
 | https://secure.gravatar.com/avatar/fc0728c525373ab9798035c37ffe4c00?s=800&d=identicon | Janek Bryczkowski | J.M.Bryczkowski@student.tudelft.nl |
