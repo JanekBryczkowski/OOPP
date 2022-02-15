@@ -10,8 +10,8 @@ Add your own name (do not add the names for others!) to the section below.
 
 | Profile Picture | Name | Email |
 |---|---|---|
-| | Hanna | H.Heinczinger-1@student.tudelft.nl |
-| | Daniël | d.t.l.franke@student.tudelft.nl|
+| | Hanna Heinczinger | H.Heinczinger-1@student.tudelft.nl |
+| | Daniël Franke | D.T.L.Franke@student.tudelft.nl|
 | | Pavlos Markesinis | P.Markesinis@student.tudelft.nl |
 | | Janek Bryczkowski | J.M.Bryczkowski@student.tudelft.nl |
 | | Marina Escribano | M.EscribanoEsteban@student.tudelft.nl |
