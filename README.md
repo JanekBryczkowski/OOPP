@@ -14,6 +14,7 @@ Add your own name (do not add the names for others!) to the section below.
 | | Daniël | d.t.l.franke@student.tudelft.nl|
 | | Pavlos Markesinis | P.Markesinis@student.tudelft.nl |
 | | Janek Bryczkowski | J.M.Bryczkowski@student.tudelft.nl |
+| | Marina Escribano | M.EscribanoEsteban@student.tudelft.nl |
 
 <!-- Instructions (remove once assignment has been completed -->
 <!-- - Add (only!) your own name to the table above (use Markdown formatting) -->
