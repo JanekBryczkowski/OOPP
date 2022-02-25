@@ -44,4 +44,8 @@ public class QuestionController {
         Question saved = repo.save(question);
         return ResponseEntity.ok(saved);
     }
+
+    @DeleteMapping("/{id}") void deleteQuestion(@PathVariable long id) {
+        repo.deleteById(id);
+    }
 }
