@@ -17,6 +17,11 @@ public class QuestionController {
         this.repo = repo;
     }
 
+    @GetMapping("/")
+    public List<Question> getQuestions() {
+        return repo.findAll();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Question> getById(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
