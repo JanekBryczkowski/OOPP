@@ -35,7 +35,6 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
     public String title;
     public int consumption;
 
