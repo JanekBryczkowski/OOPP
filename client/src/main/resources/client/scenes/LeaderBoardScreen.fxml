@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.LeaderBoardScreenController">
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button layoutX="822.0" layoutY="698.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="367.0" text="Return to Waiting Room" textFill="WHITE">
          <font>
