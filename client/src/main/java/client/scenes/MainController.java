@@ -9,7 +9,7 @@ public class MainController {
 
     //TODO: injection
 
-    private Stage primaryStage1;
+    /*private Stage primaryStage1;
 
     private LeaderBoardScreenController leaderBoardScreenController;
     private Scene overview;
@@ -40,6 +40,6 @@ public class MainController {
         primaryStage1.setTitle("Quotes: Adding Quote");
         primaryStage1.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
-    }
+    }*/
 }
 

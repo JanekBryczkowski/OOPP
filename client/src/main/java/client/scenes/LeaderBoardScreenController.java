@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LeaderBoardScreenController implements Initializable {
+public class LeaderBoardScreenController /*implements Initializable*/ {
 
-    @FXML
+    /*@FXML
     private ScrollPane leaderBoardScrollPane;
 
     @Override
@@ -32,5 +32,5 @@ public class LeaderBoardScreenController implements Initializable {
         }
 
         leaderBoardScrollPane.setContent(content);
-    }
+    }*/
 }
