@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.LeaderBoardScreenController">
+   <children>
+      <Button layoutX="822.0" layoutY="698.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="367.0" text="Return to Waiting Room" textFill="WHITE">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Button>
+      <Button layoutX="822.0" layoutY="604.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="367.0" text="Return to Splash Screen" textFill="WHITE">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="822.0" layoutY="37.0" prefHeight="67.0" prefWidth="367.0" styleClass="leaderBoardLabel" text="Leaderboard" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="leaderBoardScrollPane" hbarPolicy="NEVER" layoutX="822.0" layoutY="104.0" prefHeight="471.0" prefWidth="367.0" styleClass="scrollPane" vbarPolicy="ALWAYS" />
+      <AnchorPane layoutX="85.0" layoutY="432.0" maxHeight="327.0" maxWidth="201.0" minHeight="327.0" minWidth="201.0" prefHeight="327.0" prefWidth="201.0" styleClass="secondPlace">
+         <children>
+            <Label alignment="CENTER" layoutY="139.0" prefHeight="187.0" prefWidth="201.0" text="14" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="100.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="316.0" layoutY="268.0" maxHeight="491.0" maxWidth="201.0" minHeight="491.0" minWidth="201.0" prefHeight="491.0" prefWidth="201.0" styleClass="firstPlace">
+         <children>
+            <Label alignment="CENTER" layoutY="304.0" prefHeight="187.0" prefWidth="201.0" text="18" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="100.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="544.0" layoutY="595.0" maxHeight="164.0" maxWidth="201.0" minHeight="164.0" minWidth="201.0" prefHeight="164.0" prefWidth="201.0" styleClass="thirdPlace">
+         <children>
+            <Label alignment="CENTER" layoutY="9.0" prefHeight="140.0" prefWidth="201.0" text="11" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="100.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" layoutX="85.0" layoutY="367.0" prefHeight="65.0" prefWidth="201.0" text="Marina" textFill="#5f5f5f">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="316.0" layoutY="203.0" prefHeight="65.0" prefWidth="201.0" text="Janek" textFill="#5f5f5f">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="544.0" layoutY="530.0" prefHeight="65.0" prefWidth="201.0" text="Pavlos" textFill="#5f5f5f">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="201.0" fitWidth="201.0" layoutX="85.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../client.images/silverMedal.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="201.0" fitWidth="201.0" layoutX="316.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../client.images/goldMedal.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="201.0" fitWidth="201.0" layoutX="544.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../client.images/bronzeMedal.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
