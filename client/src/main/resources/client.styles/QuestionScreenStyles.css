@@ -1,0 +1,61 @@
+.background {
+    -fx-background-color: #D2EC7E;
+}
+
+.image {
+    -fx-background-color: #819E21;
+    -fx-background-radius: 25;
+    -fx-border-color: #CD7F32;
+    -fx-border-radius: 18;
+    -fx-border-width: 14;
+}
+
+.question_title {
+    -fx-font-size: 42;
+    -fx-font-weight: bold;
+}
+
+.back_button {
+    -fx-background-color: #819E21;
+    -fx-background-radius: 20;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+
+.points_pane {
+    -fx-background-color: #F6FFD3;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+
+}
+
+.answer_1, .answer_2, .answer_3 {
+    -fx-background-color: #F6FFD3;
+    -fx-font-size: 43;
+    -fx-background-radius: 20;
+    -fx-text-alignment: center;
+}
+
+.joker_button {
+    -fx-background-color: #819E21;
+    -fx-background-radius: 20;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
+
+.answers_given {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+
+}
+
+.seconds_left {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
+/*
+System 42 bold
+System 28
+ */
