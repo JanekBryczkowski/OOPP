@@ -1,11 +1,15 @@
 package server.api;
 
+import commons.Activity;
 import commons.Question;
+import org.springframework.data.jpa.repository.Query;
 import server.database.QuestionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/api/questions")
@@ -18,12 +22,27 @@ public class QuestionController {
     }
 
     @GetMapping("/")
-    public List<Question> getQuestions() {
+    public List<Activity> getQuestions() {
         return repo.findAll();
     }
 
+    @GetMapping("/getRandom")
+    public Activity getRandomQuestion() {
+        List<Activity> activityList = repo.findAll();
+        int numberOfQuestions = activityList.size();
+        int randomNumber = (int) (Math.random() * numberOfQuestions);
+        return activityList.get(randomNumber);
+    }
+
+    @GetMapping("/getQuestion")
+    public Question getActivities() {
+        Question question = new Question();
+        question.activityList = repo.getThreeRandom();
+        return question;
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Question> getById(@PathVariable("id") long id) {
+    public ResponseEntity<Activity> getById(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
@@ -35,18 +54,18 @@ public class QuestionController {
     }
 
     @PostMapping(path = { "", "/" })
-    public ResponseEntity<Question> add(@RequestBody Question question) {
+    public ResponseEntity<Activity> add(@RequestBody Activity activity) {
 
-        if (question==null || isNullOrEmpty(question.title)) {
+        if (activity ==null || isNullOrEmpty(activity.title)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Question saved = repo.save(question);
+        Activity saved = repo.save(activity);
         return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")
-    void deleteQuestion(@PathVariable long id) {
+    public void deleteQuestion(@PathVariable("id") long id) {
         repo.deleteById(id);
     }
 }

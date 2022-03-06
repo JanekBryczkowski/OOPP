@@ -21,8 +21,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import commons.Activity;
+import commons.Question;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
@@ -59,4 +63,14 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
     }
-}
+
+    public Question getQuestion() {
+            return ClientBuilder.newClient(new ClientConfig()) //
+                            .target(SERVER).path("api/questions/getQuestion") //
+                            .request(APPLICATION_JSON) //
+                            .accept(APPLICATION_JSON) //
+                            .get(new GenericType<Question>() {
+                            });
+        }
+    }
+

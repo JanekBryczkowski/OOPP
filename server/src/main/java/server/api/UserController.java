@@ -1,22 +1,31 @@
 package server.api;
 
-import commons.Question;
-import server.database.QuestionRepository;
-import org.springframework.http.ResponseEntity;
+import commons.User;
 import org.springframework.web.bind.annotation.*;
+import server.mainGame;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-//    private final QuestionRepository repo;
-//
-//    public QuestionController(QuestionRepository repo) {
-//        this.repo = repo;
-//    }
+    private final mainGame main;
 
+    public UserController(mainGame main) {
+        this.main = main;
+    }
+
+
+        @PostMapping(path = { "", "/" })
+        public User postUser(@RequestBody User user) {
+                return main.addUser(user);
+        }
+
+        @GetMapping
+        public ArrayList<User> getUser() {
+            return main.getUsers();
+        }
 
 
 //    @GetMapping("/")
