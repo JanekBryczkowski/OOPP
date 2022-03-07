@@ -7,9 +7,9 @@ import commons.Activity;
 import commons.Question;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -19,14 +19,17 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameScreenControl {
+public class QuestionThreeCtrl {
 
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
     public Stage primaryStage;
 
-    public int correctAnswer = 0;
+    public int correctAnswer;
     public int jokerOneActive = 1;
+    final int[] secondsPassed = {10};
+    Timer myTimer;
+    TimerTask task;
 
     @FXML
     private Text questionText;
@@ -52,31 +55,100 @@ public class GameScreenControl {
     private Button jokerTwo;
     @FXML
     private Button jokerThree;
+    @FXML
+    private Text secondsLeft;
+    @FXML
+    private ImageView emojiOne;
+    @FXML
+    private ImageView emojiTwo;
+    @FXML
+    private ImageView emojiThree;
+    @FXML
+    private Text answersGiven;
 
     @Inject
-    public GameScreenControl(ServerUtils server, GameCtrl mainCtrl) {
+    public QuestionThreeCtrl(ServerUtils server, GameCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+    }
+
+    //Every new round, a new timer and new timertask have to be instantiated
+    public void instantiateTimer() {
+        secondsPassed[0] = 10;
+        myTimer = new Timer();
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                secondsPassed[0]--;
+                if(secondsPassed[0] == 1) {
+                    secondsLeft.setText("Time left: " + secondsPassed[0] + " second");
+                } else if (secondsPassed[0] > 0)
+                    secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
+                else {
+//                            myTimer.cancel();
+                    revealAnswers(null, 4);
+                }
+
+            }
+        };
     }
 
     /*
     This function is a setup for the GameScreen.
     A question is given as input and this question is displayed on the screen.
      */
-    public void setQuestion(Question question) {
-        questionText.setText("Which activity takes the most energy?");
+    public void startQuestion(Question question) {
         List<Activity> activityList = question.activityList;
         answerOne.setText(question.activityList.get(0).title);
         answerTwo.setText(question.activityList.get(1).title);
         answerThree.setText(question.activityList.get(2).title);
-        correctAnswer = 0;
-        if(activityList.get(1).consumption > activityList.get(correctAnswer).consumption)
-            this.correctAnswer = 1;
-        if(activityList.get(2).consumption > activityList.get(correctAnswer).consumption)
-            this.correctAnswer = 2;
+        question.setCorrectAnswer();
+        this.correctAnswer = question.correctAnswer;
+
         enableButtons();
-        jokerThree.setVisible(false);
+
+        hideSoloPlayerElements();
+
+        instantiateTimer();
+
+        startTimer();
+
     }
+
+    //This functions starts the timer. When the timer finishes, the answers are revealed
+    public void startTimer() {
+//        myTimer.scheduleAtFixedRate(new TimerTask(){
+//
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    secondsPassed[0]--;
+//                    Platform.runLater(() -> {
+//                                if(secondsPassed[0] == 1) {
+//                                    secondsLeft.setText("Time left: " + secondsPassed[0] + " second");
+//                                } else if (secondsPassed[0] > 0)
+//                                    secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
+//                                else {
+//                                    myTimer.cancel();
+//                                    revealAnswers(null, 4);
+//                                }
+//                            }
+//                    );
+//                });
+//            }
+//        }, 1000,1000);
+        myTimer.scheduleAtFixedRate(task, 1000,1000);
+    }
+
+    //This function is for hiding the elements on solo player that do not make sense
+    public void hideSoloPlayerElements() {
+        jokerThree.setVisible(false);
+        emojiOne.setVisible(false);
+        emojiTwo.setVisible(false);
+        emojiThree.setVisible(false);
+        answersGiven.setVisible(false);
+    }
+
 
     //This function disables the answer buttons when an answer has been clicked
     public void disableButtons() {
@@ -95,18 +167,21 @@ public class GameScreenControl {
 
     //Function for when the player answers one
     public void answerOneGiven() {
+        myTimer.cancel();
         revealAnswers(answerOnePane, 0);
         disableButtons();
     }
 
     //Function for when the player answers two
     public void answerTwoGiven() {
+        myTimer.cancel();
         revealAnswers(answerTwoPane, 1);
         disableButtons();
     }
 
     //Function for when the player answers three
     public void answerThreeGiven() {
+        myTimer.cancel();
         revealAnswers(answerThreePane, 2);
         disableButtons();
     }
@@ -142,9 +217,9 @@ public class GameScreenControl {
             default:
                 break;
         }
-        if(correctAnswer != click) {
+        if(correctAnswer != click && !(click > 2)) {
             clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
-        } else {
+        } else if (correctAnswer == click && !(click > 2)){
             mainCtrl.points += (jokerOneActive * 100);
         }
 
@@ -152,10 +227,12 @@ public class GameScreenControl {
         newQuestion();
     }
 
+
+
     //This function will start a new question after 5 seconds.
     public void newQuestion() {
-        Timer myTimer = new Timer();
-        myTimer.schedule(new TimerTask(){
+        Timer myTimers = new Timer();
+        myTimers.schedule(new TimerTask(){
 
             @Override
             public void run() {
@@ -166,7 +243,7 @@ public class GameScreenControl {
                         mainCtrl.showLeaderBoard();
 
                     } else {
-                        mainCtrl.showGameScreen();
+                        mainCtrl.SoloGameRound();
                     }
                 });
             }

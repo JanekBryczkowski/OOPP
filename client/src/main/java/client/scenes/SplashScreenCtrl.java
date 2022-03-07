@@ -15,7 +15,7 @@ public class SplashScreenCtrl {
 
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
-    private final GameScreenControl gameScreenControl;
+    private final QuestionThreeCtrl questionThreeCtrl;
     private Stage primaryStage;
 
 
@@ -28,10 +28,10 @@ public class SplashScreenCtrl {
 
 
     @Inject
-    public SplashScreenCtrl(ServerUtils server, GameCtrl mainCtrl, Stage primaryStage, GameScreenControl gameScreenControl) throws MalformedURLException {
+    public SplashScreenCtrl(ServerUtils server, GameCtrl mainCtrl, Stage primaryStage, QuestionThreeCtrl questionThreeCtrl) throws MalformedURLException {
         this.server = server;
         this.mainCtrl = mainCtrl;
-        this.gameScreenControl = gameScreenControl;
+        this.questionThreeCtrl = questionThreeCtrl;
     }
 
     //This function sets the username and moves to the gamescreen
@@ -40,7 +40,7 @@ public class SplashScreenCtrl {
             logoLabel.setText("SET USERNAME");
         } else {
             mainCtrl.setUsername(usernameInput.getText());
-            mainCtrl.showGameScreen();
+            mainCtrl.SoloGameRound();
         }
     }
 

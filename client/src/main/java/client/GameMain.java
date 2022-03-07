@@ -17,18 +17,13 @@ package client;
 
 import static com.google.inject.Guice.createInjector;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import client.scenes.*;
 import com.google.inject.Injector;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GameMain extends Application {
@@ -50,7 +45,7 @@ public class GameMain extends Application {
 //        loader.setController(new GameCtrl());
 //        Pane mainPane = loader.load();
         var splash = FXML.load(SplashScreenCtrl.class, "client", "scenes","SplashScreen.fxml");
-        var gameScreen = FXML.load(GameScreenControl.class, "client", "scenes", "QuestionScreen.fxml");
+        var gameScreen = FXML.load(QuestionThreeCtrl.class, "client", "scenes", "QuestionScreen.fxml");
         var leaderBoard = FXML.load(LeaderBoardCtrl.class, "client", "scenes", "LeaderBoardScreen.fxml");
 
 //        var gameScreen = FXML.load(getClass().getResource("SplashScreen.fxml"))
@@ -61,7 +56,7 @@ public class GameMain extends Application {
 //        loader.getController().setPrimaryStage(primaryStage);
 
 
-//        FXMLLoader loader = new FXMLLoader(GameScreenControl.class, "client", "scenes", "QuestionScreen.fxml");
+//        FXMLLoader loader = new FXMLLoader(QuestionThreeCtrl.class, "client", "scenes", "QuestionScreen.fxml");
 //        loader.setCharset(new MainController(path));
 //        Pane mainPane = loader.load();
 //

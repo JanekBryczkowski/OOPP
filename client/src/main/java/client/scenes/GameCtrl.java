@@ -16,7 +16,6 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
-import commons.Activity;
 import commons.Question;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,7 +29,7 @@ public class GameCtrl {
     private SplashScreenCtrl overviewCtrl;
     private Scene overview;
 
-    private GameScreenControl gameCtrl;
+    private QuestionThreeCtrl gameCtrl;
     private Scene gameScreen;
 
     private AddQuoteCtrl addCtrl;
@@ -45,7 +44,7 @@ public class GameCtrl {
     public int round = 1;
     public String username;
 
-    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> overview, Pair<GameScreenControl, Parent> gameCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> overview, Pair<QuestionThreeCtrl, Parent> gameCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
         this.primaryStage = primaryStage;
 
         this.overviewCtrl = overview.getKey();
@@ -76,7 +75,7 @@ public class GameCtrl {
     }
 
     //This function is for showing the gamescreen
-    public void showGameScreen() {
+    public void SoloGameRound() {
         //Plays 5 rounds
         if(round > 5) {
             showLeaderBoard();
@@ -100,7 +99,7 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void threeActivityQuestion(Question question) {
-        gameCtrl.setQuestion(question);
+        gameCtrl.startQuestion(question);
         primaryStage.setScene(gameScreen);
         primaryStage.setFullScreen(true);
     }

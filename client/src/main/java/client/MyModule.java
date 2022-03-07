@@ -29,7 +29,7 @@ public class MyModule implements Module {
         binder.bind(QuoteOverviewCtrl.class).in(Scopes.SINGLETON);
         binder.bind(GameCtrl.class).in(Scopes.SINGLETON);
         binder.bind(SplashScreenCtrl.class).in(Scopes.SINGLETON);
-        binder.bind(GameScreenControl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionThreeCtrl.class).in(Scopes.SINGLETON);
         binder.bind(LeaderBoardCtrl.class).in(Scopes.SINGLETON);
     }
 }

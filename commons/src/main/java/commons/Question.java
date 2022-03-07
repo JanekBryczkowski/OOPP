@@ -35,6 +35,8 @@ public class Question {
 
     public List<Activity> activityList;
 
+    public int correctAnswer;
+
     public Question() {
         this.activityList = new ArrayList<>();
         // for object mappers
@@ -47,6 +49,14 @@ public class Question {
 
     public void addActivity(Activity activity) {
         activityList.add(activity);
+    }
+
+    public void setCorrectAnswer() {
+        correctAnswer = 0;
+        if(activityList.get(1).consumption > activityList.get(correctAnswer).consumption)
+            this.correctAnswer = 1;
+        if(activityList.get(2).consumption > activityList.get(correctAnswer).consumption)
+            this.correctAnswer = 2;
     }
 
     public boolean equals(Object obj) {
