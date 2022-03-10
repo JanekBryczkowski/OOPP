@@ -15,11 +15,9 @@
  */
 package server;
 
-import commons.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import java.util.ArrayList;
 
 @SpringBootApplication
 @EntityScan(basePackages = { "commons", "server" })
