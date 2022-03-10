@@ -2,14 +2,11 @@ package server.api;
 
 import commons.Activity;
 import commons.Question;
-import org.springframework.data.jpa.repository.Query;
 import server.database.QuestionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/api/questions")
