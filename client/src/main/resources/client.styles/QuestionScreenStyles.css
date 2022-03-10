@@ -32,9 +32,14 @@
 
 .answer_1, .answer_2, .answer_3 {
     -fx-background-color: #F6FFD3;
-    -fx-font-size: 43;
+    -fx-font-size: 30;
     -fx-background-radius: 20;
     -fx-text-alignment: center;
+}
+
+.answerText {
+    -fx-wrap-text: true;
+    -fx-min-height: 100;
 }
 
 .joker_button {

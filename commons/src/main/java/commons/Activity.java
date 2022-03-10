@@ -17,51 +17,46 @@ package commons;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
+@Entity
+public class Activity {
 
-public class Question {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public long id;
 
-//    public long id;
+    public String title;
+    public int consumption;
 
-    public List<Activity> activityList;
-
-    public int correctAnswer;
-
-    public Question() {
-        this.activityList = new ArrayList<>();
+    @SuppressWarnings("unused")
+    private Activity() {
         // for object mappers
     }
 
-//    public Question(String title, int consumption) {
-//        this.title = title;
-//        this.consumption = consumption;
-//    }
-
-    public void addActivity(Activity activity) {
-        activityList.add(activity);
+    public Activity(String title, int consumption) {
+        this.title = title;
+        this.consumption = consumption;
     }
 
-    public void setCorrectAnswer() {
-        correctAnswer = 0;
-        if(activityList.get(1).consumption > activityList.get(correctAnswer).consumption)
-            this.correctAnswer = 1;
-        if(activityList.get(2).consumption > activityList.get(correctAnswer).consumption)
-            this.correctAnswer = 2;
-    }
-
+    @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
     }
