@@ -30,7 +30,7 @@ public class LeaderBoardCtrl {
     public void backToSplash() {
         mainCtrl.points = 0;
         mainCtrl.round = 1;
-        mainCtrl.showOverview();
+        mainCtrl.showSplashScreen();
     }
 
 }

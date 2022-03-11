@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass = 'client.Main'
+    mainClass = 'client.GameMain'
 }
 
 javafx {

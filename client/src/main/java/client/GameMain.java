@@ -32,6 +32,7 @@ public class GameMain extends Application {
     private static final MyFXML FXML = new MyFXML(INJECTOR);
 
     public static void main(String[] args) throws URISyntaxException, IOException {
+        System.out.println("Xd 1");
         launch();
     }
 

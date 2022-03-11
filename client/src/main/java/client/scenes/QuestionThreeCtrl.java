@@ -34,11 +34,11 @@ public class QuestionThreeCtrl {
     @FXML
     private Text questionText;
     @FXML
-    private Text answerOne;
+    private Label answerOne;
     @FXML
-    private Text answerTwo;
+    private Label answerTwo;
     @FXML
-    private Text answerThree;
+    private Label answerThree;
     @FXML
     private Label points;
     @FXML
@@ -255,7 +255,7 @@ public class QuestionThreeCtrl {
         mainCtrl.points = 0;
         mainCtrl.round = 1;
         mainCtrl.username = "";
-        mainCtrl.showOverview();
+        mainCtrl.showSplashScreen();
     }
 
     //Function for when joker one is pressed

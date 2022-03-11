@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 public class SplashScreenCtrl {
 
     private final ServerUtils server;
-    private final GameCtrl mainCtrl;
+    private final GameCtrl gameCtrl;
     private final QuestionThreeCtrl questionThreeCtrl;
     private Stage primaryStage;
 
@@ -28,19 +28,19 @@ public class SplashScreenCtrl {
 
 
     @Inject
-    public SplashScreenCtrl(ServerUtils server, GameCtrl mainCtrl, Stage primaryStage, QuestionThreeCtrl questionThreeCtrl) throws MalformedURLException {
+    public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, Stage primaryStage, QuestionThreeCtrl questionThreeCtrl) throws MalformedURLException {
         this.server = server;
-        this.mainCtrl = mainCtrl;
+        this.gameCtrl = gameCtrl;
         this.questionThreeCtrl = questionThreeCtrl;
     }
 
     //This function sets the username and moves to the gamescreen
     public void join() {
-        if(usernameInput.getText() == "") {
+        if (usernameInput.getText().equals("") || usernameInput.getText() == null) {
             logoLabel.setText("SET USERNAME");
         } else {
-            mainCtrl.setUsername(usernameInput.getText());
-            mainCtrl.SoloGameRound();
+            gameCtrl.setUsername(usernameInput.getText());
+            gameCtrl.SoloGameRound();
         }
     }
 

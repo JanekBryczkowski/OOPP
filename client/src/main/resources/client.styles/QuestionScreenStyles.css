@@ -18,8 +18,16 @@
 .back_button {
     -fx-background-color: #819E21;
     -fx-background-radius: 20;
-    -fx-font-size: 20;
-    -fx-font-weight: bold;
+}
+
+.back_button:hover {
+    -fx-background-color: #6D871A;
+    -fx-background-radius: 20;
+}
+
+.back_button:pressed {
+    -fx-background-color: #637A18;
+    -fx-background-radius: 20;
 }
 
 .points_pane {
@@ -44,9 +52,17 @@
 
 .joker_button {
     -fx-background-color: #819E21;
-    -fx-background-radius: 20;
-    -fx-font-size: 16;
-    -fx-font-weight: bold;
+    -fx-background-radius: 40;
+}
+
+.joker_button:hover {
+    -fx-background-color: #6D871A;
+    -fx-background-radius: 40;
+}
+
+.joker_button:pressed {
+    -fx-background-color: #637A18;
+    -fx-background-radius: 40;
 }
 
 .answers_given {
@@ -60,7 +76,8 @@
     -fx-font-weight: bold;
 }
 
-/*
-System 42 bold
-System 28
- */
+
+.pointsLabel {
+    -fx-background-radius: 22;
+    -fx-background-color: #F5FFD3;
+}
