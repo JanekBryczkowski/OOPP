@@ -19,7 +19,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class QuestionThreeCtrl {
+public class QuestionCtrl {
 
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
@@ -34,11 +34,11 @@ public class QuestionThreeCtrl {
     @FXML
     private Text questionText;
     @FXML
-    private Text answerOne;
+    private Label answerOne;
     @FXML
-    private Text answerTwo;
+    private Label answerTwo;
     @FXML
-    private Text answerThree;
+    private Label answerThree;
     @FXML
     private Label points;
     @FXML
@@ -64,10 +64,14 @@ public class QuestionThreeCtrl {
     @FXML
     private ImageView emojiThree;
     @FXML
-    private Text answersGiven;
+    private Label answersGiven;
+    @FXML
+    private AnchorPane threeActivitiesAnchorPane;
+    @FXML
+    private AnchorPane oneActivityAnchorPane;
 
     @Inject
-    public QuestionThreeCtrl(ServerUtils server, GameCtrl mainCtrl) {
+    public QuestionCtrl(ServerUtils server, GameCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
     }
@@ -142,7 +146,7 @@ public class QuestionThreeCtrl {
 
     //This function is for hiding the elements on solo player that do not make sense
     public void hideSoloPlayerElements() {
-        jokerThree.setVisible(false);
+        //jokerThree.setVisible(false);
         emojiOne.setVisible(false);
         emojiTwo.setVisible(false);
         emojiThree.setVisible(false);
@@ -193,7 +197,7 @@ public class QuestionThreeCtrl {
         answerThreePane.setBorder(null);
         jokerOne.setDisable(false);
         jokerTwo.setDisable(false);
-        jokerThree.setDisable(false);
+        //jokerThree.setDisable(false);
         jokerOne.setBorder(null);
         jokerTwo.setBorder(null);
         jokerOneActive = 1;
@@ -255,7 +259,7 @@ public class QuestionThreeCtrl {
         mainCtrl.points = 0;
         mainCtrl.round = 1;
         mainCtrl.username = "";
-        mainCtrl.showOverview();
+        mainCtrl.showSplashScreen();
     }
 
     //Function for when joker one is pressed
@@ -264,7 +268,7 @@ public class QuestionThreeCtrl {
         jokerOne.setBorder(new Border(new BorderStroke(Color.DARKGREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
         jokerOne.setDisable(true);
         jokerTwo.setDisable(true);
-        jokerThree.setDisable(true);
+        //jokerThree.setDisable(true);
     }
 
     //Function for joker two
@@ -291,7 +295,16 @@ public class QuestionThreeCtrl {
         jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
         jokerOne.setDisable(true);
         jokerTwo.setDisable(true);
-        jokerThree.setDisable(true);
+        //jokerThree.setDisable(true);
     }
 
+    public void setOneActivity() {
+        oneActivityAnchorPane.setVisible(true);
+        threeActivitiesAnchorPane.setVisible(false);
+    }
+
+    public void setThreeActivities(){
+        oneActivityAnchorPane.setVisible(false);
+        threeActivitiesAnchorPane.setVisible(true);
+    }
 }

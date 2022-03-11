@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="258.0" fitWidth="260.0" layoutX="785.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/logo.png" />
+            <Image url="@../../client.images/earthLogo.png" />
          </image>
       </ImageView>
       <Button layoutX="766.0" layoutY="27.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="59.0" prefWidth="150.0" style="-fx-background-color: #819E21;" text="BACK" textFill="WHITE" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="27.0">

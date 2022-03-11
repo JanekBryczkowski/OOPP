@@ -26,11 +26,11 @@ public class GameCtrl {
 
     private Stage primaryStage;
 
-    private SplashScreenCtrl overviewCtrl;
-    private Scene overview;
+    private SplashScreenCtrl splashScreenCtrl;
+    private Scene splashScreenScene;
 
-    private QuestionThreeCtrl gameCtrl;
-    private Scene gameScreen;
+    private QuestionCtrl questionCtrl;
+    private Scene questionThreeScreen;
 
     private AddQuoteCtrl addCtrl;
     private Scene add;
@@ -44,29 +44,31 @@ public class GameCtrl {
     public int round = 1;
     public String username;
 
-    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> overview, Pair<QuestionThreeCtrl, Parent> gameCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionThreeCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
         this.primaryStage = primaryStage;
 
-        this.overviewCtrl = overview.getKey();
-        this.overview = new Scene(overview.getValue());
+        this.splashScreenCtrl = splash.getKey();
+        this.splashScreenScene = new Scene(splash.getValue());
 
-        this.gameCtrl = gameCtrl.getKey();
-        this.gameScreen = new Scene(gameCtrl.getValue());
+        this.questionCtrl = questionThreeCtrl.getKey();
+        this.questionThreeScreen = new Scene(questionThreeCtrl.getValue());
 
         this.leaderBoardCtrl = leaderBoardCtrl.getKey();
         this.leaderBoard = new Scene(leaderBoardCtrl.getValue());
 
-        showOverview();
+        showSplashScreen();
         primaryStage.show();
     }
 
     //This function is for showing the SplashScreen
-    public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
-        overviewCtrl.setSplashScreen();
-        primaryStage.setScene(overview);
-        primaryStage.setFullScreen(true);
-        primaryStage.setFullScreenExitHint("");
+    public void showSplashScreen() {
+        System.out.println("Xd 2");
+        primaryStage.setTitle("Splash Screen");
+        splashScreenCtrl.setSplashScreen();
+        splashScreenScene.getStylesheets().add("client.styles/SplashScreenStyle.css");
+        primaryStage.setScene(splashScreenScene);
+        //primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreenExitHint("");
     }
 
     //Setter for username
@@ -76,41 +78,62 @@ public class GameCtrl {
 
     //This function is for showing the gamescreen
     public void SoloGameRound() {
+        System.out.println("Xd 3");
         //Plays 5 rounds
-        if(round > 5) {
+        if (round > 5) {
+            System.out.println("Xd 4");
             showLeaderBoard();
         } else {
-            Question question = overviewCtrl.getRandomQuestion();
-            switch (question.activityList.size()) {
-                case (1):
+            System.out.println("Xd 5");
+            Question question = splashScreenCtrl.getRandomQuestion();
+            System.out.println("size" + question.activityList.size());
+            int xd = 1; //JUST FOR TESTING PURPOSES. IF 1, THEN 1 ACTIVITY, IF 3 THEN 3 ACTIVITIES
+            switch (/*question.activityList.size()*/xd) {
+                case (1): {
+                    System.out.println("Xd 6");
+                    oneActivityQuestion(question);
+                    break;
+                }
+                case (2): {
+                    System.out.println("Xd 7");
                     threeActivityQuestion(question);
                     break;
-                case (2):
+                }
+                case (3): {
+                    System.out.println("Xd 8");
                     threeActivityQuestion(question);
                     break;
-                case (3):
+                }
+                default: {
+                    System.out.println("Xd 9");
                     threeActivityQuestion(question);
                     break;
-                default:
-                    break;
+                }
             }
         }
     }
 
     //Setup for a question with three activities
+    public void oneActivityQuestion(Question question) {
+        //questionThreeCtrl.startQuestion(question);
+        primaryStage.setTitle("Game screen - 1 activity question");
+        primaryStage.setScene(questionThreeScreen);
+        questionCtrl.setOneActivity();
+        questionThreeScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+    }
+
+    //Setup for a question with three activities
     public void threeActivityQuestion(Question question) {
-        gameCtrl.startQuestion(question);
-        primaryStage.setScene(gameScreen);
-        primaryStage.setFullScreen(true);
+        //questionThreeCtrl.startQuestion(question);
+        primaryStage.setTitle("Game screen - 3 activities question");
+        primaryStage.setScene(questionThreeScreen);
+        questionCtrl.setThreeActivities();
+        questionThreeScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
     }
 
     //Function for showing the leaderboard
     public void showLeaderBoard() {
         leaderBoardCtrl.setLeaderBoard();
         primaryStage.setScene(leaderBoard);
-        primaryStage.setFullScreen(true);
-
     }
-
-
 }

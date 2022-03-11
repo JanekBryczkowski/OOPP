@@ -8,8 +8,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="    -fx-background-color: #D2EC7E;
-" styleClass="background" stylesheets="@../../client.styles/LeaderBoardScreenStyles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.LeaderBoardCtrl">
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="    -fx-background-color: #D2EC7E;"
+xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.LeaderBoardCtrl">
    <children>
       <Button style="    -fx-background-color: #819E21;
     -fx-background-radius: 39;" layoutX="822.0" layoutY="698.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="367.0" text="Return to Waiting Room" textFill="WHITE">
