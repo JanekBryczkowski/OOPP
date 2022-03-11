@@ -45,8 +45,8 @@ public class GameMain extends Application {
 //        FXMLLoader loader = new FXMLLoader(new URL("C:\\TU Delft\\OOPP\\repository-template\\client\\src\\main\\resources\\client\\scenes\\QuestionScreen.fxml"));
 //        loader.setController(new GameCtrl());
 //        Pane mainPane = loader.load();
-        var splash = FXML.load(SplashScreenCtrl.class, "client", "scenes","SplashScreen.fxml");
-        var gameScreen = FXML.load(QuestionThreeCtrl.class, "client", "scenes", "QuestionScreen.fxml");
+        var splash = FXML.load(SplashScreenCtrl.class, "client", "scenes", "SplashScreen.fxml");
+        var gameThreeScreen = FXML.load(QuestionCtrl.class, "client", "scenes", "QuestionScreen.fxml");
         var leaderBoard = FXML.load(LeaderBoardCtrl.class, "client", "scenes", "LeaderBoardScreen.fxml");
 
 //        var gameScreen = FXML.load(getClass().getResource("SplashScreen.fxml"))
@@ -72,8 +72,7 @@ public class GameMain extends Application {
 //        Window.swap(path+"content.fxml");
 
 
-
         var gameCtrl = INJECTOR.getInstance(GameCtrl.class);
-        gameCtrl.initialize(primaryStage, splash, gameScreen, leaderBoard);
+        gameCtrl.initialize(primaryStage, splash, gameThreeScreen, leaderBoard);
     }
 }

@@ -29,8 +29,8 @@ public class GameCtrl {
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splashScreenScene;
 
-    private QuestionThreeCtrl questionThreeCtrl;
-    private Scene gameScreen;
+    private QuestionCtrl questionCtrl;
+    private Scene questionThreeScreen;
 
     private AddQuoteCtrl addCtrl;
     private Scene add;
@@ -44,14 +44,14 @@ public class GameCtrl {
     public int round = 1;
     public String username;
 
-    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> overview, Pair<QuestionThreeCtrl, Parent> gameCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionThreeCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
         this.primaryStage = primaryStage;
 
-        this.splashScreenCtrl = overview.getKey();
-        this.splashScreenScene = new Scene(overview.getValue());
+        this.splashScreenCtrl = splash.getKey();
+        this.splashScreenScene = new Scene(splash.getValue());
 
-        this.questionThreeCtrl = gameCtrl.getKey();
-        this.gameScreen = new Scene(gameCtrl.getValue());
+        this.questionCtrl = questionThreeCtrl.getKey();
+        this.questionThreeScreen = new Scene(questionThreeCtrl.getValue());
 
         this.leaderBoardCtrl = leaderBoardCtrl.getKey();
         this.leaderBoard = new Scene(leaderBoardCtrl.getValue());
@@ -87,10 +87,11 @@ public class GameCtrl {
             System.out.println("Xd 5");
             Question question = splashScreenCtrl.getRandomQuestion();
             System.out.println("size" + question.activityList.size());
-            switch (question.activityList.size()) {
+            int xd = 1; //JUST FOR TESTING PURPOSES. IF 1, THEN 1 ACTIVITY, IF 3 THEN 3 ACTIVITIES
+            switch (/*question.activityList.size()*/xd) {
                 case (1): {
                     System.out.println("Xd 6");
-                    threeActivityQuestion(question);
+                    oneActivityQuestion(question);
                     break;
                 }
                 case (2): {
@@ -113,11 +114,21 @@ public class GameCtrl {
     }
 
     //Setup for a question with three activities
+    public void oneActivityQuestion(Question question) {
+        //questionThreeCtrl.startQuestion(question);
+        primaryStage.setTitle("Game screen - 1 activity question");
+        primaryStage.setScene(questionThreeScreen);
+        questionCtrl.setOneActivity();
+        questionThreeScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+    }
+
+    //Setup for a question with three activities
     public void threeActivityQuestion(Question question) {
         //questionThreeCtrl.startQuestion(question);
-        primaryStage.setTitle("Game screen");
-        primaryStage.setScene(gameScreen);
-        gameScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        primaryStage.setTitle("Game screen - 3 activities question");
+        primaryStage.setScene(questionThreeScreen);
+        questionCtrl.setThreeActivities();
+        questionThreeScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
     }
 
     //Function for showing the leaderboard
