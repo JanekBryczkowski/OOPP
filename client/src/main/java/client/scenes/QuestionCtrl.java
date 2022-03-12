@@ -26,7 +26,7 @@ public class QuestionCtrl {
     public Stage primaryStage;
 
     public int correctAnswer;
-    public int jokerOneActive = 1;
+    public int jokerOneActive = 1; //double points
     final int[] secondsPassed = {10};
     Timer myTimer;
     TimerTask task;
@@ -78,7 +78,7 @@ public class QuestionCtrl {
 
     //Every new round, a new timer and new timertask have to be instantiated
     public void instantiateTimer() {
-        secondsPassed[0] = 10;
+//        secondsPassed[0] = 10;
         myTimer = new Timer();
         task = new TimerTask() {
             @Override
@@ -115,34 +115,11 @@ public class QuestionCtrl {
 
         instantiateTimer();
 
-        startTimer();
-
-    }
-
-    //This functions starts the timer. When the timer finishes, the answers are revealed
-    public void startTimer() {
-//        myTimer.scheduleAtFixedRate(new TimerTask(){
-//
-//            @Override
-//            public void run() {
-//                Platform.runLater(() -> {
-//                    secondsPassed[0]--;
-//                    Platform.runLater(() -> {
-//                                if(secondsPassed[0] == 1) {
-//                                    secondsLeft.setText("Time left: " + secondsPassed[0] + " second");
-//                                } else if (secondsPassed[0] > 0)
-//                                    secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
-//                                else {
-//                                    myTimer.cancel();
-//                                    revealAnswers(null, 4);
-//                                }
-//                            }
-//                    );
-//                });
-//            }
-//        }, 1000,1000);
         myTimer.scheduleAtFixedRate(task, 1000,1000);
+
+
     }
+
 
     //This function is for hiding the elements on solo player that do not make sense
     public void hideSoloPlayerElements() {
@@ -224,7 +201,7 @@ public class QuestionCtrl {
         if(correctAnswer != click && !(click > 2)) {
             clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
         } else if (correctAnswer == click && !(click > 2)){
-            mainCtrl.points += (jokerOneActive * 100);
+            mainCtrl.points += (jokerOneActive * 10 * secondsPassed[0]);
         }
 
         points.setText(mainCtrl.points + " points");
@@ -271,7 +248,7 @@ public class QuestionCtrl {
         //jokerThree.setDisable(true);
     }
 
-    //Function for joker two
+    //Function for joker two (Eliminating wrong answer)
     public void jokerTwo() {
         Random random = new Random();
         int i = random.nextInt(2) + 1;
