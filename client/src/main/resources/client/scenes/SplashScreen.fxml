@@ -33,11 +33,11 @@
             <Image url="@../../client.images/earthLogo.png" />
          </image>
       </ImageView>
-      <Label fx:id="logoLabel" layoutX="244.0" layoutY="142.0" text="ENERGY GAME (to be changed)">
-         <font>
-            <Font size="64.0" />
-         </font>
-      </Label>
+      <ImageView fitHeight="159.0" fitWidth="967.0" layoutX="213.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../client.images/energyGameLogo.png" />
+         </image>
+      </ImageView>
       <Label layoutX="385.0" layoutY="301.0" maxHeight="100.0" maxWidth="514.0" minHeight="100.0" minWidth="514.0" prefHeight="100.0" prefWidth="514.0" text="Single Player">
          <font>
             <Font size="73.0" />
