@@ -1,18 +1,25 @@
 package commons;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Scores{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public long id;
+
     public String username;
     public int score;
 
     public Scores(String username, int score) {
-        this.username;
-        this.score;
+        this.username = username;
+        this.score = score;
     }
 
     @Override
