@@ -90,6 +90,7 @@ public class QuestionCtrl {
                     secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
                 else {
 //                            myTimer.cancel();
+                    myTimer.cancel();
                     revealAnswers(null, 4);
                 }
 
@@ -159,6 +160,7 @@ public class QuestionCtrl {
         answerOnePane.setDisable(true);
         answerTwoPane.setDisable(true);
         answerThreePane.setDisable(true);
+        myTimer.cancel();
     }
 
     //This function enables the answer buttons when a new round starts
@@ -226,9 +228,11 @@ public class QuestionCtrl {
         } else if (correctAnswer == click && !(click > 2)){
             mainCtrl.points += (jokerOneActive * 100);
         }
+        System.out.println("ALMOST NEW QUESTION");
 
         points.setText(mainCtrl.points + " points");
         newQuestion();
+        System.out.println("NEW QUESTIONS STARTED!");
     }
 
 
