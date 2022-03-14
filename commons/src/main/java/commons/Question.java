@@ -37,11 +37,6 @@ public class Question {
         // for object mappers
     }
 
-//    public Question(String title, int consumption) {
-//        this.title = title;
-//        this.consumption = consumption;
-//    }
-
     public void addActivity(Activity activity) {
         activityList.add(activity);
     }

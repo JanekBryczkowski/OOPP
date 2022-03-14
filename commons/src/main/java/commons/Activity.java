@@ -46,6 +46,14 @@ public class Activity {
         this.consumption = consumption;
     }
 
+    public String getTitle() {
+        return this.title;
+    }
+
+    public int getConsumption() {
+        return this.consumption;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);

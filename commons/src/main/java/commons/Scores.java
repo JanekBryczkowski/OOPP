@@ -21,6 +21,14 @@ public class Scores{
         this.score = score;
     }
 
+    public String getUsername() {
+        return this.username;
+    }
+
+    public int getScore() {
+        return this.score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -46,6 +46,14 @@ public class User {
         this.score = score;
     }
 
+    public String getUsername() {
+        return this.username;
+    }
+
+    public int getScore() {
+        return this.score;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
