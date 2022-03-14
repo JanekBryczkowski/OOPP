@@ -14,10 +14,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.net.URL;
+import java.util.*;
 
 public class QuestionCtrl {
 
@@ -50,9 +48,9 @@ public class QuestionCtrl {
     @FXML
     private Text round;
     @FXML
-    private Button jokerOne;
+    public Button jokerOne;
     @FXML
-    private Button jokerTwo;
+    public Button jokerTwo;
     @FXML
     private Button jokerThree;
     @FXML
@@ -84,7 +82,7 @@ public class QuestionCtrl {
             @Override
             public void run() {
                 secondsPassed[0]--;
-                if(secondsPassed[0] == 1) {
+                if (secondsPassed[0] == 1) {
                     secondsLeft.setText("Time left: " + secondsPassed[0] + " second");
                 } else if (secondsPassed[0] > 0)
                     secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
@@ -142,7 +140,7 @@ public class QuestionCtrl {
 //                });
 //            }
 //        }, 1000,1000);
-        myTimer.scheduleAtFixedRate(task, 1000,1000);
+        myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
     //This function is for hiding the elements on solo player that do not make sense
@@ -194,9 +192,12 @@ public class QuestionCtrl {
 
     //Remove the coloured borders when a new round starts
     public void removeBorders() {
-        answerOnePane.setBorder(null);
-        answerTwoPane.setBorder(null);
-        answerThreePane.setBorder(null);
+        answerOnePane.setStyle("-fx-border-width: 0");
+        answerTwoPane.setStyle("-fx-border-width: 0");
+        answerThreePane.setStyle("-fx-border-width: 0");
+        //answerOnePane.setBorder(null);
+        //answerTwoPane.setBorder(null);
+        //answerThreePane.setBorder(null);
         jokerOne.setDisable(false);
         jokerTwo.setDisable(false);
         //jokerThree.setDisable(false);
@@ -210,22 +211,26 @@ public class QuestionCtrl {
     It adds points and calls the newQuestion function
      */
     public void revealAnswers(Pane clicked, int click) {
-        switch(correctAnswer) {
-            case(0):
-                answerOnePane.setBorder(new Border(new BorderStroke(Color.GREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
+        switch (correctAnswer) {
+            case (0):
+                answerOnePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
+                //answerOnePane.setBorder(new Border(new BorderStroke(Color.GREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
                 break;
-            case(1):
-                answerTwoPane.setBorder(new Border(new BorderStroke(Color.GREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
+            case (1):
+                answerTwoPane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
+                //answerTwoPane.setBorder(new Border(new BorderStroke(Color.ORANGE,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
                 break;
-            case(2):
-                answerThreePane.setBorder(new Border(new BorderStroke(Color.GREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
+            case (2):
+                answerThreePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
+                //answerThreePane.setBorder(new Border(new BorderStroke(Color.ORANGE,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
                 break;
             default:
                 break;
         }
-        if(correctAnswer != click && !(click > 2)) {
-            clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
-        } else if (correctAnswer == click && !(click > 2)){
+        if (correctAnswer != click && !(click > 2)) {
+            clicked.setStyle("-fx-border-color: red; -fx-border-width: 5; -fx-border-radius: 20;");
+            //clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
+        } else if (correctAnswer == click && !(click > 2)) {
             mainCtrl.points += (jokerOneActive * 100);
         }
         System.out.println("ALMOST NEW QUESTION");
@@ -236,20 +241,18 @@ public class QuestionCtrl {
     }
 
 
-
     //This function will start a new question after 5 seconds.
     public void newQuestion() {
         Timer myTimers = new Timer();
-        myTimers.schedule(new TimerTask(){
+        myTimers.schedule(new TimerTask() {
 
             @Override
             public void run() {
                 Platform.runLater(() -> {
                     removeBorders();
                     round.setText("round " + ++mainCtrl.round);
-                    if(mainCtrl.round > 5) {
+                    if (mainCtrl.round > 5) {
                         mainCtrl.showLeaderBoard();
-
                     } else {
                         mainCtrl.SoloGameRound();
                     }
@@ -268,38 +271,53 @@ public class QuestionCtrl {
 
     //Function for when joker one is pressed
     public void jokerOne() {
-        this.jokerOneActive = 2;
-        jokerOne.setBorder(new Border(new BorderStroke(Color.DARKGREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
-        jokerOne.setDisable(true);
-        jokerTwo.setDisable(true);
-        //jokerThree.setDisable(true);
+        if (!GameCtrl.firstJokerUsed) {
+            this.jokerOneActive = 2;
+            jokerOne.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
+            //jokerOne.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+            jokerOne.setDisable(true);
+            jokerTwo.setDisable(true);
+            //jokerThree.setDisable(true);
+            GameCtrl.firstJokerUsed = true;
+        } else {
+            jokerOne.setDisable(true);
+        }
     }
 
     //Function for joker two
     public void jokerTwo() {
-        Random random = new Random();
-        int i = random.nextInt(2) + 1;
-        int disable = (correctAnswer + i) % 3;
-        switch(disable) {
-            case(0):
-                answerOnePane.setDisable(true);
-                answerOnePane.setBorder(new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
-                break;
-            case(1):
-                answerTwoPane.setDisable(true);
-                answerTwoPane.setBorder(new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
-                break;
-            case(2):
-                answerThreePane.setDisable(true);
-                answerThreePane.setBorder(new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
-                break;
-            default:
-                break;
+        if (!GameCtrl.secondJokerUsed) {
+            Random random = new Random();
+            int i = random.nextInt(2) + 1;
+            int disable = (correctAnswer + i) % 3;
+            switch (disable) {
+                case (0):
+                    answerOnePane.setDisable(true);
+                    answerOnePane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
+                    //answerOnePane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+                    break;
+                case (1):
+                    answerTwoPane.setDisable(true);
+                    answerTwoPane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
+                    //answerTwoPane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+                    break;
+                case (2):
+                    answerThreePane.setDisable(true);
+                    answerThreePane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
+                    //answerThreePane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+                    break;
+                default:
+                    break;
+            }
+            jokerTwo.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
+            //jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+            jokerOne.setDisable(true);
+            jokerTwo.setDisable(true);
+            //jokerThree.setDisable(true);
+            GameCtrl.secondJokerUsed = true;
+        } else {
+            jokerTwo.setDisable(true);
         }
-        jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
-        jokerOne.setDisable(true);
-        jokerTwo.setDisable(true);
-        //jokerThree.setDisable(true);
     }
 
     public void setOneActivity() {
@@ -307,7 +325,7 @@ public class QuestionCtrl {
         threeActivitiesAnchorPane.setVisible(false);
     }
 
-    public void setThreeActivities(){
+    public void setThreeActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }

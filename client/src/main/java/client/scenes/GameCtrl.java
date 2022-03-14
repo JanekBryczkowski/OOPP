@@ -44,6 +44,9 @@ public class GameCtrl {
     public int round = 1;
     public String username;
 
+    public static boolean firstJokerUsed = false;
+    public static boolean secondJokerUsed = false;
+
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
         this.primaryStage = primaryStage;
 
@@ -120,6 +123,7 @@ public class GameCtrl {
         primaryStage.setScene(questionScreen);
         questionCtrl.setOneActivity();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        checkJokers(questionCtrl);
     }
 
     //Setup for a question with three activities
@@ -129,11 +133,17 @@ public class GameCtrl {
         primaryStage.setScene(questionScreen);
         questionCtrl.setThreeActivities();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        checkJokers(questionCtrl);
     }
 
     //Function for showing the leaderboard
     public void showLeaderBoard() {
         leaderBoardCtrl.setLeaderBoard();
         primaryStage.setScene(leaderBoard);
+    }
+
+    public void checkJokers(QuestionCtrl questionCtrl) {
+        if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
+        if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);
     }
 }
