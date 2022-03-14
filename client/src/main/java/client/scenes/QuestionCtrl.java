@@ -123,6 +123,7 @@ public class QuestionCtrl {
         instantiateTimer();
 
         myTimer.scheduleAtFixedRate(task, 1000,1000);
+    }
 
 
     public void startOneActivityQuestion(Question question) {
@@ -216,7 +217,8 @@ public class QuestionCtrl {
     It adds points and calls the newQuestion function
      */
     public void revealAnswersThreeActivities(Pane clicked, int click) {
-        switch (correctAnswer) {
+        int xd = 1
+        switch (xd) {
             case (0):
                 answerOnePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
                 //answerOnePane.setBorder(new Border(new BorderStroke(Color.GREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
