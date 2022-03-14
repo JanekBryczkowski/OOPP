@@ -73,7 +73,7 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="threeActivitiesAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0">
+      <AnchorPane fx:id="threeActivitiesAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" visible="false">
          <children>
             <Pane fx:id="answerOnePane" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" onMouseClicked="#answerOneGiven" prefHeight="107.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_1">
                <children>
@@ -113,7 +113,7 @@
             </Pane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="oneActivityAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" visible="false">
+      <AnchorPane fx:id="oneActivityAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0">
          <children>
             <Pane fx:id="answerOnePane1" maxHeight="80.0" maxWidth="400.0" minHeight="80.0" minWidth="400.0" onMouseClicked="#answerOneGiven" prefHeight="80.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_1" />
             <Label fx:id="answerOne1" alignment="CENTER" maxHeight="80.0" maxWidth="400.0" minHeight="80.0" minWidth="400.0" prefHeight="80.0" prefWidth="400.0" styleClass="higherElement" text="Enter you answer below">
@@ -126,12 +126,12 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <TextField layoutY="113.0" maxHeight="80.0" maxWidth="300.0" minHeight="80.0" minWidth="300.0" prefHeight="80.0" prefWidth="300.0" promptText="Enter your answer" styleClass="nameTextField">
+            <TextField fx:id="answerOneInput" layoutY="113.0" maxHeight="80.0" maxWidth="300.0" minHeight="80.0" minWidth="300.0" prefHeight="80.0" prefWidth="300.0" promptText="Enter your answer" styleClass="nameTextField">
                <font>
                   <Font size="32.0" />
                </font>
             </TextField>
-            <Button layoutX="314.0" layoutY="113.0" maxHeight="80.0" maxWidth="80.0" minHeight="80.0" minWidth="80.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" styleClass="back_button" text="OK" textFill="WHITE">
+            <Button fx:id="answerGivenActivityOne" layoutX="314.0" layoutY="113.0" maxHeight="80.0" maxWidth="80.0" minHeight="80.0" minWidth="80.0" mnemonicParsing="false" onAction="#answerGivenActivityOne" prefHeight="80.0" prefWidth="80.0" styleClass="back_button" text="OK" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>

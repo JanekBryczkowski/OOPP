@@ -90,7 +90,7 @@ public class GameCtrl {
             System.out.println("Xd 5");
             Question question = splashScreenCtrl.getRandomQuestion();
             System.out.println("size" + question.activityList.size());
-            int xd = 3; //JUST FOR TESTING PURPOSES. IF 1, THEN 1 ACTIVITY, IF 3 THEN 3 ACTIVITIES
+            int xd = 1; //JUST FOR TESTING PURPOSES. IF 1, THEN 1 ACTIVITY, IF 3 THEN 3 ACTIVITIES
             switch (/*question.activityList.size()*/xd) {
                 case (1): {
                     System.out.println("Xd 6");
@@ -118,7 +118,7 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void oneActivityQuestion(Question question) {
-        questionCtrl.startQuestion(question);
+        questionCtrl.startOneActivityQuestion(question);
         primaryStage.setTitle("Game screen - 1 activity question");
         primaryStage.setScene(questionScreen);
         questionCtrl.setOneActivity();
@@ -128,7 +128,7 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void threeActivityQuestion(Question question) {
-        questionCtrl.startQuestion(question);
+        questionCtrl.startThreeActivityQuestion(question);
         primaryStage.setTitle("Game screen - 3 activities question");
         primaryStage.setScene(questionScreen);
         questionCtrl.setThreeActivities();

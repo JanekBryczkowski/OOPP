@@ -9,12 +9,12 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-import java.net.URL;
 import java.util.*;
 
 public class QuestionCtrl {
@@ -67,6 +67,10 @@ public class QuestionCtrl {
     private AnchorPane threeActivitiesAnchorPane;
     @FXML
     private AnchorPane oneActivityAnchorPane;
+    @FXML
+    private TextField answerOneInput;
+    @FXML
+    private Button answerGivenActivityOne;
 
     @Inject
     public QuestionCtrl(ServerUtils server, GameCtrl mainCtrl) {
@@ -87,9 +91,13 @@ public class QuestionCtrl {
                 } else if (secondsPassed[0] > 0)
                     secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
                 else {
-//                            myTimer.cancel();
-                    myTimer.cancel();
-                    revealAnswers(null, 4);
+                    if(oneActivityAnchorPane.isVisible()) {
+                        revealAnswersOneActivities(Integer.MIN_VALUE);
+                    }
+                    if(threeActivitiesAnchorPane.isVisible()) {
+                        myTimer.cancel();
+                        revealAnswersThreeActivities(null, 4);
+                    }
                 }
 
             }
@@ -100,7 +108,7 @@ public class QuestionCtrl {
     This function is a setup for the GameScreen.
     A question is given as input and this question is displayed on the screen.
      */
-    public void startQuestion(Question question) {
+    public void startThreeActivityQuestion(Question question) {
         List<Activity> activityList = question.activityList;
         answerOne.setText(question.activityList.get(0).title);
         answerTwo.setText(question.activityList.get(1).title);
@@ -118,28 +126,25 @@ public class QuestionCtrl {
 
     }
 
+    public void startOneActivityQuestion(Question question) {
+        answerGivenActivityOne.setDisable(false);
+        answerOneInput.setText("");
+        answerOneInput.setEditable(true);
+        List<Activity> activityList = question.activityList;
+        questionText.setText(question.activityList.get(0).title);
+        question.setCorrectAnswer();
+        this.correctAnswer = question.correctAnswer;
+        round.setText(String.valueOf(String.valueOf(correctAnswer)));
+
+        hideSoloPlayerElements();
+
+        instantiateTimer();
+        startTimer();
+    }
+
     //This functions starts the timer. When the timer finishes, the answers are revealed
     public void startTimer() {
-//        myTimer.scheduleAtFixedRate(new TimerTask(){
-//
-//            @Override
-//            public void run() {
-//                Platform.runLater(() -> {
-//                    secondsPassed[0]--;
-//                    Platform.runLater(() -> {
-//                                if(secondsPassed[0] == 1) {
-//                                    secondsLeft.setText("Time left: " + secondsPassed[0] + " second");
-//                                } else if (secondsPassed[0] > 0)
-//                                    secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
-//                                else {
-//                                    myTimer.cancel();
-//                                    revealAnswers(null, 4);
-//                                }
-//                            }
-//                    );
-//                });
-//            }
-//        }, 1000,1000);
+
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
@@ -172,21 +177,21 @@ public class QuestionCtrl {
     //Function for when the player answers one
     public void answerOneGiven() {
         myTimer.cancel();
-        revealAnswers(answerOnePane, 0);
+        revealAnswersThreeActivities(answerOnePane, 0);
         disableButtons();
     }
 
     //Function for when the player answers two
     public void answerTwoGiven() {
         myTimer.cancel();
-        revealAnswers(answerTwoPane, 1);
+        revealAnswersThreeActivities(answerTwoPane, 1);
         disableButtons();
     }
 
     //Function for when the player answers three
     public void answerThreeGiven() {
         myTimer.cancel();
-        revealAnswers(answerThreePane, 2);
+        revealAnswersThreeActivities(answerThreePane, 2);
         disableButtons();
     }
 
@@ -210,7 +215,7 @@ public class QuestionCtrl {
     This function reveals the correct and wrong answer by colouring the borders of the answers.
     It adds points and calls the newQuestion function
      */
-    public void revealAnswers(Pane clicked, int click) {
+    public void revealAnswersThreeActivities(Pane clicked, int click) {
         switch (correctAnswer) {
             case (0):
                 answerOnePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
@@ -233,11 +238,29 @@ public class QuestionCtrl {
         } else if (correctAnswer == click && !(click > 2)) {
             mainCtrl.points += (jokerOneActive * 100);
         }
-        System.out.println("ALMOST NEW QUESTION");
 
         points.setText(mainCtrl.points + " points");
         newQuestion();
-        System.out.println("NEW QUESTIONS STARTED!");
+    }
+
+    public void answerGivenActivityOne() {
+        int answer = Integer.valueOf(answerOneInput.getText());
+        revealAnswersOneActivities(answer);
+    }
+
+    public void revealAnswersOneActivities(int answerGiven) {
+        answerGivenActivityOne.setDisable(true);
+        answerOneInput.setEditable(false);
+        myTimer.cancel();
+        answerOneInput.setText(String.valueOf(correctAnswer));
+        if(answerGiven == correctAnswer) {
+            mainCtrl.points += (jokerOneActive * 100);
+            answerOneInput.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
+        } else {
+            answerOneInput.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
+        }
+        points.setText(String.valueOf(mainCtrl.points));
+        newQuestion();
     }
 
 
