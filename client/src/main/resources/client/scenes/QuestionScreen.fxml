@@ -17,7 +17,7 @@
             <Image url="@../../client.images/shower.jpg" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" layoutX="179.0" layoutY="16.0" maxHeight="183.0" maxWidth="815.0" minHeight="183.0" minWidth="787.0" prefHeight="183.0" prefWidth="787.0" text="Which of these activities takes more energy?" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="questionText" alignment="CENTER" layoutX="179.0" layoutY="16.0" maxHeight="183.0" maxWidth="815.0" minHeight="183.0" minWidth="787.0" prefHeight="183.0" prefWidth="787.0" text="Which of these activities takes more energy?" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold" size="47.0" />
          </font>

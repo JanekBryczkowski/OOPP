@@ -32,7 +32,7 @@ public class QuestionCtrl {
     TimerTask task;
 
     @FXML
-    private Text questionText;
+    private Label questionText;
     @FXML
     private Label answerOne;
     @FXML

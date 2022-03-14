@@ -30,7 +30,7 @@ public class GameCtrl {
     private Scene splashScreenScene;
 
     private QuestionCtrl questionCtrl;
-    private Scene questionThreeScreen;
+    private Scene questionScreen;
 
     private AddQuoteCtrl addCtrl;
     private Scene add;
@@ -44,14 +44,14 @@ public class GameCtrl {
     public int round = 1;
     public String username;
 
-    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionThreeCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splash.getKey();
         this.splashScreenScene = new Scene(splash.getValue());
 
-        this.questionCtrl = questionThreeCtrl.getKey();
-        this.questionThreeScreen = new Scene(questionThreeCtrl.getValue());
+        this.questionCtrl = questionCtrl.getKey();
+        this.questionScreen = new Scene(questionCtrl.getValue());
 
         this.leaderBoardCtrl = leaderBoardCtrl.getKey();
         this.leaderBoard = new Scene(leaderBoardCtrl.getValue());
@@ -115,20 +115,20 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void oneActivityQuestion(Question question) {
-        //questionThreeCtrl.startQuestion(question);
+        questionCtrl.startQuestion(question);
         primaryStage.setTitle("Game screen - 1 activity question");
-        primaryStage.setScene(questionThreeScreen);
+        primaryStage.setScene(questionScreen);
         questionCtrl.setOneActivity();
-        questionThreeScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
     }
 
     //Setup for a question with three activities
     public void threeActivityQuestion(Question question) {
-        //questionThreeCtrl.startQuestion(question);
+        questionCtrl.startQuestion(question);
         primaryStage.setTitle("Game screen - 3 activities question");
-        primaryStage.setScene(questionThreeScreen);
+        primaryStage.setScene(questionScreen);
         questionCtrl.setThreeActivities();
-        questionThreeScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
     }
 
     //Function for showing the leaderboard
