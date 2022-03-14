@@ -37,21 +37,20 @@ public class Question {
         // for object mappers
     }
 
-//    public Question(String title, int consumption) {
-//        this.title = title;
-//        this.consumption = consumption;
-//    }
-
     public void addActivity(Activity activity) {
         activityList.add(activity);
     }
 
     public void setCorrectAnswer() {
-        correctAnswer = 0;
-        if(activityList.get(1).consumption > activityList.get(correctAnswer).consumption)
-            this.correctAnswer = 1;
-        if(activityList.get(2).consumption > activityList.get(correctAnswer).consumption)
-            this.correctAnswer = 2;
+        if (this.activityList.size() == 1) {
+            correctAnswer = this.activityList.get(0).consumption;
+        } else if (this.activityList.size() == 2) {
+            correctAnswer = findRatio(this.activityList);
+        } else if (this.activityList.size() == 3) {
+            correctAnswer = findSmallest(this.activityList);
+        } else {
+            System.out.println("ERROR");
+        }
     }
 
     public boolean equals(Object obj) {
@@ -64,5 +63,21 @@ public class Question {
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+    }
+
+    private int findSmallest(List<Activity> list) {
+        int index = -1;
+        int minValue = Integer.MAX_VALUE;
+        for (int i = 0; i < list.size(); i++) {
+            if (minValue > list.get(i).consumption) {
+                minValue = list.get(i).consumption;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    private int findRatio(List<Activity> list) {
+        return list.get(0).consumption / list.get(1).consumption;
     }
 }

@@ -15,19 +15,40 @@
  */
 package commons;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
 
 	@Test
 	public void checkConstructor() {
-		var p = new Person("f", "l");
-		assertEquals("f", p.firstName);
-		assertEquals("l", p.lastName);
+		Person person = new Person("f", "l");
+		assertNotNull(person);
+	}
+
+	@Test
+	public void firstNameTest() {
+		Person person = new Person("abc", "def");
+		assertEquals("abc", person.firstName);
+	}
+
+	@Test
+	public void lastNameTest() {
+		Person person = new Person("abc", "def");
+		assertEquals("def", person.lastName);
+	}
+
+	@Test
+	public void getFirstNameTest() {
+		Person person = new Person("abc", "def");
+		assertEquals("abc", person.getFirstName());
+	}
+
+	@Test
+	public void getLastNameTest() {
+		Person person = new Person("abc", "def");
+		assertEquals("def", person.getLastName());
 	}
 
 	@Test
