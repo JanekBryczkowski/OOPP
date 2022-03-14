@@ -1,0 +1,34 @@
+.joinButton {
+    -fx-background-radius: 36;
+    -fx-background-color: #819E21;
+}
+
+.joinButton:hover {
+    -fx-background-radius: 36;
+    -fx-background-color: #708A1C;
+}
+
+.joinButton:pressed {
+    -fx-background-radius: 36;
+    -fx-background-color: #617818;
+}
+
+.nameTextField {
+    -fx-background-color: #ADC364;
+    -fx-background-radius: 36;
+    -fx-border-radius: 36;
+    -fx-border-color: #8D8888;
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #FFFFFF;
+    -fx-accent: #87994D;
+}
+
+.backButton {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 35;
+}
+
+.frontButton {
+    -fx-background-color: #5FD243;
+    -fx-background-radius: 23.5;
+}

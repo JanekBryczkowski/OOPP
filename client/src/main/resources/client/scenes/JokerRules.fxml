@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="758.0" prefWidth="1000.0" style="-fx-background-color: #D2EC7E; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="exitButtonJokers" alignment="CENTER" layoutX="344.0" layoutY="75.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="317.0" style="-fx-background-color: #819E21; -fx-background-radius: 20;" text="EXIT" textFill="WHITE">
+         <font>
+            <Font size="55.0" />
+         </font>
+      </Button>
+      <Text fill="#5f5f5f" layoutX="89.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Throughout the game you have three Jokers" wrappingWidth="816.8033447265625" AnchorPane.leftAnchor="120.0">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <Text fill="#5f5f5f" layoutX="161.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Click on a joker to select it" wrappingWidth="749.9999999999999" AnchorPane.leftAnchor="120.0">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <Text fill="#5f5f5f" layoutX="161.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. You can react with emojis" wrappingWidth="822.1366577148438" AnchorPane.leftAnchor="120.0">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
