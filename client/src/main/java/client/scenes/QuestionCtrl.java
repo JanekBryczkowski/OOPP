@@ -24,7 +24,7 @@ public class QuestionCtrl {
     public Stage primaryStage;
 
     public int correctAnswer;
-    public int jokerOneActive = 1;
+    public int jokerOneActive = 1; //double points
     final int[] secondsPassed = {10};
     Timer myTimer;
     TimerTask task;
@@ -80,7 +80,7 @@ public class QuestionCtrl {
 
     //Every new round, a new timer and new timertask have to be instantiated
     public void instantiateTimer() {
-        secondsPassed[0] = 10;
+//        secondsPassed[0] = 10;
         myTimer = new Timer();
         task = new TimerTask() {
             @Override
@@ -122,9 +122,8 @@ public class QuestionCtrl {
 
         instantiateTimer();
 
-        startTimer();
+        myTimer.scheduleAtFixedRate(task, 1000,1000);
 
-    }
 
     public void startOneActivityQuestion(Question question) {
         answerGivenActivityOne.setDisable(false);
@@ -147,6 +146,7 @@ public class QuestionCtrl {
 
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
+
 
     //This function is for hiding the elements on solo player that do not make sense
     public void hideSoloPlayerElements() {
@@ -311,7 +311,7 @@ public class QuestionCtrl {
         }
     }
 
-    //Function for joker two
+    //Function for joker two (Eliminating wrong answer)
     public void jokerTwo() {
         if (!GameCtrl.secondJokerUsed) {
             Random random = new Random();
