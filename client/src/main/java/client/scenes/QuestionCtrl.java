@@ -11,10 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-import java.net.URL;
 import java.util.*;
 
 public class QuestionCtrl {
@@ -266,6 +264,10 @@ public class QuestionCtrl {
         mainCtrl.points = 0;
         mainCtrl.round = 1;
         mainCtrl.username = "";
+        GameCtrl.firstJokerUsed = false;
+        GameCtrl.secondJokerUsed = false;
+        jokerOne.setStyle("-fx-border-width: 0");
+        jokerTwo.setStyle("-fx-border-width: 0");
         mainCtrl.showSplashScreen();
     }
 
