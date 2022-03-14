@@ -87,8 +87,8 @@ public class GameCtrl {
             System.out.println("Xd 5");
             Question question = splashScreenCtrl.getRandomQuestion();
             System.out.println("size" + question.activityList.size());
-            int xd = 1; //JUST FOR TESTING PURPOSES. IF 1, THEN 1 ACTIVITY, IF 3 THEN 3 ACTIVITIES
-            switch (/*question.activityList.size()*/xd) {
+//            int xd = 3; //JUST FOR TESTING PURPOSES. IF 1, THEN 1 ACTIVITY, IF 3 THEN 3 ACTIVITIES
+            switch (question.activityList.size()) {
                 case (1): {
                     System.out.println("Xd 6");
                     oneActivityQuestion(question);
