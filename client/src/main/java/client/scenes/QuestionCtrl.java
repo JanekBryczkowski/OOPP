@@ -217,7 +217,7 @@ public class QuestionCtrl {
     It adds points and calls the newQuestion function
      */
     public void revealAnswersThreeActivities(Pane clicked, int click) {
-        int xd = 1
+        int xd = 1;
         switch (xd) {
             case (0):
                 answerOnePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
