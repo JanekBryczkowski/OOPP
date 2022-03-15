@@ -30,12 +30,12 @@
       </TextField>
       <ImageView fitHeight="178.0" fitWidth="163.0" layoutX="211.0" layoutY="582.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/earthLogo.png" />
+            <Image url="@/client.images/earthLogo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="159.0" fitWidth="967.0" layoutX="213.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="159.0" fitWidth="967.0" layoutX="135.5" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/energyGameLogo.png" />
+            <Image url="@/client.images/energyGameLogo.png" />
          </image>
       </ImageView>
       <Label layoutX="385.0" layoutY="301.0" maxHeight="100.0" maxWidth="514.0" minHeight="100.0" minWidth="514.0" prefHeight="100.0" prefWidth="514.0" text="Single Player">
@@ -50,7 +50,7 @@
       </AnchorPane>
       <ImageView fitHeight="178.0" fitWidth="178.0" layoutX="863.0" layoutY="582.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/environmentLogo.png" />
+            <Image url="@/client.images/environmentLogo.png" />
          </image>
       </ImageView>
    </children>
