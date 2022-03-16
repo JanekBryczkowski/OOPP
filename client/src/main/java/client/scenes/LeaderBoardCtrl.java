@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 public class LeaderBoardCtrl {
 
     private final ServerUtils server;
-    private final GameCtrl mainCtrl;
+    private final GameCtrl gameCtrl;
 
     @FXML
     private Label scoreOne;
@@ -18,19 +18,19 @@ public class LeaderBoardCtrl {
     @Inject
     public LeaderBoardCtrl(ServerUtils server, GameCtrl mainCtrl) {
         this.server = server;
-        this.mainCtrl = mainCtrl;
+        this.gameCtrl = mainCtrl;
     }
 
     public void setLeaderBoard() {
-        scoreOne.setText(String.valueOf(mainCtrl.points));
-        oneName.setText(mainCtrl.username);
+        scoreOne.setText(String.valueOf(gameCtrl.points));
+        oneName.setText(gameCtrl.username);
     }
 
 
     public void backToSplash() {
-        mainCtrl.points = 0;
-        mainCtrl.round = 1;
-        mainCtrl.showSplashScreen();
+        gameCtrl.points = 0;
+        gameCtrl.round = 1;
+        gameCtrl.showSplashScreen();
     }
 
 }

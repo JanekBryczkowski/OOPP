@@ -38,7 +38,7 @@ public class QuestionCtrl {
     @FXML
     private Label answerThree;
     @FXML
-    private Label points;
+    private Text points;
     @FXML
     private Pane answerOnePane;
     @FXML
@@ -93,7 +93,7 @@ public class QuestionCtrl {
                 else {
                     if(oneActivityAnchorPane.isVisible()) {
                         myTimer.cancel();
-                        revealAnswersOneActivities(Integer.MIN_VALUE);
+                        revealAnswersOneActivities();
                     }
                     if(threeActivitiesAnchorPane.isVisible()) {
                         myTimer.cancel();
@@ -124,6 +124,8 @@ public class QuestionCtrl {
         instantiateTimer();
 
         myTimer.scheduleAtFixedRate(task, 1000,1000);
+
+        jokerTwo.setText("Eliminate one wrong answer");
     }
 
 
@@ -135,12 +137,14 @@ public class QuestionCtrl {
         questionText.setText(question.activityList.get(0).title);
         question.setCorrectAnswer();
         this.correctAnswer = question.correctAnswer;
-        round.setText(String.valueOf(String.valueOf(correctAnswer)));
+        round.setText(String.valueOf(correctAnswer));
 
         hideSoloPlayerElements();
 
         instantiateTimer();
         startTimer();
+
+        jokerTwo.setText("Narrow down the boundaries");
     }
 
     //This functions starts the timer. When the timer finishes, the answers are revealed
@@ -246,13 +250,13 @@ public class QuestionCtrl {
         newQuestion();
     }
 
-    public void answerGivenActivityOne() {
-        int answer = Integer.valueOf(answerOneInput.getText());
+    /*public int answerGivenActivityOne() {
+        return Integer.valueOf(answerOneInput.getText());
         revealAnswersOneActivities(answer);
-    }
+    }*/
 
-    public void revealAnswersOneActivities(int answerGiven) {
-
+    public void revealAnswersOneActivities() {
+        int answerGiven = Integer.parseInt(answerOneInput.getText());
         answerGivenActivityOne.setDisable(true);
         answerOneInput.setEditable(false);
         myTimer.cancel();
@@ -263,7 +267,7 @@ public class QuestionCtrl {
         } else {
             answerOneInput.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         }
-        points.setText(String.valueOf(mainCtrl.points));
+        points.setText(mainCtrl.points + " points");
         newQuestion();
     }
 
