@@ -278,7 +278,14 @@ public class QuestionCtrl {
     }*/
 
     public void revealAnswersOneActivities() {
-        int answerGiven = Integer.parseInt(answerOneInput.getText());
+        int answerGiven;
+        String input = answerOneInput.getText();
+        if (input.equals("") || input == null) {
+            answerGiven = 0;
+        } else {
+            answerGiven = Integer.parseInt(input);
+        }
+
         answerGivenActivityOne.setDisable(true);
         answerOneInput.setEditable(false);
         myTimer.cancel();
