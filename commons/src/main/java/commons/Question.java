@@ -78,6 +78,10 @@ public class Question {
     }
 
     private int findRatio(List<Activity> list) {
-        return list.get(0).consumption / list.get(1).consumption;
+        if (list.get(0).consumption > list.get(1).consumption) {
+            return list.get(0).consumption / list.get(1).consumption;
+        } else {
+            return list.get(1).consumption / list.get(0).consumption;
+        }
     }
 }

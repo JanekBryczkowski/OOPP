@@ -133,8 +133,26 @@ public class QuestionCtrl {
         instantiateTimer();
 
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
+    }
 
-        jokerTwo.setText("Eliminate one wrong answer");
+    public void startTwoActivityQuestion(Question question) {
+        List<Activity> activityList = question.activityList;
+        int firstActivityConsumption = question.activityList.get(0).consumption;
+        int secondActivityConsumption = question.activityList.get(1).consumption;
+        question.setCorrectAnswer();
+        this.correctAnswer = question.correctAnswer;
+
+        answerOne.setText(String.valueOf(correctAnswer));
+        answerTwo.setText(String.valueOf((int) (correctAnswer * (Math.random() * 39 + 1) / 100)));
+        answerThree.setText(String.valueOf((int) (correctAnswer * (Math.random() * 39 + 1) / 100)));
+
+        enableButtons();
+
+        hideSoloPlayerElements();
+
+        instantiateTimer();
+
+        myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
 
@@ -411,6 +429,11 @@ public class QuestionCtrl {
     }
 
     public void setThreeActivities() {
+        oneActivityAnchorPane.setVisible(false);
+        threeActivitiesAnchorPane.setVisible(true);
+    }
+
+    public void setTwoActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }
