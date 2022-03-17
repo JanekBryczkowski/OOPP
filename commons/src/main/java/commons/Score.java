@@ -1,13 +1,18 @@
 package commons;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Objects;
+
+import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
-public class Scores{
+public class Score {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +21,11 @@ public class Scores{
     public String username;
     public int score;
 
-    public Scores(String username, int score) {
+    private Score(){
+
+    }
+
+    public Score(String username, int score) {
         this.username = username;
         this.score = score;
     }
@@ -30,23 +39,17 @@ public class Scores{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Scores scores = (Scores) o;
-        return score == scores.score && Objects.equals(username, scores.username);
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, score);
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     @Override
     public String toString() {
-        return "Scores{" +
-                "username='" + username + '\'' +
-                ", score=" + score +
-                '}';
+        return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
     }
 }
