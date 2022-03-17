@@ -23,14 +23,6 @@ public class ScoreController {
         return repository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Score> getById(@PathVariable("id") long id) {
-        if (id < 0 || !repository.existsById(id)) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(repository.getById(id));
-    }
-
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
     }
