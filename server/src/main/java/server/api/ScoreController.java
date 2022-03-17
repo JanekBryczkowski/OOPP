@@ -3,7 +3,6 @@ package server.api;
 import commons.Scores;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.Main;
 import server.database.UserScoreRepository;
 
 import java.util.List;
