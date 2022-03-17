@@ -1,13 +1,9 @@
 package server.api;
 
-import commons.Activity;
-import commons.Question;
 import commons.Score;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.UserScoreRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
