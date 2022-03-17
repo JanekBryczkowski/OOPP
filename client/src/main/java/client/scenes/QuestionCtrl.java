@@ -80,7 +80,7 @@ public class QuestionCtrl {
 
     //Every new round, a new timer and new timertask have to be instantiated
     public void instantiateTimer() {
-//        secondsPassed[0] = 10;
+        secondsPassed[0] = 10;
         myTimer = new Timer();
         task = new TimerTask() {
             @Override
@@ -92,6 +92,7 @@ public class QuestionCtrl {
                     secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
                 else {
                     if(oneActivityAnchorPane.isVisible()) {
+                        myTimer.cancel();
                         revealAnswersOneActivities(Integer.MIN_VALUE);
                     }
                     if(threeActivitiesAnchorPane.isVisible()) {
@@ -251,6 +252,7 @@ public class QuestionCtrl {
     }
 
     public void revealAnswersOneActivities(int answerGiven) {
+
         answerGivenActivityOne.setDisable(true);
         answerOneInput.setEditable(false);
         myTimer.cancel();

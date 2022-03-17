@@ -54,7 +54,9 @@ public class ScoresTest {
 
     @Test
     public void hasToString() {
-        Scores scores = new Scores("abc", 123);
-        assertEquals("Scores{username='abc', score=123}", scores.toString());
+        String actual = new Scores("a", 2).toString();
+        assertTrue(actual.contains(Scores.class.getSimpleName()));
+        assertTrue(actual.contains("a"));
+        assertTrue(actual.contains("2"));
     }
 }
