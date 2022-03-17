@@ -45,7 +45,7 @@ public class Question {
         if (this.activityList.size() == 1) {
             correctAnswer = this.activityList.get(0).consumption;
         } else if (this.activityList.size() == 2) {
-            correctAnswer = findRatio(this.activityList);
+            correctAnswer = findRatio();
         } else if (this.activityList.size() == 3) {
             correctAnswer = findSmallest(this.activityList);
         } else {
@@ -74,14 +74,10 @@ public class Question {
                 index = i;
             }
         }
-        return index;
+        return index + 1;
     }
 
-    private int findRatio(List<Activity> list) {
-        if (list.get(0).consumption > list.get(1).consumption) {
-            return list.get(0).consumption / list.get(1).consumption;
-        } else {
-            return list.get(1).consumption / list.get(0).consumption;
-        }
+    private int findRatio() {
+        return (int) (Math.random() * 3 + 1);
     }
 }

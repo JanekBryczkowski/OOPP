@@ -37,10 +37,17 @@ public class QuestionController {
         Question question = new Question();
         List<Activity> currentList = new ArrayList<>();
         int counter = (int) (Math.random() * 3 + 1);
-        for (int i = 0; i < counter; i++) currentList.addAll(repo.getThreeRandom());
+        counter = 1;
+        while (counter > 0) {
+            List<Activity> random = repo.getThreeRandom();
+            if (!currentList.contains(random.get(0))) {
+                currentList.addAll(random);
+                counter--;
+            }
+        }
         question.activityList.addAll(currentList);
         return question;
-}
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getById(@PathVariable("id") long id) {

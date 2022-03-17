@@ -89,7 +89,7 @@ public class QuestionCtrl {
 
     //Every new round, a new timer and new timertask have to be instantiated
     public void instantiateTimer() {
-//        secondsPassed[0] = 10;
+        secondsPassed[0] = 10;
         myTimer = new Timer();
         task = new TimerTask() {
             @Override
@@ -119,10 +119,11 @@ public class QuestionCtrl {
     A question is given as input and this question is displayed on the screen.
      */
     public void startThreeActivityQuestion(Question question) {
-        List<Activity> activityList = question.activityList;
         answerOne.setText(question.activityList.get(0).title);
         answerTwo.setText(question.activityList.get(1).title);
         answerThree.setText(question.activityList.get(2).title);
+        questionText.setText("Which of these activities takes more energy?");
+        questionText.setStyle("-fx-font-size: 47;");
         question.setCorrectAnswer();
         this.correctAnswer = question.correctAnswer;
 
@@ -130,6 +131,7 @@ public class QuestionCtrl {
 
         hideSoloPlayerElements();
 
+        jokerTwo.setText("Eliminate one wrong answer");
         instantiateTimer();
 
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
@@ -142,9 +144,30 @@ public class QuestionCtrl {
         question.setCorrectAnswer();
         this.correctAnswer = question.correctAnswer;
 
-        answerOne.setText(String.valueOf(correctAnswer));
-        answerTwo.setText(String.valueOf((int) (correctAnswer * (Math.random() * 39 + 1) / 100)));
-        answerThree.setText(String.valueOf((int) (correctAnswer * (Math.random() * 39 + 1) / 100)));
+        String finalAnswerString;
+        int finalAnswerInteger;
+        if (firstActivityConsumption > secondActivityConsumption) {
+            finalAnswerInteger = firstActivityConsumption / secondActivityConsumption;
+        } else {
+            finalAnswerInteger = secondActivityConsumption / firstActivityConsumption;
+        }
+        finalAnswerString = String.valueOf(finalAnswerInteger);
+
+        jokerTwo.setText("Eliminate one wrong answer");
+
+        if (correctAnswer == 1) {
+            answerOne.setText(finalAnswerString);
+            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+        } else if (correctAnswer == 2) {
+            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerTwo.setText(finalAnswerString);
+            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+        } else if (correctAnswer == 3) {
+            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerThree.setText(finalAnswerString);
+        }
 
         enableButtons();
 
@@ -160,8 +183,9 @@ public class QuestionCtrl {
         answerGivenActivityOne.setDisable(false);
         answerOneInput.setText("");
         answerOneInput.setEditable(true);
-        List<Activity> activityList = question.activityList;
-        questionText.setText(question.activityList.get(0).title);
+        questionText.setText("How much does it take: " + question.activityList.get(0).title + "?");
+        questionText.setStyle("-fx-font-size: 37;");
+
         question.setCorrectAnswer();
         this.correctAnswer = question.correctAnswer;
         round.setText(String.valueOf(correctAnswer));
@@ -226,21 +250,21 @@ public class QuestionCtrl {
     //Function for when the player answers one
     public void answerOneGiven() {
         myTimer.cancel();
-        revealAnswersThreeActivities(answerOnePane, 0);
+        revealAnswersThreeActivities(answerOnePane, 1);
         disableButtons();
     }
 
     //Function for when the player answers two
     public void answerTwoGiven() {
         myTimer.cancel();
-        revealAnswersThreeActivities(answerTwoPane, 1);
+        revealAnswersThreeActivities(answerTwoPane, 2);
         disableButtons();
     }
 
     //Function for when the player answers three
     public void answerThreeGiven() {
         myTimer.cancel();
-        revealAnswersThreeActivities(answerThreePane, 2);
+        revealAnswersThreeActivities(answerThreePane, 3);
         disableButtons();
     }
 
@@ -265,27 +289,26 @@ public class QuestionCtrl {
     It adds points and calls the newQuestion function
      */
     public void revealAnswersThreeActivities(Pane clicked, int click) {
-        int xd = 1;
-        switch (xd) {
-            case (0):
+        switch (correctAnswer) {
+            case (1):
                 answerOnePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
                 //answerOnePane.setBorder(new Border(new BorderStroke(Color.GREEN,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
                 break;
-            case (1):
+            case (2):
                 answerTwoPane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
                 //answerTwoPane.setBorder(new Border(new BorderStroke(Color.ORANGE,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
                 break;
-            case (2):
+            case (3):
                 answerThreePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
                 //answerThreePane.setBorder(new Border(new BorderStroke(Color.ORANGE,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
                 break;
             default:
                 break;
         }
-        if (correctAnswer != click && !(click > 2)) {
+        if (correctAnswer != click && !(click > 3)) {
             clicked.setStyle("-fx-border-color: red; -fx-border-width: 5; -fx-border-radius: 20;");
             //clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
-        } else if (correctAnswer == click && !(click > 2)) {
+        } else if (correctAnswer == click && !(click > 3)) {
             mainCtrl.points += (jokerOneActive * 100);
         }
 
@@ -314,7 +337,7 @@ public class QuestionCtrl {
         if (answerGiven == correctAnswer) {
             mainCtrl.points += (jokerOneActive * 100);
             answerOneInput.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
-        } else if (answerGiven > lowerBoundaryNumber && answerGiven < upperBoundaryNumber){
+        } else if (answerGiven > lowerBoundaryNumber && answerGiven < upperBoundaryNumber) {
             mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
             answerOneInput.setBorder(new Border(new BorderStroke(Color.ORANGE, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else {
@@ -389,21 +412,23 @@ public class QuestionCtrl {
                 //jokerThree.setDisable(true);
                 GameCtrl.secondJokerUsed = true;
             } else if (threeActivitiesAnchorPane.isVisible()) {
-                Random random = new Random();
-                int i = random.nextInt(2) + 1;
-                int disable = (correctAnswer + i) % 3;
-                switch (disable) {
-                    case (0):
+                int random = correctAnswer;
+                while (random == correctAnswer) {
+                    random = (int) (Math.random() * 3 + 1);
+                }
+
+                switch (random) {
+                    case (1):
                         answerOnePane.setDisable(true);
                         answerOnePane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
                         //answerOnePane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
                         break;
-                    case (1):
+                    case (2):
                         answerTwoPane.setDisable(true);
                         answerTwoPane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
                         //answerTwoPane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
                         break;
-                    case (2):
+                    case (3):
                         answerThreePane.setDisable(true);
                         answerThreePane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
                         //answerThreePane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
@@ -428,12 +453,12 @@ public class QuestionCtrl {
         threeActivitiesAnchorPane.setVisible(false);
     }
 
-    public void setThreeActivities() {
+    public void setTwoActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }
 
-    public void setTwoActivities() {
+    public void setThreeActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }

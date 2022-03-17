@@ -68,7 +68,7 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="threeActivitiesAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" visible="false">
+      <AnchorPane fx:id="threeActivitiesAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0">
          <children>
             <Pane fx:id="answerOnePane" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" onMouseClicked="#answerOneGiven" prefHeight="107.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_1">
                <children>
@@ -82,19 +82,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane fx:id="answerThreePane" layoutY="139.5" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" onMouseClicked="#answerThreeGiven" prefHeight="107.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_3">
-               <children>
-                  <Label fx:id="answerThree" alignment="CENTER" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" prefHeight="107.0" prefWidth="400.0" text="Label" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </Pane>
-            <Pane fx:id="answerTwoPane" layoutY="279.0" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" onMouseClicked="#answerTwoGiven" prefHeight="107.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_2">
+            <Pane fx:id="answerTwoPane" layoutY="139.5" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" onMouseClicked="#answerTwoGiven" prefHeight="107.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_3">
                <children>
                   <Label fx:id="answerTwo" alignment="CENTER" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" prefHeight="107.0" prefWidth="400.0" text="Label" textAlignment="CENTER" wrapText="true">
                      <font>
@@ -106,9 +94,21 @@
                   </Label>
                </children>
             </Pane>
+            <Pane fx:id="answerThreePane" layoutY="279.0" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" onMouseClicked="#answerThreeGiven" prefHeight="107.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_2">
+               <children>
+                  <Label fx:id="answerThree" alignment="CENTER" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" prefHeight="107.0" prefWidth="400.0" text="Label" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="oneActivityAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" style="-fx-background-color: #F6FFD3; -fx-background-radius: 20;">
+      <AnchorPane fx:id="oneActivityAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" style="-fx-background-color: #F6FFD3; -fx-background-radius: 20;" visible="false">
          <children>
             <Label fx:id="answerOne1" alignment="CENTER" maxHeight="80.0" maxWidth="400.0" minHeight="80.0" minWidth="400.0" prefHeight="80.0" prefWidth="400.0" style="-fx-border-color: gray; -fx-border-width: 0 0 2 0;" text="Enter you answer below">
                <font>
