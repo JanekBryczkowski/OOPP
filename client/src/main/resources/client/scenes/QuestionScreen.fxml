@@ -11,11 +11,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #D2EC7E;" styleClass="background" stylesheets="@../../client.styles/QuestionScreenStyles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuestionCtrl">
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #D2EC7E;" styleClass="background" stylesheets="@../../client.styles/QuestionScreenStyles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuestionCtrl">
    <children>
       <ImageView fitHeight="386.0" fitWidth="683.0" focusTraversable="true" layoutX="65.0" layoutY="296.0" pickOnBounds="true">
          <image>
-            <Image url="@../../client.images/shower.jpg" />
+            <Image url="@/client.images/shower.jpg" />
          </image>
       </ImageView>
       <Label fx:id="questionText" alignment="CENTER" layoutX="179.0" layoutY="16.0" maxHeight="183.0" maxWidth="815.0" minHeight="183.0" minWidth="787.0" prefHeight="183.0" prefWidth="787.0" text="Which of these activities takes more energy?" textAlignment="CENTER" wrapText="true">
@@ -43,24 +43,24 @@
          </font></Button>
       <ImageView fx:id="emojiOne" fitHeight="72.0" fitWidth="72.0" layoutX="14.0" layoutY="703.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/emojiOne.png" />
+            <Image url="@/client.images/emojiOne.png" />
          </image>
       </ImageView>
       <ImageView fx:id="emojiTwo" fitHeight="72.0" fitWidth="72.0" layoutX="100.0" layoutY="703.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/emojiThree.png" />
+            <Image url="@/client.images/emojiTwo.png" />
          </image>
       </ImageView>
       <ImageView fx:id="emojiThree" fitHeight="72.0" fitWidth="72.0" layoutX="186.0" layoutY="703.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/emojiTwo.png" />
+            <Image url="@/client.images/emojiThree.png" />
          </image>
       </ImageView>
       <Text fx:id="round" layoutX="1182.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text fx:id="secondsLeft" layoutX="740.0" layoutY="733.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="RIGHT" wrappingWidth="453.3333129882813" />
       <ImageView fitHeight="124.0" fitWidth="100.0" layoutX="65.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/earthLogo.png" />
+            <Image url="@/client.images/earthLogo.png" />
          </image>
       </ImageView>
       <Button fx:id="jokerOne" layoutX="348.0" layoutY="199.0" maxHeight="65.0" maxWidth="400.0" minHeight="65.0" minWidth="400.0" mnemonicParsing="false" onAction="#jokerOne" prefHeight="65.0" prefWidth="400.0" styleClass="joker_button" text="Double Points" textFill="WHITE">
