@@ -139,11 +139,14 @@ public class GameCtrl {
         checkJokers(questionCtrl);
     }
 
-    //Function for showing the leaderboard
+    //Function for storing the user and their points in the database and
+    //loading the leaderboard scene
     public void showLeaderBoard() {
-        leaderBoardCtrl.setLeaderBoard();
+        leaderBoardCtrl.storePoints();
+//        leaderBoardCtrl.setLeaderBoard();
         primaryStage.setScene(leaderBoard);
     }
+
 
     public void checkJokers(QuestionCtrl questionCtrl) {
         if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
