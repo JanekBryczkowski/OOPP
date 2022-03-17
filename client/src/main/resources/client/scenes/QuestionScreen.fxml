@@ -68,7 +68,7 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="threeActivitiesAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0">
+      <AnchorPane fx:id="threeActivitiesAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" visible="false">
          <children>
             <Pane fx:id="answerOnePane" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" onMouseClicked="#answerOneGiven" prefHeight="107.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_1">
                <children>
@@ -108,7 +108,7 @@
             </Pane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="oneActivityAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" style="-fx-background-color: #F6FFD3; -fx-background-radius: 20;" visible="false">
+      <AnchorPane fx:id="oneActivityAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" style="-fx-background-color: #F6FFD3; -fx-background-radius: 20;">
          <children>
             <Label fx:id="answerOne1" alignment="CENTER" maxHeight="80.0" maxWidth="400.0" minHeight="80.0" minWidth="400.0" prefHeight="80.0" prefWidth="400.0" style="-fx-border-color: gray; -fx-border-width: 0 0 2 0;" text="Enter you answer below">
                <font>
@@ -120,7 +120,7 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <TextField fx:id="answerOneInput" layoutX="7.0" layoutY="113.0" maxHeight="80.0" maxWidth="300.0" minHeight="80.0" minWidth="300.0" prefHeight="80.0" prefWidth="300.0" promptText="Enter your answer" styleClass="nameTextField">
+            <TextField fx:id="answerOneInput" layoutX="7.0" layoutY="113.0" maxHeight="80.0" maxWidth="300.0" minHeight="80.0" minWidth="300.0" onInputMethodTextChanged="#validateInput" onKeyTyped="#validateInput" prefHeight="80.0" prefWidth="300.0" promptText="Enter your answer" styleClass="nameTextField">
                <font>
                   <Font size="32.0" />
                </font>

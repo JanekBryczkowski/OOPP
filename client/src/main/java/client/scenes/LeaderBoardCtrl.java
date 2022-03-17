@@ -30,6 +30,8 @@ public class LeaderBoardCtrl {
     public void backToSplash() {
         gameCtrl.points = 0;
         gameCtrl.round = 1;
+        GameCtrl.firstJokerUsed = false;
+        GameCtrl.secondJokerUsed = false;
         gameCtrl.showSplashScreen();
     }
 

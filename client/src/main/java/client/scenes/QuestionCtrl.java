@@ -6,6 +6,8 @@ import com.google.inject.Stage;
 import commons.Activity;
 import commons.Question;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +27,7 @@ public class QuestionCtrl {
 
     public int correctAnswer;
     public int jokerOneActive = 1; //double points
-    final int[] secondsPassed = {10};
+    final int[] secondsPassed = {15};
     Timer myTimer;
     TimerTask task;
 
@@ -87,9 +89,15 @@ public class QuestionCtrl {
         this.mainCtrl = mainCtrl;
     }
 
+    private int checkNumberOfCharacters(String string) {
+        char[] characters = string.toCharArray();
+
+        return characters.length;
+    }
+
     //Every new round, a new timer and new timertask have to be instantiated
     public void instantiateTimer() {
-        secondsPassed[0] = 10;
+        secondsPassed[0] = 15;
         myTimer = new Timer();
         task = new TimerTask() {
             @Override
@@ -109,7 +117,6 @@ public class QuestionCtrl {
                         revealAnswersThreeActivities(null, 4);
                     }
                 }
-
             }
         };
     }
@@ -138,7 +145,6 @@ public class QuestionCtrl {
     }
 
     public void startTwoActivityQuestion(Question question) {
-        List<Activity> activityList = question.activityList;
         int firstActivityConsumption = question.activityList.get(0).consumption;
         int secondActivityConsumption = question.activityList.get(1).consumption;
         question.setCorrectAnswer();
@@ -148,8 +154,14 @@ public class QuestionCtrl {
         int finalAnswerInteger;
         if (firstActivityConsumption > secondActivityConsumption) {
             finalAnswerInteger = firstActivityConsumption / secondActivityConsumption;
+            questionText.setText("How much more energy does (" + question.activityList.get(0).title +
+                    ") take comparing to (" + question.activityList.get(1).title + ")?");
+            questionText.setStyle("-fx-font-size: 30;");
         } else {
             finalAnswerInteger = secondActivityConsumption / firstActivityConsumption;
+            questionText.setText("How much more energy does (" + question.activityList.get(1).title +
+                    ") take comparing to (" + question.activityList.get(0).title + ")?");
+            questionText.setStyle("-fx-font-size: 30;");
         }
         finalAnswerString = String.valueOf(finalAnswerInteger);
 
@@ -216,7 +228,6 @@ public class QuestionCtrl {
 
     //This functions starts the timer. When the timer finishes, the answers are revealed
     public void startTimer() {
-
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
@@ -289,6 +300,8 @@ public class QuestionCtrl {
     It adds points and calls the newQuestion function
      */
     public void revealAnswersThreeActivities(Pane clicked, int click) {
+        jokerOne.setDisable(true);
+        jokerTwo.setDisable(true);
         switch (correctAnswer) {
             case (1):
                 answerOnePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
@@ -309,7 +322,9 @@ public class QuestionCtrl {
             clicked.setStyle("-fx-border-color: red; -fx-border-width: 5; -fx-border-radius: 20;");
             //clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
         } else if (correctAnswer == click && !(click > 3)) {
+            System.out.println(mainCtrl.points);
             mainCtrl.points += (jokerOneActive * 100);
+            System.out.println(mainCtrl.points);
         }
 
         points.setText(mainCtrl.points + " points");
@@ -322,6 +337,8 @@ public class QuestionCtrl {
     }*/
 
     public void revealAnswersOneActivities() {
+        jokerOne.setDisable(true);
+        jokerTwo.setDisable(true);
         int answerGiven;
         String input = answerOneInput.getText();
         if (input.equals("") || input == null) {
@@ -359,14 +376,14 @@ public class QuestionCtrl {
                 Platform.runLater(() -> {
                     removeBorders();
                     round.setText("round " + ++mainCtrl.round);
-                    if (mainCtrl.round > 5) {
+                    if (mainCtrl.round > 10) {
                         mainCtrl.showLeaderBoard();
                     } else {
                         mainCtrl.SoloGameRound();
                     }
                 });
             }
-        }, 5000);
+        }, 1000);
     }
 
     //This function returns to the splash screen (for when a user clicks 'back')
@@ -378,6 +395,13 @@ public class QuestionCtrl {
         GameCtrl.secondJokerUsed = false;
         jokerOne.setStyle("-fx-border-width: 0");
         jokerTwo.setStyle("-fx-border-width: 0");
+        jokerOne.setDisable(false);
+        jokerTwo.setDisable(false);
+        answerOnePane.setStyle("-fx-border-width: 0;");
+        answerTwoPane.setStyle("-fx-border-width: 0;");
+        answerThreePane.setStyle("-fx-border-width: 0;");
+        myTimer.cancel();
+        points.setText("0 points");
         mainCtrl.showSplashScreen();
     }
 
@@ -473,5 +497,27 @@ public class QuestionCtrl {
             double percentage = ((double) (upperBoundaryNumber - givenAnswer) / (double) (upperBoundaryNumber - correctAnswer));
             return (int) (percentage * 100);
         }
+    }
+
+    public void resetJokers() {
+        jokerOne.setStyle("-fx-border-width: 0");
+        jokerTwo.setStyle("-fx-border-width: 0");
+    }
+
+    public void resetPoints() {
+        points.setText("0 points");
+    }
+
+    public void validateInput() {
+        answerOneInput.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    answerOneInput.setText(newValue.replaceAll("[^\\d]", ""));
+                } else {
+                    answerOneInput.setText(newValue);
+                }
+            }
+        });
     }
 }

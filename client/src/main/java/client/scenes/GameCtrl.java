@@ -82,7 +82,8 @@ public class GameCtrl {
     //This function is for showing the gamescreen
     public void SoloGameRound() {
         //Plays 5 rounds
-        if (round > 5) {
+        if (round > 10) {
+            questionCtrl.resetPoints();
             showLeaderBoard();
         } else {
             Question question = splashScreenCtrl.getRandomQuestion();
@@ -93,7 +94,6 @@ public class GameCtrl {
                     break;
                 }
                 case (2): {
-                    System.out.println("TWO");
                     twoActivityQuestion(question);
                     break;
                 }
@@ -141,6 +141,8 @@ public class GameCtrl {
 
     //Function for showing the leaderboard
     public void showLeaderBoard() {
+        questionCtrl.resetPoints();
+        questionCtrl.resetJokers();
         leaderBoardCtrl.setLeaderBoard();
         primaryStage.setScene(leaderBoard);
     }
