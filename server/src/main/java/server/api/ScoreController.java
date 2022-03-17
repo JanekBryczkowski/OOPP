@@ -1,6 +1,6 @@
 package server.api;
 
-import commons.Scores;
+import commons.Score;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.UserScoreRepository;
@@ -19,18 +19,30 @@ public class ScoreController {
     }
 
     @GetMapping("/")
-    public List<Scores> getScores(){
+    public List<Score> getScores(){
         return repository.findAll();
     }
 
-    @PostMapping(path = {"/" , " "})
-    public ResponseEntity<Scores> add(@RequestBody Scores scores) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Score> getById(@PathVariable("id") long id) {
+        if (id < 0 || !repository.existsById(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(repository.getById(id));
+    }
 
-        if (scores == null) {
+    private static boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty();
+    }
+
+    @PostMapping(path = {"/" , " "})
+    public ResponseEntity<Score> add(@RequestBody Score score) {
+
+        if (score == null || isNullOrEmpty(score.username)) {
             return ResponseEntity.badRequest().build();
         }
 
-        Scores saved = repository.save(scores);
+        Score saved = repository.save(score);
         return ResponseEntity.ok(saved);
     }
 
