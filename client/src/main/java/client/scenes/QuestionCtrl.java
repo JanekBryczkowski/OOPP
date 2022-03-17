@@ -89,7 +89,7 @@ public class QuestionCtrl {
 
     //Every new round, a new timer and new timertask have to be instantiated
     public void instantiateTimer() {
-        secondsPassed[0] = 10;
+//        secondsPassed[0] = 10;
         myTimer = new Timer();
         task = new TimerTask() {
             @Override
