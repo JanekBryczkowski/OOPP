@@ -76,7 +76,8 @@ public class QuestionCtrl {
     @FXML
     private Text upperBoundary;
 
-    double random;
+    double randomLower;
+    double randomUpper;
     int lowerBoundaryNumber;
     int upperBoundaryNumber;
 
@@ -157,14 +158,16 @@ public class QuestionCtrl {
     }
 
     private void setUpTheBoundaries() {
-        random = (Math.random() * 39 + 1) / 100;
-        lowerBoundaryNumber = correctAnswer - (int) (correctAnswer * random);
-        upperBoundaryNumber = correctAnswer + (int) (correctAnswer * random);
+        randomLower = (Math.random() * 39 + 1) / 100;
+        randomUpper = (Math.random() * 39 + 1) / 100;
+        lowerBoundaryNumber = correctAnswer - (int) (correctAnswer * randomLower);
+        upperBoundaryNumber = correctAnswer + (int) (correctAnswer * randomUpper);
         lowerBoundary.setText(String.valueOf(lowerBoundaryNumber));
         upperBoundary.setText(String.valueOf(upperBoundaryNumber));
 
         System.out.println("correct: " + correctAnswer);
-        System.out.println("random: " + random);
+        System.out.println("random lower: " + randomLower);
+        System.out.println("random upper: " + randomUpper);
         System.out.println("lower: " + lowerBoundaryNumber);
         System.out.println("upper: " + upperBoundaryNumber);
     }
@@ -293,6 +296,9 @@ public class QuestionCtrl {
         if (answerGiven == correctAnswer) {
             mainCtrl.points += (jokerOneActive * 100);
             answerOneInput.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
+        } else if (answerGiven > lowerBoundaryNumber && answerGiven < upperBoundaryNumber){
+            mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
+            answerOneInput.setBorder(new Border(new BorderStroke(Color.ORANGE, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else {
             mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
             answerOneInput.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
