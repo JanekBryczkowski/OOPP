@@ -38,6 +38,9 @@ public class GameCtrl {
     private LeaderBoardCtrl leaderBoardCtrl;
     private Scene leaderBoard;
 
+    private WaitingRoomCtrl waitingRoomCtrl;
+    private Scene waitingRoom;
+
     private ServerUtils server;
 
     public int points = 0;
@@ -47,7 +50,7 @@ public class GameCtrl {
     public static boolean firstJokerUsed = false;
     public static boolean secondJokerUsed = false;
 
-    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splash.getKey();
@@ -58,6 +61,9 @@ public class GameCtrl {
 
         this.leaderBoardCtrl = leaderBoardCtrl.getKey();
         this.leaderBoard = new Scene(leaderBoardCtrl.getValue());
+
+        this.waitingRoomCtrl = waitingRoomCtrl.getKey();
+        this.waitingRoom = new Scene(waitingRoomCtrl.getValue());
 
         showSplashScreen();
         primaryStage.show();
@@ -134,6 +140,11 @@ public class GameCtrl {
         questionCtrl.setThreeActivities();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
         checkJokers(questionCtrl);
+    }
+
+    public void startMultiPlayer() {
+        primaryStage.setTitle("Waiting Room");
+        primaryStage.setScene(waitingRoom);
     }
 
     //Function for showing the leaderboard

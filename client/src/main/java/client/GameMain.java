@@ -48,6 +48,7 @@ public class GameMain extends Application {
         var splash = FXML.load(SplashScreenCtrl.class, "client", "scenes", "SplashScreen.fxml");
         var gameThreeScreen = FXML.load(QuestionCtrl.class, "client", "scenes", "QuestionScreen.fxml");
         var leaderBoard = FXML.load(LeaderBoardCtrl.class, "client", "scenes", "LeaderBoardScreen.fxml");
+        var waitingRoom = FXML.load(WaitingRoomCtrl.class, "client", "scenes", "WaitingRoom.fxml");
 
 //        var gameScreen = FXML.load(getClass().getResource("SplashScreen.fxml"))
 
@@ -73,6 +74,6 @@ public class GameMain extends Application {
 
 
         var gameCtrl = INJECTOR.getInstance(GameCtrl.class);
-        gameCtrl.initialize(primaryStage, splash, gameThreeScreen, leaderBoard);
+        gameCtrl.initialize(primaryStage, splash, gameThreeScreen, leaderBoard, waitingRoom);
     }
 }

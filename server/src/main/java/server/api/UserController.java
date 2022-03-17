@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import server.mainGame;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -17,15 +18,15 @@ public class UserController {
     }
 
 
-        @PostMapping(path = { "", "/" })
-        public User postUser(@RequestBody User user) {
-                return main.addUser(user);
-        }
+    @PostMapping(path = { "", "/" })
+    public User postUserToOpenLobby(@RequestBody User user) {
+            return main.getOpenLobby().addUser(user);
+    }
 
-        @GetMapping
-        public ArrayList<User> getUser() {
-            return main.getUsers();
-        }
+    @GetMapping(path = { "", "/" })
+    public List<User> getUsersOfOpenLobby() {
+        return (List<User>) main.getOpenLobby().getUserList();
+    }
 
 
 //    @GetMapping("/")

@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.List;
 
 import commons.Question;
+import commons.User;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
@@ -69,5 +70,16 @@ public class ServerUtils {
                             .get(new GenericType<Question>() {
                             });
         }
+
+    public User addUser(User user) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(user, APPLICATION_JSON), User.class);
+    }
+
+
+
     }
 

@@ -298,6 +298,7 @@ public class QuestionCtrl {
         jokerOne.setStyle("-fx-border-width: 0");
         jokerTwo.setStyle("-fx-border-width: 0");
         mainCtrl.showSplashScreen();
+        myTimer.cancel();
     }
 
     //Function for when joker one is pressed
