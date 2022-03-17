@@ -82,7 +82,7 @@ public class GameCtrl {
     //This function is for showing the gamescreen
     public void SoloGameRound() {
         //Plays 5 rounds
-        if (round > 10) {
+        if (round > 5) {
             showLeaderBoard();
         } else {
             Question question = splashScreenCtrl.getRandomQuestion();

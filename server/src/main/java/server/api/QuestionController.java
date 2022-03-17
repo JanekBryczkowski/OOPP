@@ -37,6 +37,7 @@ public class QuestionController {
         Question question = new Question();
         List<Activity> currentList = new ArrayList<>();
         int counter = (int) (Math.random() * 3 + 1);
+        counter = 1;
         while (counter > 0) {
             List<Activity> random = repo.getThreeRandom();
             if (!currentList.contains(random.get(0))) {

@@ -119,15 +119,13 @@ public class QuestionCtrl {
     A question is given as input and this question is displayed on the screen.
      */
     public void startThreeActivityQuestion(Question question) {
-        List<Activity> activityList = question.activityList;
         answerOne.setText(question.activityList.get(0).title);
         answerTwo.setText(question.activityList.get(1).title);
         answerThree.setText(question.activityList.get(2).title);
+        questionText.setText("Which of these activities takes more energy?");
+        questionText.setStyle("-fx-font-size: 47;");
         question.setCorrectAnswer();
         this.correctAnswer = question.correctAnswer;
-        System.out.println("////////////////////");
-        System.out.println(correctAnswer);
-        System.out.println("////////////////////");
 
         enableButtons();
 
@@ -185,8 +183,9 @@ public class QuestionCtrl {
         answerGivenActivityOne.setDisable(false);
         answerOneInput.setText("");
         answerOneInput.setEditable(true);
-        List<Activity> activityList = question.activityList;
-        questionText.setText(question.activityList.get(0).title);
+        questionText.setText("How much does it take: " + question.activityList.get(0).title + "?");
+        questionText.setStyle("-fx-font-size: 37;");
+
         question.setCorrectAnswer();
         this.correctAnswer = question.correctAnswer;
         round.setText(String.valueOf(correctAnswer));
@@ -454,12 +453,12 @@ public class QuestionCtrl {
         threeActivitiesAnchorPane.setVisible(false);
     }
 
-    public void setThreeActivities() {
+    public void setTwoActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }
 
-    public void setTwoActivities() {
+    public void setThreeActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }
