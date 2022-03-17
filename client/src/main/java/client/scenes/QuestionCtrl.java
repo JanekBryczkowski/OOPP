@@ -3,7 +3,6 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Stage;
-import commons.Activity;
 import commons.Question;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
