@@ -433,6 +433,11 @@ public class QuestionCtrl {
         threeActivitiesAnchorPane.setVisible(true);
     }
 
+    public void setTwoActivities() {
+        oneActivityAnchorPane.setVisible(false);
+        threeActivitiesAnchorPane.setVisible(true);
+    }
+
     public int calculatePointsForOpenAnswer(int correctAnswer, int givenAnswer) {
         if (givenAnswer < lowerBoundaryNumber || givenAnswer > upperBoundaryNumber) {
             return 0;
