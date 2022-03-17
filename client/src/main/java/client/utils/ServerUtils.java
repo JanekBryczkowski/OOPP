@@ -71,16 +71,15 @@ public class ServerUtils {
                             });
         }
 
-    public Score getScores() {
+    public List<Score> getScores() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/scores/getScores") //
+                .target(SERVER).path("api/scores/getTopScores") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<Score>() {
-                });
+                .get(new GenericType<List<Score>>() {});
     }
 
-    public Score addScores(Score score) {
+    public Score addScore(Score score) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/scores/") //
                 .request(APPLICATION_JSON) //
@@ -88,6 +87,5 @@ public class ServerUtils {
                 .post(Entity.entity(score, APPLICATION_JSON), Score.class);
     }
 
-
-    }
+}
 
