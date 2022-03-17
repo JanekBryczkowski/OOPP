@@ -3,9 +3,12 @@ package server.api;
 import commons.Scores;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.Main;
 import server.database.UserScoreRepository;
 
 import java.util.List;
+
+import static java.lang.System.*;
 
 
 @RestController
@@ -21,6 +24,11 @@ public class ScoreController {
     @GetMapping("/")
     public List<Scores> getScores(){
         return repository.findAll();
+    }
+
+    @GetMapping("/restart")
+    public static void restartServer() {
+        exit(0);
     }
 
     @PostMapping(path = {"/" , " "})
