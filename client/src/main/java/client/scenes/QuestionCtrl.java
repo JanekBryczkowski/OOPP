@@ -134,8 +134,8 @@ public class QuestionCtrl {
         this.correctAnswer = question.correctAnswer;
 
         answerOne.setText(String.valueOf(correctAnswer));
-        answerTwo.setText(String.valueOf((int) (correctAnswer * Math.random())));
-        answerThree.setText(String.valueOf((int) (correctAnswer * Math.random())));
+        answerTwo.setText(String.valueOf((int) (correctAnswer * (Math.random() * 39 + 1) / 100)));
+        answerThree.setText(String.valueOf((int) (correctAnswer * (Math.random() * 39 + 1) / 100)));
 
         enableButtons();
 
