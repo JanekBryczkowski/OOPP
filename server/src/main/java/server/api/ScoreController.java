@@ -23,18 +23,14 @@ public class ScoreController {
         return repository.findAll();
     }
 
-    private static boolean isNullOrEmpty(String s) {
-        return s == null || s.isEmpty();
-    }
+    @PostMapping(path = {"/" , " "})
+    public ResponseEntity<Scores> add(@RequestBody Scores scores) {
 
-    @PostMapping(path = {"", "/"})
-    public ResponseEntity<Scores> add(@RequestBody Scores score) {
-
-        if (score == null || isNullOrEmpty(score.username)) {
+        if (scores == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        Scores saved = repository.save(score);
+        Scores saved = repository.save(scores);
         return ResponseEntity.ok(saved);
     }
 

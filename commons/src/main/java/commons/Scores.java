@@ -1,15 +1,10 @@
 package commons;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
+import java.util.Objects;
 
 @Entity
 public class Scores{
@@ -20,10 +15,6 @@ public class Scores{
 
     public String username;
     public int score;
-
-    private Scores() {
-
-    }
 
     public Scores(String username, int score) {
         this.username = username;
@@ -39,17 +30,23 @@ public class Scores{
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Scores scores = (Scores) o;
+        return score == scores.score && Objects.equals(username, scores.username);
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return Objects.hash(username, score);
     }
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+        return "Scores{" +
+                "username='" + username + '\'' +
+                ", score=" + score +
+                '}';
     }
 }
