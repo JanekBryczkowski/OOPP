@@ -83,11 +83,11 @@
 }
 
 .nameTextField {
-    -fx-background-color: #ADC364;
+    -fx-background-color: #E0E8BE;
     -fx-background-radius: 36;
     -fx-border-radius: 36;
     -fx-border-color: #8D8888;
-    -fx-text-fill: #FFFFFF;
-    -fx-prompt-text-fill: #FFFFFF;
-    -fx-accent: #87994D;
+    -fx-text-fill: #000000;
+    -fx-prompt-text-fill: #000000;
+    -fx-accent: #C7CFA9;
 }

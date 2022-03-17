@@ -81,19 +81,14 @@ public class GameCtrl {
 
     //This function is for showing the gamescreen
     public void SoloGameRound() {
-        System.out.println("Xd 3");
         //Plays 5 rounds
         if (round > 5) {
-            System.out.println("Xd 4");
             showLeaderBoard();
         } else {
-            System.out.println("Xd 5");
             Question question = splashScreenCtrl.getRandomQuestion();
             System.out.println("size" + question.activityList.size());
-//            int xd = 3; //JUST FOR TESTING PURPOSES. IF 1, THEN 1 ACTIVITY, IF 3 THEN 3 ACTIVITIES
             switch (question.activityList.size()) {
                 case (1): {
-                    System.out.println("Xd 6");
                     oneActivityQuestion(question);
                     break;
                 }
@@ -103,12 +98,10 @@ public class GameCtrl {
                     break;
                 }
                 case (3): {
-                    System.out.println("Xd 8");
                     threeActivityQuestion(question);
                     break;
                 }
                 default: {
-                    System.out.println("Xd 9");
                     threeActivityQuestion(question);
                     break;
                 }
