@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserScoreRepository extends JpaRepository<Scores, Long> {
 
-    @Query(value = "SELECT * FROM Scores ORDER BY DESC", nativeQuery = true)
-    List<Scores> getThreeRandom();
+//    @Query(value = "SELECT * FROM Scores ORDER BY DESC", nativeQuery = true)
+//    List<Scores>;
 
 }
