@@ -6,6 +6,7 @@ import server.database.QuestionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,9 +35,12 @@ public class QuestionController {
     @GetMapping("/getQuestion")
     public Question getActivities() {
         Question question = new Question();
-        question.activityList = repo.getThreeRandom();
+        List<Activity> currentList = new ArrayList<>();
+        int counter = (int) (Math.random() * 3 + 1);
+        for (int i = 0; i < counter; i++) currentList.addAll(repo.getThreeRandom());
+        question.activityList.addAll(currentList);
         return question;
-    }
+}
 
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getById(@PathVariable("id") long id) {
@@ -50,10 +54,10 @@ public class QuestionController {
         return s == null || s.isEmpty();
     }
 
-    @PostMapping(path = { "", "/" })
+    @PostMapping(path = {"", "/"})
     public ResponseEntity<Activity> add(@RequestBody Activity activity) {
 
-        if (activity ==null || isNullOrEmpty(activity.title)) {
+        if (activity == null || isNullOrEmpty(activity.title)) {
             return ResponseEntity.badRequest().build();
         }
 

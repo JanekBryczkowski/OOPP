@@ -10,6 +10,5 @@ public interface QuestionRepository extends JpaRepository<Activity, Long>{
 
     @Query(value = "SELECT * FROM Activity ORDER BY RAND() LIMIT 1", nativeQuery = true)
     List<Activity> getThreeRandom();
-
 }
 

@@ -98,8 +98,8 @@ public class GameCtrl {
                     break;
                 }
                 case (2): {
-                    System.out.println("Xd 7");
-                    threeActivityQuestion(question);
+                    System.out.println("TWO");
+                    twoActivityQuestion(question);
                     break;
                 }
                 case (3): {
@@ -122,6 +122,16 @@ public class GameCtrl {
         primaryStage.setTitle("Game screen - 1 activity question");
         primaryStage.setScene(questionScreen);
         questionCtrl.setOneActivity();
+        questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        checkJokers(questionCtrl);
+    }
+
+    //Setup for a question with three activities
+    public void twoActivityQuestion(Question question) {
+        questionCtrl.startTwoActivityQuestion(question);
+        primaryStage.setTitle("Game screen - 2 activities question");
+        primaryStage.setScene(questionScreen);
+        questionCtrl.setTwoActivities();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
         checkJokers(questionCtrl);
     }

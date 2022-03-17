@@ -91,11 +91,11 @@ public class QuestionCtrl {
                 } else if (secondsPassed[0] > 0)
                     secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
                 else {
-                    if(oneActivityAnchorPane.isVisible()) {
+                    if (oneActivityAnchorPane.isVisible()) {
                         myTimer.cancel();
                         revealAnswersOneActivities(Integer.MIN_VALUE);
                     }
-                    if(threeActivitiesAnchorPane.isVisible()) {
+                    if (threeActivitiesAnchorPane.isVisible()) {
                         myTimer.cancel();
                         revealAnswersThreeActivities(null, 4);
                     }
@@ -123,7 +123,27 @@ public class QuestionCtrl {
 
         instantiateTimer();
 
-        myTimer.scheduleAtFixedRate(task, 1000,1000);
+        myTimer.scheduleAtFixedRate(task, 1000, 1000);
+    }
+
+    public void startTwoActivityQuestion(Question question) {
+        List<Activity> activityList = question.activityList;
+        int firstActivityConsumption = question.activityList.get(0).consumption;
+        int secondActivityConsumption = question.activityList.get(1).consumption;
+        question.setCorrectAnswer();
+        this.correctAnswer = question.correctAnswer;
+
+        answerOne.setText(String.valueOf(correctAnswer));
+        answerTwo.setText(String.valueOf((int) (correctAnswer * Math.random())));
+        answerThree.setText(String.valueOf((int) (correctAnswer * Math.random())));
+
+        enableButtons();
+
+        hideSoloPlayerElements();
+
+        instantiateTimer();
+
+        myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
 
@@ -257,7 +277,7 @@ public class QuestionCtrl {
         answerOneInput.setEditable(false);
         myTimer.cancel();
         answerOneInput.setText(String.valueOf(correctAnswer));
-        if(answerGiven == correctAnswer) {
+        if (answerGiven == correctAnswer) {
             mainCtrl.points += (jokerOneActive * 100);
             answerOneInput.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else {
@@ -357,6 +377,11 @@ public class QuestionCtrl {
     }
 
     public void setThreeActivities() {
+        oneActivityAnchorPane.setVisible(false);
+        threeActivitiesAnchorPane.setVisible(true);
+    }
+
+    public void setTwoActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }
