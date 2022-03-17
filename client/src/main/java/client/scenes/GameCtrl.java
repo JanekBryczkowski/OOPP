@@ -143,7 +143,7 @@ public class GameCtrl {
     //loading the leaderboard scene
     public void showLeaderBoard() {
         leaderBoardCtrl.storePoints();
-//        leaderBoardCtrl.setLeaderBoard();
+        leaderBoardCtrl.setLeaderBoard();
         primaryStage.setScene(leaderBoard);
     }
 
