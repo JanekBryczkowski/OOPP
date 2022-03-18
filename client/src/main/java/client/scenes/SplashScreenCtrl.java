@@ -44,9 +44,9 @@ public class SplashScreenCtrl {
     //This function sets the username and moves to the gamescreen
     public void join() {
         if (usernameInput.getText().equals("") || usernameInput.getText() == null) {
-            //alert.setText("Please, provide your username");
+            alert.setText("Please, provide your username");
         } else {
-            //alert.setText("");
+            alert.setText("");
             gameCtrl.setUsername(usernameInput.getText());
             gameCtrl.SoloGameRound();
         }

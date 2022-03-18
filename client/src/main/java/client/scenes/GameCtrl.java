@@ -143,6 +143,8 @@ public class GameCtrl {
     //Function for storing the user and their points in the database and
     //loading the leaderboard scene
     public void showLeaderBoard() {
+        questionCtrl.resetPoints();
+        questionCtrl.resetJokers();
         leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         primaryStage.setScene(leaderBoard);

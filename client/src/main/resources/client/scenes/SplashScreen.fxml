@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="SplashScreen" maxHeight="800.0" maxWidth="1238.0" minHeight="800.0" minWidth="1238.0" prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #D2EC7E;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
+<AnchorPane fx:id="SplashScreen" maxHeight="800.0" maxWidth="1238.0" minHeight="800.0" minWidth="1238.0" prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #D2EC7E;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
     <children>
         <Button alignment="CENTER" layoutX="328.0" layoutY="614.0" maxHeight="108.0" maxWidth="247.0" minHeight="108.0" minWidth="247.0" mnemonicParsing="false" onAction="#join" prefHeight="108.0" prefWidth="247.0" styleClass="joinButton" text="Join" textFill="WHITE">
             <font>
@@ -31,12 +31,12 @@
         </TextField>
         <ImageView fitHeight="178.0" fitWidth="163.0" layoutX="44.0" layoutY="586.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../client.images/earthLogo.png" />
+                <Image url="@/client.images/earthLogo.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="159.0" fitWidth="967.0" layoutX="135.5" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../client.images/energyGameLogo.png" />
+                <Image url="@/client.images/energyGameLogo.png" />
             </image>
         </ImageView>
         <Label layoutX="385.0" layoutY="301.0" maxHeight="100.0" maxWidth="514.0" minHeight="100.0" minWidth="514.0" prefHeight="100.0" prefWidth="514.0" text="Single Player">
@@ -51,7 +51,7 @@
         </AnchorPane>
         <ImageView fitHeight="178.0" fitWidth="178.0" layoutX="1011.0" layoutY="580.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../client.images/environmentLogo.png" />
+                <Image url="@/client.images/environmentLogo.png" />
             </image>
         </ImageView>
         <Button alignment="CENTER" layoutX="699.0" layoutY="615.0" maxHeight="108.0" maxWidth="247.0" minHeight="108.0" minWidth="247.0" mnemonicParsing="false" onAction="#GameRulesButton" prefHeight="108.0" prefWidth="247.0" styleClass="joinButton" text="Rules" textFill="WHITE">
@@ -119,10 +119,15 @@
                 </Text>
                 <ImageView fitHeight="127.0" fitWidth="128.0" layoutX="507.0" layoutY="336.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../client.images/environmentLogo.png" />
+                        <Image url="@/client.images/environmentLogo.png" />
                     </image>
                 </ImageView>
             </children>
         </AnchorPane>
+      <Text fx:id="alert" fill="RED" layoutX="211.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="815.83333333333">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
