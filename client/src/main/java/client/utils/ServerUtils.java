@@ -74,7 +74,16 @@ public class ServerUtils {
 
     public List<Score> getScores() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/scores/getTopScores") //
+                .target(SERVER).path("api/scores/") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<List<Score>>() {
+                });
+    }
+
+    public List<Score> getTopScores() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/scores/top") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<Score>>() {
