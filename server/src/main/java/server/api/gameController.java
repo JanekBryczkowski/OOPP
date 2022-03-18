@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.LobbyController;
 import server.database.QuestionRepository;
-import server.mainGame;
+import server.Main;
 
 @RestController
 @RequestMapping("/api/game")
@@ -16,7 +16,7 @@ public class gameController {
     private final QuestionRepository repo;
     private SimpMessagingTemplate msgs;
 
-    public gameController(mainGame mainGame, QuestionRepository repo, SimpMessagingTemplate msgs, LobbyController lobbyController) {
+    public gameController(Main mainGame, QuestionRepository repo, SimpMessagingTemplate msgs, LobbyController lobbyController) {
         this.repo = repo;
         this.msgs = msgs;
         this.lobbyController = lobbyController;

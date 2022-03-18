@@ -8,7 +8,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.database.QuestionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.mainGame;
+import server.Main;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class QuestionController {
     private final QuestionRepository repo;
     private SimpMessagingTemplate msgs;
 
-    public QuestionController(mainGame mainGame, QuestionRepository repo, SimpMessagingTemplate msgs) {
+    public QuestionController(Main mainGame, QuestionRepository repo, SimpMessagingTemplate msgs) {
         this.repo = repo;
         this.msgs = msgs;
     }
