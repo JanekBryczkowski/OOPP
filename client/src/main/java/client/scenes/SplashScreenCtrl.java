@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 import java.net.MalformedURLException;
 
@@ -28,7 +29,7 @@ public class SplashScreenCtrl {
     @FXML
     private TextField usernameInput;
     @FXML
-    private Label logoLabel;
+    private Text alert;
     @FXML
     private AnchorPane gameRules;
 
@@ -43,9 +44,9 @@ public class SplashScreenCtrl {
     //This function sets the username and moves to the gamescreen
     public void join() {
         if (usernameInput.getText().equals("") || usernameInput.getText() == null) {
-            alert.setText("Please, provide your username");
+            //alert.setText("Please, provide your username");
         } else {
-            alert.setText("");
+            //alert.setText("");
             gameCtrl.setUsername(usernameInput.getText());
             gameCtrl.SoloGameRound();
         }
