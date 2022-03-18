@@ -1,7 +1,5 @@
 package commons;
 
-import commons.Question;
-
 public class Message {
 
     public Lobby lobby;

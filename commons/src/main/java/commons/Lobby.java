@@ -1,7 +1,5 @@
 package commons;
 
-import commons.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
