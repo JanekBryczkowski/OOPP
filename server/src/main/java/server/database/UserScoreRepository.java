@@ -1,14 +1,14 @@
 package server.database;
 
-import commons.Scores;
+import commons.Score;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface UserScoreRepository extends JpaRepository<Scores, Long> {
+public interface UserScoreRepository extends JpaRepository<Score, Long> {
 
-    @Query(value = "SELECT * FROM Scores ORDER BY DESC", nativeQuery = true)
-    List<Scores> getThreeRandom();
+    @Query(value = "SELECT * FROM Scores ORDER BY DESC LIMIT 3", nativeQuery = true)
+    List<Score> getTopThree();
 
 }

@@ -6,7 +6,6 @@ import com.google.inject.Stage;
 import commons.Question;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -44,8 +43,9 @@ public class SplashScreenCtrl {
     //This function sets the username and moves to the gamescreen
     public void join() {
         if (usernameInput.getText().equals("") || usernameInput.getText() == null) {
-            logoLabel.setText("SET USERNAME");
+            alert.setText("Please, provide your username");
         } else {
+            alert.setText("");
             gameCtrl.setUsername(usernameInput.getText());
             gameCtrl.SoloGameRound();
         }

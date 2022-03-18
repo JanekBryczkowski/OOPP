@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.List;
 
 import commons.Question;
+import commons.Score;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
@@ -69,6 +70,21 @@ public class ServerUtils {
                             .get(new GenericType<Question>() {
                             });
         }
+
+    public List<Score> getScores() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/scores/getTopScores") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<List<Score>>() {});
+    }
+
+    public Score addScore(Score score) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/scores/") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(score, APPLICATION_JSON), Score.class);
     }
 
 
