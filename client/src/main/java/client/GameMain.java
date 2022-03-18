@@ -75,5 +75,10 @@ public class GameMain extends Application {
 
         var gameCtrl = INJECTOR.getInstance(GameCtrl.class);
         gameCtrl.initialize(primaryStage, splash, gameThreeScreen, leaderBoard, waitingRoom);
+
+//        primaryStage.setOnCloseRequest(e -> {
+//            waitingRoom.getKey().stop();
+//        });
+
     }
 }

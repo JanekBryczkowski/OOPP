@@ -19,26 +19,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SpringBootApplication
 @EntityScan(basePackages = { "commons", "server" })
 public class mainGame {
 
-    private List<Lobby> lobbyList;
-    public Lobby openLobby = new Lobby();
-
     public static void main(String[] args) {
         SpringApplication.run(mainGame.class, args);
-    }
-
-    public void addLobby(Lobby lobby) {
-        this.lobbyList.add(lobby);
-    }
-
-    public Lobby getOpenLobby() {
-        return this.openLobby;
     }
 
 }

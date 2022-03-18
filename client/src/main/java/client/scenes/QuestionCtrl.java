@@ -126,6 +126,14 @@ public class QuestionCtrl {
         myTimer.scheduleAtFixedRate(task, 1000,1000);
     }
 
+    /*
+    In this function the multiplayer question gets set up. For now, the only thing done is setting the
+    question title to the title of the first activity. This needs to be changed so that it checks how long
+    the question is. This function will also have to instantiate a timer.
+     */
+    public void setUpMultiPlayerQuestion(Question question) {
+        questionText.setText(question.activityList.get(0).title);
+    }
 
     public void startOneActivityQuestion(Question question) {
         answerGivenActivityOne.setDisable(false);
@@ -293,8 +301,8 @@ public class QuestionCtrl {
         mainCtrl.points = 0;
         mainCtrl.round = 1;
         mainCtrl.username = "";
-        GameCtrl.firstJokerUsed = false;
-        GameCtrl.secondJokerUsed = false;
+        mainCtrl.firstJokerUsed = false;
+        mainCtrl.secondJokerUsed = false;
         jokerOne.setStyle("-fx-border-width: 0");
         jokerTwo.setStyle("-fx-border-width: 0");
         mainCtrl.showSplashScreen();
@@ -303,14 +311,14 @@ public class QuestionCtrl {
 
     //Function for when joker one is pressed
     public void jokerOne() {
-        if (!GameCtrl.firstJokerUsed) {
+        if (!mainCtrl.firstJokerUsed) {
             this.jokerOneActive = 2;
             jokerOne.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
             //jokerOne.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
             jokerOne.setDisable(true);
             jokerTwo.setDisable(true);
             //jokerThree.setDisable(true);
-            GameCtrl.firstJokerUsed = true;
+            mainCtrl.firstJokerUsed = true;
         } else {
             jokerOne.setDisable(true);
         }
@@ -318,7 +326,7 @@ public class QuestionCtrl {
 
     //Function for joker two (Eliminating wrong answer)
     public void jokerTwo() {
-        if (!GameCtrl.secondJokerUsed) {
+        if (!mainCtrl.secondJokerUsed) {
             Random random = new Random();
             int i = random.nextInt(2) + 1;
             int disable = (correctAnswer + i) % 3;
@@ -346,7 +354,7 @@ public class QuestionCtrl {
             jokerOne.setDisable(true);
             jokerTwo.setDisable(true);
             //jokerThree.setDisable(true);
-            GameCtrl.secondJokerUsed = true;
+            mainCtrl.secondJokerUsed = true;
         } else {
             jokerTwo.setDisable(true);
         }

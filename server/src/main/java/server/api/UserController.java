@@ -1,32 +1,70 @@
 package server.api;
 
 import commons.User;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
-import server.mainGame;
+import commons.Lobby;
+import server.LobbyController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final mainGame main;
+    private final LobbyController lobbyController;
 
-    public UserController(mainGame main) {
-        this.main = main;
+    public UserController(LobbyController lobbyController) {
+        this.lobbyController = lobbyController;
     }
 
 
     @PostMapping(path = { "", "/" })
     public User postUserToOpenLobby(@RequestBody User user) {
-            return main.getOpenLobby().addUser(user);
+//            listeners.forEach((k,l) -> l.accept(user));
+            return lobbyController.getOpenLobby().addUser(user);
     }
 
-    @GetMapping(path = { "", "/" })
+    @GetMapping("/currentLobby")
     public List<User> getUsersOfOpenLobby() {
-        return (List<User>) main.getOpenLobby().getUserList();
+        return (List<User>) lobbyController.getOpenLobby().getUserList();
     }
+
+    @GetMapping("/allLobies")
+    public List<Lobby> getAllLobbies() {
+        return (List<Lobby>) lobbyController.getAllLobbies();
+    }
+
+    @MessageMapping("/users")
+    @SendTo("/topic/users")
+    public User addUser(User user) {
+//        postUserToOpenLobby(user);
+        return user;
+    }
+
+
+
+
+//    private Map<Object, Consumer<User>> listeners = new HashMap<>();
+//
+//    @GetMapping("/updates")
+//    public DeferredResult<ResponseEntity<User>> getUpdates() {
+//        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//        var res = new DeferredResult<ResponseEntity<User>>(5000L, noContent);
+//
+//        var key = new Object();
+//        listeners.put(key, q -> {
+//            res.setResult(ResponseEntity.ok(q));
+//        });
+//
+//        res.onCompletion(() -> {
+//            listeners.remove(key);
+//        });
+//        listeners.forEach((k,l) -> System.out.println(l.toString()));
+//
+//        return res;
+//    }
 
 
 //    @GetMapping("/")

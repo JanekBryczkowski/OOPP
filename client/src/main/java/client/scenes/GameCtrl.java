@@ -47,8 +47,8 @@ public class GameCtrl {
     public int round = 1;
     public String username;
 
-    public static boolean firstJokerUsed = false;
-    public static boolean secondJokerUsed = false;
+    public  boolean firstJokerUsed = false;
+    public  boolean secondJokerUsed = false;
 
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
         this.primaryStage = primaryStage;
@@ -122,6 +122,7 @@ public class GameCtrl {
         }
     }
 
+
     //Setup for a question with three activities
     public void oneActivityQuestion(Question question) {
         questionCtrl.startOneActivityQuestion(question);
@@ -142,9 +143,27 @@ public class GameCtrl {
         checkJokers(questionCtrl);
     }
 
-    public void startMultiPlayer() {
+    /*
+    Player joining the current lobby of the multi player game
+     */
+    public void joinCurrentLobby() {
         primaryStage.setTitle("Waiting Room");
         primaryStage.setScene(waitingRoom);
+    }
+
+    /*
+    This function gets called whenever a player receives a question from the server
+    in multiplayer mode. The question is printed to the terminal for testing. The scene is set
+    to the question screen and on the question controller, the setup function is called with
+    the question, which will set up the question properly
+     */
+    public void startMultiPlayerQuestion(Question question) {
+        System.out.println("MADE IT");
+        System.out.println(question.toString());
+        primaryStage.setTitle("Question");
+        primaryStage.setScene(questionScreen);
+        questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        questionCtrl.setUpMultiPlayerQuestion(question);
     }
 
     //Function for showing the leaderboard
