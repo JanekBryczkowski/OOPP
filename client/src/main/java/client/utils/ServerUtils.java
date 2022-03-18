@@ -51,7 +51,8 @@ public class ServerUtils {
                 .target(SERVER).path("api/quotes") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<List<Quote>>() {});
+                .get(new GenericType<List<Quote>>() {
+                });
     }
 
     public Quote addQuote(Quote quote) {
@@ -63,20 +64,21 @@ public class ServerUtils {
     }
 
     public Question getQuestion() {
-            return ClientBuilder.newClient(new ClientConfig()) //
-                            .target(SERVER).path("api/questions/getQuestion") //
-                            .request(APPLICATION_JSON) //
-                            .accept(APPLICATION_JSON) //
-                            .get(new GenericType<Question>() {
-                            });
-        }
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/questions/getQuestion") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<Question>() {
+                });
+    }
 
     public List<Score> getScores() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/scores/getTopScores") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<List<Score>>() {});
+                .get(new GenericType<List<Score>>() {
+                });
     }
 
     public Score addScore(Score score) {
@@ -86,6 +88,6 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(score, APPLICATION_JSON), Score.class);
     }
-
 }
+
 

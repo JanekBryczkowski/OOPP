@@ -48,6 +48,7 @@ public class GameCtrl {
     public static boolean secondJokerUsed = false;
 
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
+
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splash.getKey();
@@ -152,4 +153,6 @@ public class GameCtrl {
         if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
         if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);
     }
+
+
 }

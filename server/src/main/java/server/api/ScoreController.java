@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import server.database.UserScoreRepository;
 import java.util.List;
 
+import static java.lang.System.*;
+
 
 @RestController
 @RequestMapping("/api/scores")
@@ -29,6 +31,11 @@ public class ScoreController {
 
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
+    }
+
+    @GetMapping("/restart")
+    public static void restartServer() {
+        exit(0);
     }
 
     @PostMapping(path = {"/" , " "})
