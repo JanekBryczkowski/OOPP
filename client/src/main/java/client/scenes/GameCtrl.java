@@ -155,6 +155,12 @@ public class GameCtrl {
         primaryStage.setScene(waitingRoom);
     }
 
+    public void showWaitingRoomScreen() {
+        primaryStage.setTitle("Waiting Room");
+        waitingRoom.getStylesheets().add("client.styles/WaitingRoomStyle.css");
+        primaryStage.setScene(waitingRoom);
+    }
+
     /*
     This function gets called whenever a player receives a question from the server
     in multiplayer mode. The question is printed to the terminal for testing. The scene is set
