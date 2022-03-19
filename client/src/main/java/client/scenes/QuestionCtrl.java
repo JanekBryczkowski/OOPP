@@ -384,7 +384,7 @@ public class QuestionCtrl {
                 Platform.runLater(() -> {
                     removeBorders();
                     round.setText("round " + ++mainCtrl.round);
-                    if (mainCtrl.round > 10) {
+                    if (mainCtrl.round > 1) {
                         mainCtrl.showLeaderBoard();
                     } else {
                         mainCtrl.SoloGameRound();
