@@ -2,9 +2,13 @@ package server.api;
 
 import commons.Activity;
 import commons.Question;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.database.QuestionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +18,11 @@ import java.util.List;
 public class QuestionController {
 
     private final QuestionRepository repo;
+    private SimpMessagingTemplate msgs;
 
-    public QuestionController(QuestionRepository repo) {
+    public QuestionController(Main mainGame, QuestionRepository repo, SimpMessagingTemplate msgs) {
         this.repo = repo;
+        this.msgs = msgs;
     }
 
     @GetMapping("/")
@@ -75,4 +81,12 @@ public class QuestionController {
     public void deleteQuestion(@PathVariable("id") long id) {
         repo.deleteById(id);
     }
+
+    @MessageMapping("/question")
+    @SendTo("/topic/question")
+    public Question sendQuestion(Question question) {
+        System.out.println("SENDING QUESTION " + question.toString());
+        return question;
+    }
+
 }

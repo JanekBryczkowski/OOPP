@@ -24,7 +24,7 @@ public class ScoreController {
         return  repository.findAll();
     }
 
-    @GetMapping("/getTopScores")
+    @GetMapping("/top")
     public List<Score> getTopScores(){
         return repository.getTopThree();
     }

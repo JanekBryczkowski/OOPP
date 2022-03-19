@@ -38,17 +38,19 @@ public class GameCtrl {
     private LeaderBoardCtrl leaderBoardCtrl;
     private Scene leaderBoard;
 
+    private WaitingRoomCtrl waitingRoomCtrl;
+    private Scene waitingRoom;
+
     private ServerUtils server;
 
     public int points = 0;
     public int round = 1;
     public String username;
 
-    public static boolean firstJokerUsed = false;
-    public static boolean secondJokerUsed = false;
+    public  boolean firstJokerUsed = false;
+    public  boolean secondJokerUsed = false;
 
-    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl) {
-
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splash.getKey();
@@ -59,6 +61,9 @@ public class GameCtrl {
 
         this.leaderBoardCtrl = leaderBoardCtrl.getKey();
         this.leaderBoard = new Scene(leaderBoardCtrl.getValue());
+
+        this.waitingRoomCtrl = waitingRoomCtrl.getKey();
+        this.waitingRoom = new Scene(waitingRoomCtrl.getValue());
 
         showSplashScreen();
         primaryStage.show();
@@ -82,6 +87,7 @@ public class GameCtrl {
 
     //This function is for showing the gamescreen
     public void SoloGameRound() {
+        System.out.println("Xd 3");
         //Plays 5 rounds
         if (round > 10) {
             questionCtrl.resetPoints();
@@ -140,6 +146,30 @@ public class GameCtrl {
         checkJokers(questionCtrl);
     }
 
+    /*
+    Player joining the current lobby of the multi player game
+     */
+    public void joinCurrentLobby() {
+        primaryStage.setTitle("Waiting Room");
+        primaryStage.setScene(waitingRoom);
+    }
+
+    /*
+    This function gets called whenever a player receives a question from the server
+    in multiplayer mode. The question is printed to the terminal for testing. The scene is set
+    to the question screen and on the question controller, the setup function is called with
+    the question, which will set up the question properly
+     */
+    public void startMultiPlayerQuestion(Question question) {
+        System.out.println("MADE IT");
+        System.out.println(question.toString());
+        primaryStage.setTitle("Question");
+        primaryStage.setScene(questionScreen);
+        questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        questionCtrl.setUpMultiPlayerQuestion(question);
+    }
+
+
     //Function for storing the user and their points in the database and
     //loading the leaderboard scene
     public void showLeaderBoard() {
@@ -147,14 +177,12 @@ public class GameCtrl {
         questionCtrl.resetJokers();
         leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
+        leaderBoardCtrl.setList();
         primaryStage.setScene(leaderBoard);
     }
-
 
     public void checkJokers(QuestionCtrl questionCtrl) {
         if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
         if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);
     }
-
-
 }
