@@ -58,6 +58,7 @@ public class SplashScreenCtrl {
         this.server = server;
         this.gameCtrl = gameCtrl;
         this.questionCtrl = questionCtrl;
+
     }
 
     //This function sets the username and moves to the gamescreen
