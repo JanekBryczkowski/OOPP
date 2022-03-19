@@ -5,9 +5,19 @@
 
 <module name = "Checker">
     <module name="TreeWalker">
+<!--        doesn't build with unused imports-->
         <module name="UnusedImports" />
+<!--        overridden messages need the @Override notation-->
         <module name="MissingOverride"/>
+<!--        static imports are a violation-->
+<!--        there are some necessary exceptions-->
+        <module name="AvoidStaticImport">
+            <property name="excludes" value="com.google.inject.Guice.createInjector"/>
+            <property name="excludes" value="jakarta.ws.rs.core.MediaType.APPLICATION_JSON"/>
+        </module>
+
     </module>
+
 
     <!-- TODO: decide in your team with other checkers to add! -->
 
