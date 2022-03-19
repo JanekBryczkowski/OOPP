@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserScoreRepository extends JpaRepository<Score, Long> {
 
-    @Query(value = "SELECT * FROM Scores ORDER BY DESC LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM Score ORDER BY SCORE DESC LIMIT 3", nativeQuery = true)
     List<Score> getTopThree();
 
 }

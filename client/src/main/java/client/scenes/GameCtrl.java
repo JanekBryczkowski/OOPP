@@ -177,6 +177,7 @@ public class GameCtrl {
         questionCtrl.resetJokers();
         leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
+        leaderBoardCtrl.setList();
         primaryStage.setScene(leaderBoard);
     }
 

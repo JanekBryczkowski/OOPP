@@ -4,8 +4,11 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Score;
 import jakarta.ws.rs.WebApplicationException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 
@@ -25,25 +28,39 @@ public class LeaderBoardCtrl {
 
     @FXML
     private Text firstScore;
-//    @FXML
-//    private Label secondName;
-//
-//    @FXML
-//    private Label secondScore;
-//
-//    @FXML
-//    private Label thirdName;
-//
-//    @FXML
-//    private Label thirdScore;
+    @FXML
+    private Text secondName;
 
+    @FXML
+    private Text secondScore;
+
+    @FXML
+    private Text thirdName;
+
+    @FXML
+    private Text thirdScore;
+
+    @FXML
+    private ScrollPane leaderBoardList;
+
+
+    @FXML
+    private TableColumn<Integer, String> scoreTable;
+    @FXML
+    private TableColumn<String, String> usernameTable;
+    @FXML
+    private TableView table;
+
+    List<Score> topThreeList = new ArrayList<>();
     List<Score> scoreList = new ArrayList<>();
+    ObservableList<Score> scores;
 
 
     @Inject
     public LeaderBoardCtrl(ServerUtils server, GameCtrl mainCtrl) {
         this.server = server;
         this.gameCtrl = mainCtrl;
+        scores = FXCollections.observableArrayList();
     }
 
     public void storePoints() {
@@ -59,33 +76,24 @@ public class LeaderBoardCtrl {
         }
     }
 
-//    public void calculateTopThree() {
-//        first = new Score("a", 0);
-//        second = new Score("a", 0);
-//        third = new Score("a", 0);
-//        List<Score> scoreList = server.getScores();
-//        for(Score score : scoreList) {
-//            if(score.score > first.getScore()) {
-//                first = score;
-//            } else if(score.score > second.getScore() && score.score < first.getScore()) {
-//                second = score;
-//            } else if(score.score > third.getScore() && score.score < second.getScore()) {
-//                third = score;
-//            }
-//        }
-//    }
-
     public void setLeaderBoard() {
-        firstName.setText(gameCtrl.username);
-        firstScore.setText(String.valueOf(gameCtrl.points));
-        // correct way to do it but not fully working
-//        scoreList.addAll(server.getScores());
-//        firstName.setText(scoreList.get(0).getUsername());
-//        firstScore.setText(String.valueOf(scoreList.get(0).getScore()));
-//        secondName.setText(scoreList.get(1).getUsername());
-//        secondScore.setText(String.valueOf(scoreList.get(1).score));
-//        thirdName.setText(scoreList.get(2).getUsername());
-//        thirdScore.setText(String.valueOf(scoreList.get(2).score));
+        topThreeList.addAll(server.getTopScores());
+        firstName.setText(topThreeList.get(0).getUsername());
+        firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
+        secondName.setText(topThreeList.get(1).getUsername());
+        secondScore.setText(String.valueOf(topThreeList.get(1).score));
+        thirdName.setText(topThreeList.get(2).getUsername());
+        thirdScore.setText(String.valueOf(topThreeList.get(2).score));
+    }
+
+    public void setList() {
+        scores.addAll(server.getScores());
+        scoreList.addAll(server.getScores());
+        usernameTable.setCellValueFactory(new PropertyValueFactory<>("username"));
+        scoreTable.setCellValueFactory(new PropertyValueFactory<>("score"));
+
+        System.out.println(scores);
+//        table.setItems(scores);
     }
 
     public void backToSplash() {
