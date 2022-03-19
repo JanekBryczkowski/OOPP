@@ -169,15 +169,15 @@ public class QuestionCtrl {
 
         if (correctAnswer == 1) {
             answerOne.setText(finalAnswerString);
-            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
-            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
+            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
         } else if (correctAnswer == 2) {
-            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
             answerTwo.setText(finalAnswerString);
-            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
         } else if (correctAnswer == 3) {
-            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
-            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
+            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
             answerThree.setText(finalAnswerString);
         }
 
