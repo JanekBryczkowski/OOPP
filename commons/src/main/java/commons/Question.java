@@ -47,7 +47,7 @@ public class Question {
         } else if (this.activityList.size() == 2) {
             correctAnswer = findRatio();
         } else if (this.activityList.size() == 3) {
-            correctAnswer = findSmallest(this.activityList);
+            correctAnswer = findLargest(this.activityList);
         } else {
             System.out.println("ERROR");
         }
@@ -65,12 +65,12 @@ public class Question {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
     }
 
-    private int findSmallest(List<Activity> list) {
+    private int findLargest(List<Activity> list) {
         int index = -1;
-        int minValue = Integer.MAX_VALUE;
+        int maxValue = Integer.MIN_VALUE;
         for (int i = 0; i < list.size(); i++) {
-            if (minValue > list.get(i).consumption) {
-                minValue = list.get(i).consumption;
+            if (maxValue < list.get(i).consumption) {
+                maxValue = list.get(i).consumption;
                 index = i;
             }
         }
