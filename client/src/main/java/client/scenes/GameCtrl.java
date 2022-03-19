@@ -89,32 +89,26 @@ public class GameCtrl {
     public void SoloGameRound() {
         System.out.println("Xd 3");
         //Plays 5 rounds
-        if (round > 5) {
-            System.out.println("Xd 4");
+        if (round > 10) {
+            questionCtrl.resetPoints();
             showLeaderBoard();
         } else {
-            System.out.println("Xd 5");
             Question question = splashScreenCtrl.getRandomQuestion();
             System.out.println("size" + question.activityList.size());
-//            int xd = 3; //JUST FOR TESTING PURPOSES. IF 1, THEN 1 ACTIVITY, IF 3 THEN 3 ACTIVITIES
             switch (question.activityList.size()) {
                 case (1): {
-                    System.out.println("Xd 6");
                     oneActivityQuestion(question);
                     break;
                 }
                 case (2): {
-                    System.out.println("Xd 7");
-                    threeActivityQuestion(question);
+                    twoActivityQuestion(question);
                     break;
                 }
                 case (3): {
-                    System.out.println("Xd 8");
                     threeActivityQuestion(question);
                     break;
                 }
                 default: {
-                    System.out.println("Xd 9");
                     threeActivityQuestion(question);
                     break;
                 }
@@ -122,13 +116,22 @@ public class GameCtrl {
         }
     }
 
-
     //Setup for a question with three activities
     public void oneActivityQuestion(Question question) {
         questionCtrl.startOneActivityQuestion(question);
         primaryStage.setTitle("Game screen - 1 activity question");
         primaryStage.setScene(questionScreen);
         questionCtrl.setOneActivity();
+        questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        checkJokers(questionCtrl);
+    }
+
+    //Setup for a question with three activities
+    public void twoActivityQuestion(Question question) {
+        questionCtrl.startTwoActivityQuestion(question);
+        primaryStage.setTitle("Game screen - 2 activities question");
+        primaryStage.setScene(questionScreen);
+        questionCtrl.setTwoActivities();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
         checkJokers(questionCtrl);
     }
@@ -166,8 +169,13 @@ public class GameCtrl {
         questionCtrl.setUpMultiPlayerQuestion(question);
     }
 
-    //Function for showing the leaderboard
+
+    //Function for storing the user and their points in the database and
+    //loading the leaderboard scene
     public void showLeaderBoard() {
+        questionCtrl.resetPoints();
+        questionCtrl.resetJokers();
+        leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         primaryStage.setScene(leaderBoard);
     }
