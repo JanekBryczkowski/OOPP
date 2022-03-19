@@ -69,18 +69,18 @@
             <Image url="@/client.images/bronzeMedal.png" />
          </image>
       </ImageView>
-      <Text fx:id="firstName" layoutX="328.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="firstName" fill="#403e3e" layoutX="345.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.74999999999977">
          <font>
-            <Font size="96.0" />
+            <Font size="45.0" />
          </font></Text>
-      <Text fx:id="secondName" layoutX="97.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="secondName" fill="#403e3e" layoutX="96.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="182.42709350585938">
          <font>
-            <Font size="96.0" />
+            <Font size="45.0" />
          </font>
       </Text>
-      <Text fx:id="thirdName" layoutX="556.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="thirdName" fill="#403e3e" layoutX="601.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="105.7890625">
          <font>
-            <Font size="96.0" />
+            <Font size="45.0" />
          </font>
       </Text>
       <TableView fx:id="table" layoutX="822.0" layoutY="105.0" prefHeight="447.0" prefWidth="366.0">
