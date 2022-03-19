@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1238.0" style="    -fx-background-color: #D2EC7E;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.LeaderBoardCtrl">
    <children>
-      <Button layoutX="822.0" layoutY="698.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="367.0" style="    -fx-background-color: #819E21;     -fx-background-radius: 39;" text="Return to Waiting Room" textFill="WHITE">
+      <Button layoutX="822.0" layoutY="698.0" mnemonicParsing="false" onAction="#backToWaitingRoom" prefHeight="64.0" prefWidth="367.0" style="    -fx-background-color: #819E21;     -fx-background-radius: 39;" text="Return to Waiting Room" textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>

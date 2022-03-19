@@ -3,7 +3,9 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Score;
+import commons.User;
 import jakarta.ws.rs.WebApplicationException;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -102,6 +104,14 @@ public class LeaderBoardCtrl {
         gameCtrl.firstJokerUsed = false;
         gameCtrl.secondJokerUsed = false;
         gameCtrl.showSplashScreen();
+    }
+
+    public void backToWaitingRoom() {
+        gameCtrl.points = 0;
+        gameCtrl.round = 1;
+        gameCtrl.firstJokerUsed = false;
+        gameCtrl.secondJokerUsed = false;
+        gameCtrl.showWaitingRoomScreen();
     }
 
 }

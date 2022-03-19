@@ -87,6 +87,7 @@ public class SplashScreenCtrl {
      */
     public void startMultiPlayerGame() {
         String username = usernameInput.getText();
+        gameCtrl.username = usernameInput.getText();
         User user = new User(username,0);
         server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();

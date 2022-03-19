@@ -17,6 +17,8 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import commons.Question;
+import commons.User;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -151,6 +153,12 @@ public class GameCtrl {
      */
     public void joinCurrentLobby() {
         primaryStage.setTitle("Waiting Room");
+        primaryStage.setScene(waitingRoom);
+    }
+
+    public void showWaitingRoomScreen() {
+        primaryStage.setTitle("Waiting Room");
+        waitingRoom.getStylesheets().add("client.styles/WaitingRoomStyle.css");
         primaryStage.setScene(waitingRoom);
     }
 
