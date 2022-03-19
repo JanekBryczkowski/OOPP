@@ -4,11 +4,15 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Stage;
 import commons.Question;
+import commons.User;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.MalformedURLException;
 
@@ -19,6 +23,9 @@ public class SplashScreenCtrl {
     private final QuestionCtrl questionCtrl;
     private Stage primaryStage;
 
+    //If mode is set to 0, then single player is active
+    //If mode is set to 1, then multi player is active
+    private int mode = 0;
 
     @FXML
     private AnchorPane Big;
@@ -28,6 +35,18 @@ public class SplashScreenCtrl {
     private Button joinButton;
     @FXML
     private TextField usernameInput;
+    @FXML
+    private Label logoLabel;
+//    @FXML
+//    private AnchorPane modeSwitch;
+    @FXML
+    private AnchorPane modeOne;
+    @FXML
+    private AnchorPane modeTwo;
+    @FXML
+    private Label modeText;
+    @FXML
+    private Label setUsername;
     @FXML
     private Text alert;
     @FXML
@@ -47,9 +66,40 @@ public class SplashScreenCtrl {
             alert.setText("Please, provide your username");
         } else {
             alert.setText("");
-            gameCtrl.setUsername(usernameInput.getText());
-            gameCtrl.SoloGameRound();
+            if (mode == 0) {
+                gameCtrl.setUsername(usernameInput.getText());
+                gameCtrl.SoloGameRound();
+            } else {
+                startMultiPlayerGame();
+            }
         }
+    }
+
+    /*
+    This function gets called whenever a player presses join to start a multiplayer game.
+    First a User is made and this user gets send to the server. The server will add this user to the
+    current lobby.
+
+    Then, the user GETs the number of the current open lobby. With this number, the player registers
+    for the websocket channel of that lobby. Everytime the player receives a question from this channel,
+    the startMultiPlayerQuestion function in the gameCtrl is called and the question gets passed. In this
+    function, the client side will set up the given question
+     */
+    public void startMultiPlayerGame() {
+        String username = usernameInput.getText();
+        User user = new User(username,0);
+        server.addUser(user);
+        int currentOpenLobby = server.getCurrentLobby();
+        String destination = "/topic/question" + String.valueOf(currentOpenLobby);
+        server.registerForMessages(destination, q -> {
+
+            System.out.println("RECEIVED A QUESTION FROM /topic/question");
+            Platform.runLater(() -> {
+                gameCtrl.startMultiPlayerQuestion(q);
+            });
+
+        });
+        gameCtrl.joinCurrentLobby();
     }
 
     public void GameRulesButton() {
@@ -65,11 +115,31 @@ public class SplashScreenCtrl {
 
     //This function is a setup for the splash screen.
     public void setSplashScreen() {
+//        setUsername.setVisible(false);
+//        modeTwo.setVisible(false);
         usernameInput.setText("");
     }
 
     public Question getRandomQuestion() {
         return server.getQuestion();
+    }
+
+    /*
+    This function gets called whenever a player switches the mode.
+    The switch will change on the front end, and on the backend the mode will change.
+     */
+    public void switchMode() {
+        if(mode == 0) {
+            modeOne.setVisible(false);
+            modeTwo.setVisible(true);
+            mode = 1;
+            modeText.setText("Multi Player");
+        } else {
+            modeOne.setVisible(true);
+            modeTwo.setVisible(false);
+            mode = 0;
+            modeText.setText("Single Player");
+        }
     }
 
 }

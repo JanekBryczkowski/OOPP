@@ -27,4 +27,5 @@ public class Config {
     public Random getRandom() {
         return new Random();
     }
+
 }
