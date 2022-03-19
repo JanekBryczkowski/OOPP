@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
-public class Scores{
+public class Score {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,11 +21,11 @@ public class Scores{
     public String username;
     public int score;
 
-    private Scores() {
+    private Score(){
 
     }
 
-    public Scores(String username, int score) {
+    public Score(String username, int score) {
         this.username = username;
         this.score = score;
     }

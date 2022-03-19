@@ -2,10 +2,15 @@ package server.api;
 
 import commons.Activity;
 import commons.Question;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.database.QuestionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.Main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -13,9 +18,11 @@ import java.util.List;
 public class QuestionController {
 
     private final QuestionRepository repo;
+    private SimpMessagingTemplate msgs;
 
-    public QuestionController(QuestionRepository repo) {
+    public QuestionController(Main mainGame, QuestionRepository repo, SimpMessagingTemplate msgs) {
         this.repo = repo;
+        this.msgs = msgs;
     }
 
     @GetMapping("/")
@@ -34,7 +41,16 @@ public class QuestionController {
     @GetMapping("/getQuestion")
     public Question getActivities() {
         Question question = new Question();
-        question.activityList = repo.getThreeRandom();
+        List<Activity> currentList = new ArrayList<>();
+        int counter = (int) (Math.random() * 3 + 1);
+        while (counter > 0) {
+            List<Activity> random = repo.getThreeRandom();
+            if (!currentList.contains(random.get(0))) {
+                currentList.addAll(random);
+                counter--;
+            }
+        }
+        question.activityList.addAll(currentList);
         return question;
     }
 
@@ -50,10 +66,10 @@ public class QuestionController {
         return s == null || s.isEmpty();
     }
 
-    @PostMapping(path = { "", "/" })
+    @PostMapping(path = {"", "/"})
     public ResponseEntity<Activity> add(@RequestBody Activity activity) {
 
-        if (activity ==null || isNullOrEmpty(activity.title)) {
+        if (activity == null || isNullOrEmpty(activity.title)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -65,4 +81,12 @@ public class QuestionController {
     public void deleteQuestion(@PathVariable("id") long id) {
         repo.deleteById(id);
     }
+
+    @MessageMapping("/question")
+    @SendTo("/topic/question")
+    public Question sendQuestion(Question question) {
+        System.out.println("SENDING QUESTION " + question.toString());
+        return question;
+    }
+
 }

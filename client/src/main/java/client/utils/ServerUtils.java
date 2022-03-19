@@ -20,17 +20,25 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 
 import commons.Question;
-import commons.Scores;
+import commons.Score;
+import commons.User;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.*;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 public class ServerUtils {
 
@@ -51,7 +59,8 @@ public class ServerUtils {
                 .target(SERVER).path("api/quotes") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<List<Quote>>() {});
+                .get(new GenericType<List<Quote>>() {
+                });
     }
 
     public Quote addQuote(Quote quote) {
@@ -71,23 +80,99 @@ public class ServerUtils {
                             });
         }
 
-    public Scores getScores() {
-            return ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/scores/getScores") //
-                    .request(APPLICATION_JSON) //
-                    .accept(APPLICATION_JSON) //
-                    .get(new GenericType<Scores>() {
-                    });
+    public int getCurrentLobby() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/game/currentOpenLobby") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(Integer.class);
     }
 
-    public Scores addScores(Scores scores) {
+    public User addUser(User user) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(user, APPLICATION_JSON), User.class);
+    }
+
+    public List<User> getUsersInLobby() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<List<User>>() {});
+    }
+
+    public void startGame() {
+        System.out.println("SENDING GET TO questions/start");
+         ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/game/start") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get();
+    }
+
+    private StompSession session = connect("ws://localhost:8080/websocket");
+
+    private StompSession connect(String url) {
+        var client = new StandardWebSocketClient();
+        var stomp = new WebSocketStompClient(client);
+        stomp.setMessageConverter(new MappingJackson2MessageConverter());
+        try {
+            return stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        throw new IllegalStateException();
+    }
+
+    public void registerForMessages(String dest, Consumer<Question> question) {
+        session.subscribe(dest, new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return Question.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                question.accept((Question) payload);
+            }
+        });
+    }
+
+    public void send(String dest, Object o) {
+        session.send(dest, o);
+    }
+
+    public List<Score> getScores() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/scores/") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(scores, APPLICATION_JSON), Scores.class);
+                .get(new GenericType<List<Score>>() {
+                });
+    }
+
+    public List<Score> getTopScores() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/scores/top") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<List<Score>>() {
+                });
     }
 
 
+    public Score addScore(Score score) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/scores/") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(score, APPLICATION_JSON), Score.class);
     }
+}
+
 
