@@ -115,8 +115,8 @@ public class SplashScreenCtrl {
 
     //This function is a setup for the splash screen.
     public void setSplashScreen() {
-        setUsername.setVisible(false);
-        modeTwo.setVisible(false);
+//        setUsername.setVisible(false);
+//        modeTwo.setVisible(false);
         usernameInput.setText("");
     }
 
