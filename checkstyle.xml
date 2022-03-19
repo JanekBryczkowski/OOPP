@@ -9,12 +9,6 @@
         <module name="UnusedImports" />
 <!--        overridden messages need the @Override notation-->
         <module name="MissingOverride"/>
-<!--        static imports are a violation-->
-<!--        there are some necessary exceptions-->
-        <module name="AvoidStaticImport">
-            <property name="excludes" value="com.google.inject.Guice.createInjector"/>
-            <property name="excludes" value="jakarta.ws.rs.core.MediaType.APPLICATION_JSON"/>
-        </module>
 <!--        checks JavaDoc statements start from the second line-->
         <module name="JavadocContentLocationCheck"/>
 <!--        JavaDoc lines without a leading asterisk -->
@@ -31,6 +25,8 @@
         <module name="NoLineWrap"/>
 <!--        No spaces before tokens-->
         <module name="NoWhitespaceBefore"/>
+<!--        No spaces before case statement tokens-->
+        <module name="NoWhitespaceBeforeCaseDefaultColon"/>
 
     </module>
 
