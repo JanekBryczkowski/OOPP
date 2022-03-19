@@ -107,6 +107,21 @@ public class LeaderBoardCtrl {
     }
 
     public void backToWaitingRoom() {
+        String username = gameCtrl.username;
+        User user = new User(username,0);
+        server.addUser(user);
+        int currentOpenLobby = server.getCurrentLobby();
+        String destination = "/topic/question" + String.valueOf(currentOpenLobby);
+        server.registerForMessages(destination, q -> {
+
+            System.out.println("RECEIVED A QUESTION FROM /topic/question");
+            Platform.runLater(() -> {
+                gameCtrl.startMultiPlayerQuestion(q);
+            });
+
+        });
+
+        gameCtrl.joinCurrentLobby();
         gameCtrl.points = 0;
         gameCtrl.round = 1;
         gameCtrl.firstJokerUsed = false;
