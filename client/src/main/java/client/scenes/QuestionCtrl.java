@@ -31,7 +31,8 @@ public class QuestionCtrl {
     TimerTask task;
 
     private final int ROUNDS = 10;
-
+    @FXML
+    private Label waitingText;
     @FXML
     private Label questionText;
     @FXML
@@ -94,6 +95,23 @@ public class QuestionCtrl {
         char[] characters = string.toCharArray();
 
         return characters.length;
+    }
+
+    public void prepareForNextQuestion() {
+        Timer myTimers = new Timer();
+        myTimers.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!oneActivityAnchorPane.isVisible() || !threeActivitiesAnchorPane.isVisible()) {
+                    waitingText.setVisible(true);
+                }
+            }
+        }, 3000);
+
+    }
+
+    public void hideWaitingText() {
+        waitingText.setVisible(false);
     }
 
     //Every new round, a new timer and new timertask have to be instantiated
@@ -393,7 +411,8 @@ public class QuestionCtrl {
                     }
                 });
             }
-        }, 1000);
+        }, 5000);
+        prepareForNextQuestion();
     }
 
     //This function returns to the splash screen (for when a user clicks 'back')

@@ -119,6 +119,7 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void oneActivityQuestion(Question question) {
+        questionCtrl.hideWaitingText();
         questionCtrl.startOneActivityQuestion(question);
         primaryStage.setTitle("Game screen - 1 activity question");
         primaryStage.setScene(questionScreen);
@@ -129,6 +130,7 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void twoActivityQuestion(Question question) {
+        questionCtrl.hideWaitingText();
         questionCtrl.startTwoActivityQuestion(question);
         primaryStage.setTitle("Game screen - 2 activities question");
         primaryStage.setScene(questionScreen);
@@ -139,6 +141,7 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void threeActivityQuestion(Question question) {
+        questionCtrl.hideWaitingText();
         questionCtrl.startThreeActivityQuestion(question);
         primaryStage.setTitle("Game screen - 3 activities question");
         primaryStage.setScene(questionScreen);
