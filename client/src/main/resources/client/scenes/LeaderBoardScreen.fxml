@@ -28,7 +28,7 @@
       </Label>
       <AnchorPane layoutX="85.0" layoutY="432.0" maxHeight="327.0" maxWidth="201.0" minHeight="327.0" minWidth="201.0" prefHeight="327.0" prefWidth="201.0" style="    -fx-background-color: #819E21;     -fx-background-radius: 25;     -fx-border-color: #BBBBBB;     -fx-border-radius: 18;     -fx-border-width: 14;" styleClass="secondPlace">
          <children>
-            <Text fx:id="secondScore" fill="WHITE" layoutX="41.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+            <Text fx:id="secondScore" fill="WHITE" layoutX="14.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="173.0">
                <font>
                   <Font size="64.0" />
                </font>
@@ -37,7 +37,7 @@
       </AnchorPane>
       <AnchorPane layoutX="316.0" layoutY="268.0" maxHeight="491.0" maxWidth="201.0" minHeight="491.0" minWidth="201.0" prefHeight="491.0" prefWidth="201.0" style="    -fx-background-color: #819E21;     -fx-background-radius: 25;     -fx-border-color: #DAA520;     -fx-border-radius: 18;     -fx-border-width: 14;" styleClass="firstPlace">
          <children>
-            <Text fx:id="firstScore" fill="WHITE" layoutX="41.0" layoutY="448.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+            <Text fx:id="firstScore" fill="WHITE" layoutX="14.0" layoutY="449.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="173.0">
                <font>
                   <Font size="64.0" />
                </font>
@@ -46,7 +46,7 @@
       </AnchorPane>
       <AnchorPane layoutX="544.0" layoutY="595.0" maxHeight="164.0" maxWidth="201.0" minHeight="164.0" minWidth="201.0" prefHeight="164.0" prefWidth="201.0" style="-fx-background-color: #819E21; -fx-background-radius: 25; -fx-border-color: CD7F32; -fx-border-radius: 18; -fx-border-width: 14;" styleClass="thirdPlace">
          <children>
-            <Text fx:id="thirdScore" fill="WHITE" layoutX="41.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+            <Text fx:id="thirdScore" fill="WHITE" layoutX="14.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="174.0">
                <font>
                   <Font size="64.0" />
                </font>
@@ -68,16 +68,16 @@
             <Image url="@/client.images/bronzeMedal.png" />
          </image>
       </ImageView>
-      <Text fx:id="firstName" fill="#403e3e" layoutX="345.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.74999999999977">
+      <Text fx:id="firstName" fill="#403e3e" layoutX="316.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="201.0">
          <font>
             <Font size="45.0" />
          </font></Text>
-      <Text fx:id="secondName" fill="#403e3e" layoutX="96.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="182.42709350585938">
+      <Text fx:id="secondName" fill="#403e3e" layoutX="85.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="201.0">
          <font>
             <Font size="45.0" />
          </font>
       </Text>
-      <Text fx:id="thirdName" fill="#403e3e" layoutX="601.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="105.7890625">
+      <Text fx:id="thirdName" fill="#403e3e" layoutX="544.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="201.0">
          <font>
             <Font size="45.0" />
          </font>
