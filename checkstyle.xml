@@ -15,6 +15,14 @@
             <property name="excludes" value="com.google.inject.Guice.createInjector"/>
             <property name="excludes" value="jakarta.ws.rs.core.MediaType.APPLICATION_JSON"/>
         </module>
+<!--        checks JavaDoc statements start from the second line-->
+        <module name="JavadocContentLocationCheck"/>
+<!--        JavaDoc lines without a leading asterisk -->
+        <module name="JavadocMissingLeadingAsterisk"/>
+<!--        JavaDoc must end with proper punctuation-->
+        <module name="JavadocStyle">
+            <property name="checkFirstSentence" value="false"/>
+        </module>
 
     </module>
 
