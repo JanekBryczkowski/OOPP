@@ -23,6 +23,14 @@
         <module name="JavadocStyle">
             <property name="checkFirstSentence" value="false"/>
         </module>
+<!--        ensures the names of abstract classes conform to a pattern-->
+        <module name="AbstractClassName"/>
+<!--        Spaces between method name and parameters passed are not allowed-->
+        <module name="MethodParamPad"/>
+<!--        No wrapping around a line in import and package statements, more visually pleasing-->
+        <module name="NoLineWrap"/>
+<!--        No spaces before tokens-->
+        <module name="NoWhitespaceBefore"/>
 
     </module>
 
