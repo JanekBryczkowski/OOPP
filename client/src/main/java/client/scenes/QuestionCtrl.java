@@ -30,6 +30,8 @@ public class QuestionCtrl {
     Timer myTimer;
     TimerTask task;
 
+    private final int ROUNDS = 10;
+
     @FXML
     private Label questionText;
     @FXML
@@ -169,15 +171,15 @@ public class QuestionCtrl {
 
         if (correctAnswer == 1) {
             answerOne.setText(finalAnswerString);
-            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
-            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
+            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
         } else if (correctAnswer == 2) {
-            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
             answerTwo.setText(finalAnswerString);
-            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerThree.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
         } else if (correctAnswer == 3) {
-            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
-            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 39 + 1) / 100)));
+            answerOne.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
+            answerTwo.setText(String.valueOf((int) (finalAnswerInteger * (Math.random() * 139 + 10) / 100)));
             answerThree.setText(finalAnswerString);
         }
 
@@ -384,7 +386,7 @@ public class QuestionCtrl {
                 Platform.runLater(() -> {
                     removeBorders();
                     round.setText("round " + ++mainCtrl.round);
-                    if (mainCtrl.round > 10) {
+                    if (mainCtrl.round > ROUNDS) {
                         mainCtrl.showLeaderBoard();
                     } else {
                         mainCtrl.SoloGameRound();
