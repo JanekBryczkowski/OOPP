@@ -49,6 +49,7 @@ public class GameCtrl {
 
     public  boolean firstJokerUsed = false;
     public  boolean secondJokerUsed = false;
+    private final int ROUNDS = 10;
 
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
         this.primaryStage = primaryStage;
@@ -89,7 +90,7 @@ public class GameCtrl {
     public void SoloGameRound() {
         System.out.println("Xd 3");
         //Plays 5 rounds
-        if (round > 1) {
+        if (round > ROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
         } else {

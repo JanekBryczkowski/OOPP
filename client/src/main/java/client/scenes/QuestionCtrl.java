@@ -30,6 +30,8 @@ public class QuestionCtrl {
     Timer myTimer;
     TimerTask task;
 
+    private final int ROUNDS = 10;
+
     @FXML
     private Label questionText;
     @FXML
@@ -384,7 +386,7 @@ public class QuestionCtrl {
                 Platform.runLater(() -> {
                     removeBorders();
                     round.setText("round " + ++mainCtrl.round);
-                    if (mainCtrl.round > 1) {
+                    if (mainCtrl.round > ROUNDS) {
                         mainCtrl.showLeaderBoard();
                     } else {
                         mainCtrl.SoloGameRound();
