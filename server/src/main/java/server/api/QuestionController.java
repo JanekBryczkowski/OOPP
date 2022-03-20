@@ -25,6 +25,10 @@ public class QuestionController {
         this.msgs = msgs;
     }
 
+    public Iterable<Activity> save(List<Activity> users) {
+        return repo.saveAll(users);
+    }
+
     @GetMapping("/")
     public List<Activity> getQuestions() {
         return repo.findAll();

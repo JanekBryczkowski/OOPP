@@ -52,7 +52,6 @@ public class SplashScreenCtrl {
     @FXML
     private AnchorPane gameRules;
 
-
     @Inject
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
         this.server = server;
@@ -70,6 +69,10 @@ public class SplashScreenCtrl {
                 gameCtrl.setUsername(usernameInput.getText());
                 gameCtrl.SoloGameRound();
             } else {
+                boolean isValidUsername = server.isValidUsername(usernameInput.getText());
+                if(isValidUsername == false)
+                    alert.setText("This username is already taken");
+                else
                 startMultiPlayerGame();
             }
         }
