@@ -88,6 +88,7 @@ public class GameCtrl {
 
     //This function is for showing the gamescreen
     public void SoloGameRound() {
+        questionCtrl.multiplayer = false;
         System.out.println("Xd 3");
         //Plays 5 rounds
         if (round > ROUNDS) {
@@ -119,7 +120,6 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void oneActivityQuestion(Question question) {
-        questionCtrl.hideWaitingText();
         questionCtrl.startOneActivityQuestion(question);
         primaryStage.setTitle("Game screen - 1 activity question");
         primaryStage.setScene(questionScreen);
@@ -130,7 +130,6 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void twoActivityQuestion(Question question) {
-        questionCtrl.hideWaitingText();
         questionCtrl.startTwoActivityQuestion(question);
         primaryStage.setTitle("Game screen - 2 activities question");
         primaryStage.setScene(questionScreen);
@@ -141,7 +140,6 @@ public class GameCtrl {
 
     //Setup for a question with three activities
     public void threeActivityQuestion(Question question) {
-        questionCtrl.hideWaitingText();
         questionCtrl.startThreeActivityQuestion(question);
         primaryStage.setTitle("Game screen - 3 activities question");
         primaryStage.setScene(questionScreen);
@@ -173,9 +171,13 @@ public class GameCtrl {
     public void startMultiPlayerQuestion(Question question) {
         System.out.println("MADE IT");
         System.out.println(question.toString());
-        primaryStage.setTitle("Question");
-        primaryStage.setScene(questionScreen);
+
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        primaryStage.setScene(questionScreen);
+        primaryStage.setTitle("Question");
+
+        checkJokers(questionCtrl);
+        questionCtrl.multiplayer = true;
         questionCtrl.setUpMultiPlayerQuestion(question);
     }
 
