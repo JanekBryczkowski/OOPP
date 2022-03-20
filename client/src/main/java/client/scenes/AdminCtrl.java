@@ -3,11 +3,11 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
-import javafx.fxml.FXML;
+
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+//import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -21,8 +21,8 @@ public class AdminCtrl {
     List<Activity> activityList = new ArrayList<>();
 
 
-    @FXML
-    private Button inspectButton;
+//    @FXML
+//    private Button inspectButton;
 
 //    @FXML
 //    private TextField activityText;
