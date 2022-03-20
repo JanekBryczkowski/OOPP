@@ -17,10 +17,8 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import commons.Question;
-import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -53,9 +51,6 @@ public class GameCtrl {
     public  boolean secondJokerUsed = false;
     private final int ROUNDS = 10;
 
-    @FXML
-    private TextField usernameInput;
-
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
         this.primaryStage = primaryStage;
 
@@ -77,12 +72,11 @@ public class GameCtrl {
 
     //This function is for showing the SplashScreen
     public void showSplashScreen() {
-//        System.out.println("Xd 2");
+        System.out.println("Xd 2");
         primaryStage.setTitle("Splash Screen");
         splashScreenCtrl.setSplashScreen();
         splashScreenScene.getStylesheets().add("client.styles/SplashScreenStyle.css");
         primaryStage.setScene(splashScreenScene);
-//        usernameInput.setText(splashScreenCtrl.getUsername());
         //primaryStage.setFullScreen(true);
         //primaryStage.setFullScreenExitHint("");
     }
