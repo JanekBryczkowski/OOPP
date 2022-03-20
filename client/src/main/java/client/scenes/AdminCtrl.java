@@ -24,14 +24,14 @@ public class AdminCtrl {
     @FXML
     private Button inspectButton;
 
-    @FXML
-    private TextField activityText;
-
-    @FXML
-    private TextField consumptionText;
-
-    @FXML
-    private TextField deleteText;
+//    @FXML
+//    private TextField activityText;
+//
+//    @FXML
+//    private TextField consumptionText;
+//
+//    @FXML
+//    private TextField deleteText;
 
 //    @FXML
 //    private ScrollPane scroll;
