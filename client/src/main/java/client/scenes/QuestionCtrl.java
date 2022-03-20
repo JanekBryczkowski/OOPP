@@ -24,6 +24,10 @@ public class QuestionCtrl {
     private final GameCtrl mainCtrl;
     public Stage primaryStage;
 
+    public boolean multiplayer;
+    public boolean answered;
+    public int answer;
+
     public int correctAnswer;
     public int jokerOneActive = 1; //double points
     final int[] secondsPassed = {15};
@@ -104,18 +108,48 @@ public class QuestionCtrl {
             @Override
             public void run() {
                 secondsPassed[0]--;
-                if (secondsPassed[0] == 1) {
-                    secondsLeft.setText("Time left: " + secondsPassed[0] + " second");
-                } else if (secondsPassed[0] > 0)
-                    secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
-                else {
-                    if (oneActivityAnchorPane.isVisible()) {
-                        myTimer.cancel();
-                        revealAnswersOneActivities();
+                if (!multiplayer) {
+                    if (secondsPassed[0] == 1) {
+                        secondsLeft.setText("Time left: " + secondsPassed[0] + " second");
+                    } else if (secondsPassed[0] > 0)
+                        secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
+                    else {
+                        if (oneActivityAnchorPane.isVisible()) {
+                            revealAnswersOneActivities();
+                        }
+                        if (threeActivitiesAnchorPane.isVisible()) {
+                            revealAnswersThreeActivities(null, 4);
+                        }
                     }
-                    if (threeActivitiesAnchorPane.isVisible()) {
-                        myTimer.cancel();
-                        revealAnswersThreeActivities(null, 4);
+                }
+                else {
+                    if (secondsPassed[0] == 6) {
+                        if (!answered)
+                            secondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " second");
+                        else
+                            secondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " second");
+                    } else if (secondsPassed[0] > 5)
+                        if (!answered)
+                            secondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " seconds");
+                        else
+                            secondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " seconds");
+                    else if (secondsPassed[0] > 0) {
+                        secondsLeft.setText("Answers revealed! Next round starting soon");
+                        if (oneActivityAnchorPane.isVisible()) {
+                            revealAnswersOneActivities();
+                        }
+                        if (threeActivitiesAnchorPane.isVisible()) {
+                            if (!answered)
+                                revealAnswersThreeActivities(null, 4);
+                            else {
+                                if (answer == 1)
+                                    revealAnswersThreeActivities(answerOnePane, 1);
+                                else if (answer == 2)
+                                    revealAnswersThreeActivities(answerTwoPane, 2);
+                                else
+                                    revealAnswersThreeActivities(answerThreePane, 3);
+                            }
+                        }
                     }
                 }
 
@@ -138,12 +172,13 @@ public class QuestionCtrl {
 
         enableButtons();
 
-        hideSoloPlayerElements();
+        if (!multiplayer)
+            hideSoloPlayerElements();
+
+        instantiateTimer();
+        myTimer.scheduleAtFixedRate(task, 1000, 1000);
 
         jokerTwo.setText("Eliminate one wrong answer");
-        instantiateTimer();
-
-        myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
     public void startTwoActivityQuestion(Question question) {
@@ -183,13 +218,11 @@ public class QuestionCtrl {
             answerThree.setText(finalAnswerString);
         }
 
-        enableButtons();
-
-        hideSoloPlayerElements();
-
+        if (!multiplayer)
+            hideSoloPlayerElements();
         instantiateTimer();
-
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
+        enableButtons();
     }
 
     /*
@@ -198,7 +231,29 @@ public class QuestionCtrl {
     the question is. This function will also have to instantiate a timer.
      */
     public void setUpMultiPlayerQuestion(Question question) {
-        questionText.setText(question.activityList.get(0).title);
+        System.out.println("MP question size" + question.activityList.size());
+        removeBorders();
+        switch (question.activityList.size()) {
+            case (1): {
+                startOneActivityQuestion(question);
+                setOneActivity();
+                break;
+            }
+            case (2): {
+                startTwoActivityQuestion(question);
+                setTwoActivities();
+                break;
+            }
+            case (3): {
+                startThreeActivityQuestion(question);
+                setThreeActivities();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
     }
 
     public void startOneActivityQuestion(Question question) {
@@ -212,7 +267,8 @@ public class QuestionCtrl {
         this.correctAnswer = question.correctAnswer;
         round.setText(String.valueOf(correctAnswer));
 
-        hideSoloPlayerElements();
+        if (!multiplayer)
+            hideSoloPlayerElements();
 
         instantiateTimer();
         startTimer();
@@ -257,7 +313,6 @@ public class QuestionCtrl {
         answerOnePane.setDisable(true);
         answerTwoPane.setDisable(true);
         answerThreePane.setDisable(true);
-        myTimer.cancel();
     }
 
     //This function enables the answer buttons when a new round starts
@@ -268,24 +323,43 @@ public class QuestionCtrl {
 
     }
 
+    //Function for when the player OKs the input for 1activity question
+    public void answerNumberGiven() {
+        if (!multiplayer)
+            revealAnswersOneActivities();
+        disableButtons();
+    }
+
     //Function for when the player answers one
     public void answerOneGiven() {
-        myTimer.cancel();
-        revealAnswersThreeActivities(answerOnePane, 1);
+        if (!multiplayer)
+            revealAnswersThreeActivities(answerOnePane, 1);
+        else {
+            answered = true;
+            answer = 1;
+        }
         disableButtons();
     }
 
     //Function for when the player answers two
     public void answerTwoGiven() {
-        myTimer.cancel();
-        revealAnswersThreeActivities(answerTwoPane, 2);
+        if (!multiplayer)
+            revealAnswersThreeActivities(answerTwoPane, 2);
+        else {
+            answered = true;
+            answer = 2;
+        }
         disableButtons();
     }
 
     //Function for when the player answers three
     public void answerThreeGiven() {
-        myTimer.cancel();
-        revealAnswersThreeActivities(answerThreePane, 3);
+        if (!multiplayer)
+            revealAnswersThreeActivities(answerThreePane, 3);
+        else {
+            answered = true;
+            answer = 3;
+        }
         disableButtons();
     }
 
@@ -310,6 +384,8 @@ public class QuestionCtrl {
     It adds points and calls the newQuestion function
      */
     public void revealAnswersThreeActivities(Pane clicked, int click) {
+        myTimer.cancel();
+
         jokerOne.setDisable(true);
         jokerTwo.setDisable(true);
         switch (correctAnswer) {
@@ -338,7 +414,12 @@ public class QuestionCtrl {
         }
 
         points.setText(mainCtrl.points + " points");
-        newQuestion();
+        if (!multiplayer)
+            newQuestion();
+        else {
+            answer = 0;
+            answered = false;
+        }
     }
 
     /*public int answerGivenActivityOne() {
@@ -347,6 +428,8 @@ public class QuestionCtrl {
     }*/
 
     public void revealAnswersOneActivities() {
+        myTimer.cancel();
+
         jokerOne.setDisable(true);
         jokerTwo.setDisable(true);
         int answerGiven;
@@ -359,7 +442,6 @@ public class QuestionCtrl {
 
         answerGivenActivityOne.setDisable(true);
         answerOneInput.setEditable(false);
-        myTimer.cancel();
         answerOneInput.setText("correct: " + correctAnswer);
         if (answerGiven == correctAnswer) {
             mainCtrl.points += (jokerOneActive * 100);
@@ -372,7 +454,8 @@ public class QuestionCtrl {
             answerOneInput.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         }
         points.setText(mainCtrl.points + " points");
-        newQuestion();
+        if (!multiplayer)
+            newQuestion();
     }
 
 

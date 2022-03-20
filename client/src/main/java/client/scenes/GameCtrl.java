@@ -88,6 +88,7 @@ public class GameCtrl {
 
     //This function is for showing the gamescreen
     public void SoloGameRound() {
+        questionCtrl.multiplayer = false;
         System.out.println("Xd 3");
         //Plays 5 rounds
         if (round > ROUNDS) {
@@ -170,9 +171,13 @@ public class GameCtrl {
     public void startMultiPlayerQuestion(Question question) {
         System.out.println("MADE IT");
         System.out.println(question.toString());
-        primaryStage.setTitle("Question");
-        primaryStage.setScene(questionScreen);
+
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        primaryStage.setScene(questionScreen);
+        primaryStage.setTitle("Question");
+
+        checkJokers(questionCtrl);
+        questionCtrl.multiplayer = true;
         questionCtrl.setUpMultiPlayerQuestion(question);
     }
 
