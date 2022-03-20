@@ -26,12 +26,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
-import commons.Question;
-import commons.Score;
-import commons.User;
+import commons.*;
 import org.glassfish.jersey.client.ClientConfig;
 
-import commons.Quote;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
@@ -60,6 +57,15 @@ public class ServerUtils {
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<Quote>>() {
+                });
+    }
+
+    public List<Activity> showAll() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/questions") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<List<Activity>>() {
                 });
     }
 
