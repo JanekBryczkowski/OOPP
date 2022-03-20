@@ -362,7 +362,7 @@ public class QuestionCtrl {
         myTimer.cancel();
         answerOneInput.setText("correct: " + correctAnswer);
         if (answerGiven == correctAnswer) {
-            mainCtrl.points += (jokerOneActive * 100);
+            mainCtrl.points += (jokerOneActive * 10 * secondsPassed[0]);
             answerOneInput.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else if (answerGiven > lowerBoundaryNumber && answerGiven < upperBoundaryNumber) {
             mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
