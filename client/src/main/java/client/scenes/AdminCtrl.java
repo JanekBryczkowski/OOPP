@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import commons.Activity;
 
 import javafx.geometry.Pos;
-//import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.layout.AnchorPane;
@@ -19,23 +18,6 @@ public class AdminCtrl {
     private final ServerUtils server;
     private final GameCtrl gameCtrl;
     List<Activity> activityList = new ArrayList<>();
-
-
-//    @FXML
-//    private Button inspectButton;
-
-//    @FXML
-//    private TextField activityText;
-//
-//    @FXML
-//    private TextField consumptionText;
-//
-//    @FXML
-//    private TextField deleteText;
-
-//    @FXML
-//    private ScrollPane scroll;
-
 
 
     //Connecting the page with the server, and the GameCtrl
