@@ -23,6 +23,7 @@ public class SplashScreenCtrl {
     private final GameCtrl gameCtrl;
     private final QuestionCtrl questionCtrl;
     private Stage primaryStage;
+//    private String username;
 
     //If mode is set to 0, then single player is active
     //If mode is set to 1, then multi player is active
@@ -125,6 +126,10 @@ public class SplashScreenCtrl {
         Big.setEffect(null);
 
         }
+
+//        public String getUsername() {
+//            return username;
+//        }
 
 
 
