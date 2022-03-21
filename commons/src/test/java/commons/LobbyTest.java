@@ -21,7 +21,7 @@ public class LobbyTest {
     @Test
     public void getUserListTest() {
         Lobby lobby = new Lobby(1);
-        assertNotNull (lobby.getUserList());
+        assertNotNull(lobby.getUserList());
     }
 
 
