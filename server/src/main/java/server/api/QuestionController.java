@@ -25,6 +25,11 @@ public class QuestionController {
         this.msgs = msgs;
     }
 
+    public Iterable<Activity> save(List<Activity> users) {
+//        dropTable();
+        return repo.saveAll(users);
+    }
+
     @GetMapping("/")
     public List<Activity> getQuestions() {
         return repo.findAll();
@@ -36,6 +41,11 @@ public class QuestionController {
         int numberOfQuestions = activityList.size();
         int randomNumber = (int) (Math.random() * numberOfQuestions);
         return activityList.get(randomNumber);
+    }
+
+    public void dropTable() {
+        repo.dropTable();
+        repo.createTable();
     }
 
     @GetMapping("/getQuestion")
