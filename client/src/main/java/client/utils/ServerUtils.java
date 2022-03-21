@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
@@ -179,6 +180,16 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(score, APPLICATION_JSON), Score.class);
     }
+
+    public boolean isValidUsername(String username) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user/isValidUsername/" + username.toLowerCase(Locale.ROOT)) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(boolean.class);
+    }
+
+
 }
 
 

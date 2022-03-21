@@ -74,7 +74,11 @@ public class SplashScreenCtrl {
                 gameCtrl.setUsername(usernameInput.getText());
                 gameCtrl.SoloGameRound();
             } else {
-                startMultiPlayerGame();
+                boolean isValidUsername = server.isValidUsername(usernameInput.getText());
+                if(isValidUsername == false)
+                    alert.setText("This username is already taken");
+                else
+                    startMultiPlayerGame();
             }
         }
     }

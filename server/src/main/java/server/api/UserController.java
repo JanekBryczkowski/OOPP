@@ -8,6 +8,7 @@ import commons.Lobby;
 import server.LobbyController;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/api/user")
@@ -17,6 +18,16 @@ public class UserController {
 
     public UserController(LobbyController lobbyController) {
         this.lobbyController = lobbyController;
+    }
+
+
+    @GetMapping("/isValidUsername/{username}")
+    public boolean isValidUsername(@PathVariable("username") String username) {
+        List<User> userList = lobbyController.openLobby.getUserList();
+        for(User user : userList)
+            if(user.username.toLowerCase(Locale.ROOT).equals(username))
+                return false;
+        return true;
     }
 
 
