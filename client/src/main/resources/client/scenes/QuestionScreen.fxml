@@ -146,7 +146,7 @@
          <children>
             <Text fx:id="points" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pointsLabel" text="0 points" textAlignment="CENTER" wrappingWidth="229.33333333333326">
                <font>
-                  <Font name="System Bold" size="43.0" />
+                  <Font name="System Bold" size="40.0" />
                </font>
             </Text>
          </children>
