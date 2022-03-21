@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.layout.AnchorPane;
@@ -51,6 +52,8 @@ public class SplashScreenCtrl {
     private Text alert;
     @FXML
     private AnchorPane gameRules;
+    @FXML
+    private Button rulesButton;
 
 
     @Inject
@@ -106,13 +109,24 @@ public class SplashScreenCtrl {
 
     public void GameRulesButton() {
         gameRules.setVisible(true);
-        //SplashScreen.setEffect(BoxBlur);
+        joinButton.setDisable(true);
+        rulesButton.setDisable(true);
+        if (alert != null) {
+            alert.setText("");
+        }
+        Big.setEffect(new BoxBlur(1238, 800, 1));
 
     }
 
     public void exit() {
         gameRules.setVisible(false);
-    }
+        joinButton.setDisable(false);
+        rulesButton.setDisable(false);
+        Big.setEffect(null);
+
+        }
+
+
 
 
     //This function is a setup for the splash screen.

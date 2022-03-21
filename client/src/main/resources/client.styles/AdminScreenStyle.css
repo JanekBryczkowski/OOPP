@@ -1,0 +1,91 @@
+.inspectButton {
+    -fx-background-radius: 36;
+    -fx-background-color: #819E21;
+}
+
+.inspectButton:hover {
+    -fx-background-radius: 36;
+    -fx-background-color: #708A1C;
+}
+
+.inspectButton:pressed {
+    -fx-background-radius: 36;
+    -fx-background-color: #617818;
+}
+
+.activityTable {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.activityTable thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scrollPane {
+    -fx-background-color: #F5FFD3;
+    -fx-border-radius: 0 0 18 18;
+    -fx-padding: 0;
+    -fx-background-radius: 0 0 18 18;
+    -fx-background-insets: 0;
+}
+
+.scroll-pane:focused {
+    -fx-background-insets: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-insets: 0;
+}
+
+.scroll-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-pref-width: 20;
+    -fx-background-radius: 0 0 18 0;
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.0 0.15em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #53593C;
+    -fx-background-radius: 6;
+    -fx-visible-amount: 100;
+}
+
+.scroll-bar:vertical:hover .thumb {
+    -fx-background-color: #454A32;
+    -fx-background-radius: 6;
+    -fx-visible-amount: 100;
+}
+
+.scroll-bar:vertical:pressed .thumb {
+    -fx-background-color: #373B27;
+    -fx-background-radius: 6;
+    -fx-visible-amount: 100;
+}

@@ -409,7 +409,7 @@ public class QuestionCtrl {
             //clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
         } else if (correctAnswer == click && !(click > 3)) {
             System.out.println(mainCtrl.points);
-            mainCtrl.points += (jokerOneActive * 100);
+            mainCtrl.points += (jokerOneActive * 10 * secondsPassed[0]);
             System.out.println(mainCtrl.points);
         }
 
@@ -444,7 +444,7 @@ public class QuestionCtrl {
         answerOneInput.setEditable(false);
         answerOneInput.setText("correct: " + correctAnswer);
         if (answerGiven == correctAnswer) {
-            mainCtrl.points += (jokerOneActive * 100);
+            mainCtrl.points += (jokerOneActive * 10 * secondsPassed[0]);
             answerOneInput.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else if (answerGiven > lowerBoundaryNumber && answerGiven < upperBoundaryNumber) {
             mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
@@ -586,10 +586,10 @@ public class QuestionCtrl {
             return 0;
         } else if (correctAnswer > givenAnswer) {
             double percentage = ((double) (givenAnswer - lowerBoundaryNumber) / (double) (correctAnswer - lowerBoundaryNumber));
-            return (int) (percentage * 100);
+            return (int) (percentage * 10 * secondsPassed[0]);
         } else {
             double percentage = ((double) (upperBoundaryNumber - givenAnswer) / (double) (upperBoundaryNumber - correctAnswer));
-            return (int) (percentage * 100);
+            return (int) (percentage * 10 * secondsPassed[0]);
         }
     }
 
