@@ -145,8 +145,8 @@ public class QuestionCtrl {
     }
 
     public void startTwoActivityQuestion(Question question) {
-        int firstActivityConsumption = question.activityList.get(0).consumption_in_wh;
-        int secondActivityConsumption = question.activityList.get(1).consumption_in_wh;
+        int firstActivityConsumption = question.activityList.get(0).consumption;
+        int secondActivityConsumption = question.activityList.get(1).consumption;
         question.setCorrectAnswer();
         this.correctAnswer = question.correctAnswer;
 
