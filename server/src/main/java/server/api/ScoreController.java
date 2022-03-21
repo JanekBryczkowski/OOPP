@@ -38,7 +38,7 @@ public class ScoreController {
         exit(0);
     }
 
-    @PostMapping(path = {"/" , " "})
+    @PostMapping(path = {"/", " "})
     public ResponseEntity<Score> add(@RequestBody Score score) {
 
         if (score == null || isNullOrEmpty(score.username)) {

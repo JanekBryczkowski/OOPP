@@ -17,7 +17,10 @@ package commons;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -27,12 +30,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Activity {
 
     @Id
-    public String id;
-    public String image_path;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public long id;
+
     public String title;
-    public int consumption_in_wh;
-    @Column(length = 10000000)
-    public String source;
     public int consumption;
 
     @SuppressWarnings("unused")
@@ -40,12 +41,8 @@ public class Activity {
         // for object mappers
     }
 
-    public Activity(String id, String image_path, String title, int consumption_in_wh, String source, int consumption) {
-        this.id = id;
-        this.image_path = image_path;
+    public Activity(String title, int consumption) {
         this.title = title;
-        this.consumption_in_wh = consumption_in_wh;
-        this.source = source;
         this.consumption = consumption;
     }
 
@@ -54,7 +51,7 @@ public class Activity {
     }
 
     public int getConsumption() {
-        return this.consumption_in_wh;
+        return this.consumption;
     }
 
     @Override

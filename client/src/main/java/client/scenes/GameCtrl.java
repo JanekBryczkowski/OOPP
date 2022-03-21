@@ -36,7 +36,7 @@ public class GameCtrl {
     private Scene add;
 
     private LeaderBoardCtrl leaderBoardCtrl;
-    private Scene leaderBoard;
+    private Scene leaderBoardScreen;
 
     private WaitingRoomCtrl waitingRoomCtrl;
     private Scene waitingRoom;
@@ -49,6 +49,7 @@ public class GameCtrl {
 
     public  boolean firstJokerUsed = false;
     public  boolean secondJokerUsed = false;
+    private final int ROUNDS = 10;
 
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
         this.primaryStage = primaryStage;
@@ -60,7 +61,7 @@ public class GameCtrl {
         this.questionScreen = new Scene(questionCtrl.getValue());
 
         this.leaderBoardCtrl = leaderBoardCtrl.getKey();
-        this.leaderBoard = new Scene(leaderBoardCtrl.getValue());
+        this.leaderBoardScreen = new Scene(leaderBoardCtrl.getValue());
 
         this.waitingRoomCtrl = waitingRoomCtrl.getKey();
         this.waitingRoom = new Scene(waitingRoomCtrl.getValue());
@@ -87,9 +88,10 @@ public class GameCtrl {
 
     //This function is for showing the gamescreen
     public void SoloGameRound() {
+        questionCtrl.multiplayer = false;
         System.out.println("Xd 3");
         //Plays 5 rounds
-        if (round > 10) {
+        if (round > ROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
         } else {
@@ -154,6 +156,12 @@ public class GameCtrl {
         primaryStage.setScene(waitingRoom);
     }
 
+    public void showWaitingRoomScreen() {
+        primaryStage.setTitle("Waiting Room");
+        waitingRoom.getStylesheets().add("client.styles/WaitingRoomStyle.css");
+        primaryStage.setScene(waitingRoom);
+    }
+
     /*
     This function gets called whenever a player receives a question from the server
     in multiplayer mode. The question is printed to the terminal for testing. The scene is set
@@ -163,9 +171,13 @@ public class GameCtrl {
     public void startMultiPlayerQuestion(Question question) {
         System.out.println("MADE IT");
         System.out.println(question.toString());
-        primaryStage.setTitle("Question");
-        primaryStage.setScene(questionScreen);
+
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+        primaryStage.setScene(questionScreen);
+        primaryStage.setTitle("Question");
+
+        checkJokers(questionCtrl);
+        questionCtrl.multiplayer = true;
         questionCtrl.setUpMultiPlayerQuestion(question);
     }
 
@@ -178,7 +190,8 @@ public class GameCtrl {
         leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         leaderBoardCtrl.setList();
-        primaryStage.setScene(leaderBoard);
+        leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
+        primaryStage.setScene(leaderBoardScreen);
     }
 
     public void checkJokers(QuestionCtrl questionCtrl) {
