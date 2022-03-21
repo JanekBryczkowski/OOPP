@@ -43,7 +43,7 @@ public class Question {
 
     public void setCorrectAnswer() {
         if (this.activityList.size() == 1) {
-            correctAnswer = this.activityList.get(0).consumption;
+            correctAnswer = this.activityList.get(0).consumption_in_wh;
         } else if (this.activityList.size() == 2) {
             correctAnswer = findRatio();
         } else if (this.activityList.size() == 3) {
@@ -69,8 +69,8 @@ public class Question {
         int index = -1;
         int maxValue = Integer.MIN_VALUE;
         for (int i = 0; i < list.size(); i++) {
-            if (maxValue < list.get(i).consumption) {
-                maxValue = list.get(i).consumption;
+            if (maxValue < list.get(i).consumption_in_wh) {
+                maxValue = list.get(i).consumption_in_wh;
                 index = i;
             }
         }
