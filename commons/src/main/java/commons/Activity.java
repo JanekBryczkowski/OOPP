@@ -39,7 +39,6 @@ public class Activity {
     private Activity() {
         // for object mappers
     }
-
     public Activity(String id, String image_path, String title, int consumption_in_wh, String source, int consumption) {
         this.id = id;
         this.image_path = image_path;

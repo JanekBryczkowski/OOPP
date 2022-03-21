@@ -26,6 +26,7 @@ public class QuestionController {
     }
 
     public Iterable<Activity> save(List<Activity> users) {
+//        dropTable();
         return repo.saveAll(users);
     }
 
@@ -42,16 +43,40 @@ public class QuestionController {
         return activityList.get(randomNumber);
     }
 
+    public void dropTable() {
+        repo.dropTable();
+        repo.createTable();
+    }
+
     @GetMapping("/getQuestion")
     public Question getActivities() {
         Question question = new Question();
         List<Activity> currentList = new ArrayList<>();
         int counter = (int) (Math.random() * 3 + 1);
-        while (counter > 0) {
-            List<Activity> random = repo.getThreeRandom();
-            if (!currentList.contains(random.get(0))) {
-                currentList.addAll(random);
-                counter--;
+        if (counter == 2) {
+            List<Activity> random1 = repo.getThreeRandom();
+            int firstConsumption = random1.get(0).consumption;
+            currentList.addAll(random1);
+            List<Activity> random2 = repo.getThreeRandom();
+            int secondConsumption = random2.get(0).consumption;
+            do {
+                if (firstConsumption / secondConsumption > 10
+                        || secondConsumption / firstConsumption > 10) {
+                    currentList.addAll(random2);
+                    break;
+                } else {
+                    random2 = repo.getThreeRandom();
+                    secondConsumption = random2.get(0).consumption;
+                }
+            } while (firstConsumption / secondConsumption < 10
+                    && secondConsumption / firstConsumption < 10);
+        } else {
+            while (counter > 0) {
+                List<Activity> random = repo.getThreeRandom();
+                if (!currentList.contains(random.get(0))) {
+                    currentList.addAll(random);
+                    counter--;
+                }
             }
         }
         question.activityList.addAll(currentList);

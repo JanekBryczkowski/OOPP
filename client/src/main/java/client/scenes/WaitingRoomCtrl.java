@@ -14,6 +14,7 @@ public class WaitingRoomCtrl {
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
 
+
     private List<User> userList = new ArrayList<>();
 
     @FXML
@@ -33,6 +34,16 @@ public class WaitingRoomCtrl {
     public void play() {
         System.out.println("USER PRESSED PLAY");
         server.startGame();
+    }
+
+    //IMPORTANT NOTATION
+    //When fixing the table in the waiting room
+    //make sure to implement to this method the removal of the player
+    //from the table when pressing the back button
+
+    public void backButton() {
+        mainCtrl.showSplashScreen();
+
     }
 
 

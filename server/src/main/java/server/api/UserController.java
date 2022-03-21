@@ -21,6 +21,16 @@ public class UserController {
     }
 
 
+    @GetMapping("/isValidUsername/{username}")
+    public boolean isValidUsername(@PathVariable("username") String username) {
+        List<User> userList = lobbyController.openLobby.getUserList();
+        for(User user : userList)
+            if(user.username.toLowerCase(Locale.ROOT).equals(username))
+                return false;
+        return true;
+    }
+
+
     @PostMapping(path = { "", "/" })
     public User postUserToOpenLobby(@RequestBody User user) {
 //            listeners.forEach((k,l) -> l.accept(user));
@@ -35,15 +45,6 @@ public class UserController {
     @GetMapping("/allLobies")
     public List<Lobby> getAllLobbies() {
         return (List<Lobby>) lobbyController.getAllLobbies();
-    }
-
-    @GetMapping("/isValidUsername/{username}")
-    public boolean isValidUsername(@PathVariable("username") String username) {
-        List<User> userList = lobbyController.openLobby.getUserList();
-        for(User user : userList)
-            if(user.username.toLowerCase(Locale.ROOT).equals(username))
-                return false;
-        return true;
     }
 
     @MessageMapping("/users")

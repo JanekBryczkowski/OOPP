@@ -36,7 +36,6 @@ import java.util.List;
 @EntityScan(basePackages = { "commons", "server" })
 public class Main {
 
-
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
@@ -45,6 +44,8 @@ public class Main {
     CommandLineRunner runner(QuestionController questionRepository) {
         return args -> {
             // read json and write to db
+//            questionRepository.dropTable();
+
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -61,5 +62,6 @@ public class Main {
             }
         };
     }
+
 
 }

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.layout.AnchorPane;
@@ -51,12 +52,16 @@ public class SplashScreenCtrl {
     private Text alert;
     @FXML
     private AnchorPane gameRules;
+    @FXML
+    private Button rulesButton;
+
 
     @Inject
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
         this.server = server;
         this.gameCtrl = gameCtrl;
         this.questionCtrl = questionCtrl;
+
     }
 
     //This function sets the username and moves to the gamescreen
@@ -73,7 +78,7 @@ public class SplashScreenCtrl {
                 if(isValidUsername == false)
                     alert.setText("This username is already taken");
                 else
-                startMultiPlayerGame();
+                    startMultiPlayerGame();
             }
         }
     }
@@ -90,6 +95,7 @@ public class SplashScreenCtrl {
      */
     public void startMultiPlayerGame() {
         String username = usernameInput.getText();
+        gameCtrl.username = usernameInput.getText();
         User user = new User(username,0);
         server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
@@ -107,13 +113,24 @@ public class SplashScreenCtrl {
 
     public void GameRulesButton() {
         gameRules.setVisible(true);
-        //SplashScreen.setEffect(BoxBlur);
+        joinButton.setDisable(true);
+        rulesButton.setDisable(true);
+        if (alert != null) {
+            alert.setText("");
+        }
+        Big.setEffect(new BoxBlur(1238, 800, 1));
 
     }
 
     public void exit() {
         gameRules.setVisible(false);
-    }
+        joinButton.setDisable(false);
+        rulesButton.setDisable(false);
+        Big.setEffect(null);
+
+        }
+
+
 
 
     //This function is a setup for the splash screen.
