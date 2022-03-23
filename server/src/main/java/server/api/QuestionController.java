@@ -60,16 +60,16 @@ public class QuestionController {
             List<Activity> random2 = repo.getThreeRandom();
             int secondConsumption = random2.get(0).consumption;
             do {
-                if (firstConsumption / secondConsumption > 10
-                        || secondConsumption / firstConsumption > 10) {
+                if (firstConsumption  > 10 * secondConsumption
+                        || secondConsumption  > 10 * firstConsumption) {
                     currentList.addAll(random2);
                     break;
                 } else {
                     random2 = repo.getThreeRandom();
                     secondConsumption = random2.get(0).consumption;
                 }
-            } while (firstConsumption / secondConsumption < 10
-                    && secondConsumption / firstConsumption < 10);
+            } while (firstConsumption  < 10 * secondConsumption
+                    && secondConsumption < firstConsumption * 10);
         } else {
             while (counter > 0) {
                 List<Activity> random = repo.getThreeRandom();
