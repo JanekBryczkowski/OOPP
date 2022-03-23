@@ -77,14 +77,21 @@ public class LeaderBoardCtrl {
         scoreList = new ArrayList<>();
         topThreeList = new ArrayList<>();
         topThreeList.addAll(server.getTopScores());
-        if (scoreList.size() == 0) {
+        if (topThreeList.size() == 1) {
             firstName.setText(topThreeList.get(0).getUsername());
             firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
-        } else if (scoreList.size() == 1) {
+            secondName.setText("");
+            secondScore.setText("");
+            thirdName.setText("");
+            thirdScore.setText("");
+        } else if (topThreeList.size() == 2) {
             firstName.setText(topThreeList.get(0).getUsername());
             firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
             secondName.setText(topThreeList.get(1).getUsername());
-        } else if (scoreList.size() >= 3) {
+            secondScore.setText(String.valueOf(topThreeList.get(1).score));
+            thirdName.setText("");
+            thirdScore.setText("");
+        } else if (topThreeList.size() >= 3) {
             firstName.setText(topThreeList.get(0).getUsername());
             firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
             secondName.setText(topThreeList.get(1).getUsername());
