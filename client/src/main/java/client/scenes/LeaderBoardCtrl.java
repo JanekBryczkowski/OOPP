@@ -77,13 +77,21 @@ public class LeaderBoardCtrl {
         scoreList = new ArrayList<>();
         topThreeList = new ArrayList<>();
         topThreeList.addAll(server.getTopScores());
-
-        firstName.setText(topThreeList.get(0).getUsername());
-        firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
-        secondName.setText(topThreeList.get(1).getUsername());
-        secondScore.setText(String.valueOf(topThreeList.get(1).score));
-        thirdName.setText(topThreeList.get(2).getUsername());
-        thirdScore.setText(String.valueOf(topThreeList.get(2).score));
+        if (scoreList.size() == 0) {
+            firstName.setText(topThreeList.get(0).getUsername());
+            firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
+        } else if (scoreList.size() == 1) {
+            firstName.setText(topThreeList.get(0).getUsername());
+            firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
+            secondName.setText(topThreeList.get(1).getUsername());
+        } else if (scoreList.size() >= 3) {
+            firstName.setText(topThreeList.get(0).getUsername());
+            firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
+            secondName.setText(topThreeList.get(1).getUsername());
+            secondScore.setText(String.valueOf(topThreeList.get(1).score));
+            thirdName.setText(topThreeList.get(2).getUsername());
+            thirdScore.setText(String.valueOf(topThreeList.get(2).score));
+        }
     }
 
     public void setList() {
@@ -146,7 +154,7 @@ public class LeaderBoardCtrl {
 
     public void backToWaitingRoom() {
         String username = gameCtrl.username;
-        User user = new User(username,0);
+        User user = new User(username, 0);
         server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
         String destination = "/topic/question" + String.valueOf(currentOpenLobby);
