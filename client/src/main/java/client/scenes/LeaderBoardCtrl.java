@@ -77,6 +77,7 @@ public class LeaderBoardCtrl {
         scoreList = new ArrayList<>();
         topThreeList = new ArrayList<>();
         topThreeList.addAll(server.getTopScores());
+
         firstName.setText(topThreeList.get(0).getUsername());
         firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
         secondName.setText(topThreeList.get(1).getUsername());
