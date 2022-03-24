@@ -51,21 +51,16 @@
       </Button>
       <ImageView fitHeight="331.0" fitWidth="333.0" layoutX="826.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/environmentLogo.png" />
+            <Image url="@/client.images/environmentLogo.png" />
          </image>
       </ImageView>
-      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="64.0" layoutY="347.0" maxHeight="336.0" maxWidth="640.0" minHeight="336.0" minWidth="640.0" prefHeight="336.0" prefWidth="640.0" styleClass="scrollPane" vbarPolicy="ALWAYS" />
-      <Label alignment="CENTER" layoutX="64.0" layoutY="307.0" maxHeight="40.0" maxWidth="350.0" minHeight="40.0" minWidth="350.0" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 18 0 0 0;" text="Activities">
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="64.0" layoutY="347.0" maxHeight="336.0" maxWidth="640.0" minHeight="336.0" minWidth="450.0" prefHeight="336.0" prefWidth="596.0" styleClass="scrollPane" vbarPolicy="ALWAYS" />
+      <Label alignment="CENTER" layoutX="64.0" layoutY="307.0" maxHeight="40.0" maxWidth="350.0" minHeight="40.0" minWidth="284.0" prefHeight="40.0" prefWidth="315.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 18 0 0 0;" text="Activities">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="414.0" layoutY="307.0" maxHeight="40.0" maxWidth="190.0" minHeight="40.0" minWidth="190.0" prefHeight="40.0" prefWidth="190.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0;" text="Consumption">
-         <font>
-            <Font name="System Bold" size="21.0" />
-         </font>
-      </Label>
-      <Label layoutX="604.0" layoutY="307.0" maxHeight="40.0" maxWidth="100.0" minHeight="40.0" minWidth="100.0" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 0 18 0 0;" text="Delete">
+      <Label alignment="CENTER" layoutX="347.0" layoutY="307.0" maxHeight="40.0" maxWidth="315.0" minHeight="40.0" minWidth="100.0" prefHeight="40.0" prefWidth="315.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 0 18 0 0;" text="Consumption" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
