@@ -154,6 +154,7 @@ public class GameCtrl {
     public void joinCurrentLobby() {
         primaryStage.setTitle("Waiting Room");
         primaryStage.setScene(waitingRoom);
+        waitingRoomCtrl.setWaitingRoomTable();
     }
 
     public void showWaitingRoomScreen() {
