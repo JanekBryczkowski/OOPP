@@ -136,8 +136,8 @@ public class ServerUtils {
         throw new IllegalStateException();
     }
 
-    public void registerForMessages(String dest, Consumer<Question> question) {
-        session.subscribe(dest, new StompFrameHandler() {
+    public StompSession.Subscription registerForMessages(String dest, Consumer<Question> question) {
+        StompSession.Subscription subscription = session.subscribe(dest, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
                 return Question.class;
@@ -148,7 +148,14 @@ public class ServerUtils {
                 question.accept((Question) payload);
             }
         });
+        return subscription;
     }
+
+    public void unsubscribeForMessages() {
+        session.disconnect();
+    }
+
+
 
     public void send(String dest, Object o) {
         session.send(dest, o);
