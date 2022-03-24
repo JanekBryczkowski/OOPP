@@ -16,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.net.MalformedURLException;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -535,7 +536,11 @@ public class QuestionCtrl {
                     if (gameCtrl.round > ROUNDS) {
                         gameCtrl.showLeaderBoard();
                     } else {
-                        gameCtrl.SoloGameRound();
+                        try {
+                            gameCtrl.SoloGameRound();
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
