@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.springframework.messaging.simp.stomp.StompSession;
 
+import java.net.MalformedURLException;
+
 public class GameCtrl {
 
     private Stage primaryStage;
@@ -94,7 +96,7 @@ public class GameCtrl {
     }
 
     //This function is for showing the gamescreen
-    public void SoloGameRound() {
+    public void SoloGameRound() throws MalformedURLException {
         questionCtrl.multiplayer = false;
         System.out.println("Xd 3");
         //Plays 5 rounds
@@ -146,7 +148,7 @@ public class GameCtrl {
     }
 
     //Setup for a question with three activities
-    public void threeActivityQuestion(Question question) {
+    public void threeActivityQuestion(Question question) throws MalformedURLException {
         questionCtrl.startThreeActivityQuestion(question);
         primaryStage.setTitle("Game screen - 3 activities question");
         primaryStage.setScene(questionScreen);

@@ -70,7 +70,11 @@ public class SplashScreenCtrl {
             alert.setText("");
             if (mode == 0) {
                 gameCtrl.setUsername(usernameInput.getText());
-                gameCtrl.SoloGameRound();
+                try {
+                    gameCtrl.SoloGameRound();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             } else {
                 boolean isValidUsername = server.isValidUsername(usernameInput.getText());
                 if(isValidUsername == false)
