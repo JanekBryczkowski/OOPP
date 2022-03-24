@@ -16,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.text.NumberFormat;
 import java.util.*;
 
 public class QuestionCtrl {
@@ -121,8 +122,7 @@ public class QuestionCtrl {
                             revealAnswersThreeActivities(null, 4);
                         }
                     }
-                }
-                else {
+                } else {
                     if (secondsPassed[0] == 6) {
                         if (!answered)
                             secondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " second");
@@ -282,14 +282,24 @@ public class QuestionCtrl {
         randomUpper = (Math.random() * 39 + 1) / 100;
         lowerBoundaryNumber = correctAnswer - (int) (correctAnswer * randomLower);
         upperBoundaryNumber = correctAnswer + (int) (correctAnswer * randomUpper);
-        lowerBoundary.setText(String.valueOf(lowerBoundaryNumber));
-        upperBoundary.setText(String.valueOf(upperBoundaryNumber));
+        lowerBoundary.setText(formatNumber(lowerBoundaryNumber));
+        upperBoundary.setText(formatNumber(upperBoundaryNumber));
+    }
 
-        System.out.println("correct: " + correctAnswer);
-        System.out.println("random lower: " + randomLower);
-        System.out.println("random upper: " + randomUpper);
-        System.out.println("lower: " + lowerBoundaryNumber);
-        System.out.println("upper: " + upperBoundaryNumber);
+    private String formatNumber(int number) {
+        NumberFormat myFormat = NumberFormat.getInstance();
+        myFormat.setGroupingUsed(true);
+        return myFormat.format(number);
+    }
+
+    private String formatNumberString(String number) {
+        if (number.equals("")) return "";
+        else {
+            int numberInInt = Integer.parseInt(number);
+            NumberFormat myFormat = NumberFormat.getInstance();
+            myFormat.setGroupingUsed(true);
+            return myFormat.format(numberInInt);
+        }
     }
 
     //This functions starts the timer. When the timer finishes, the answers are revealed
@@ -301,9 +311,9 @@ public class QuestionCtrl {
     //This function is for hiding the elements on solo player that do not make sense
     public void hideSoloPlayerElements() {
         //jokerThree.setVisible(false);
-        emojiOne.setVisible(false);
-        emojiTwo.setVisible(false);
-        emojiThree.setVisible(false);
+        emojiOne.setDisable(true);
+        emojiTwo.setDisable(true);
+        emojiThree.setDisable(true);
         answersGiven.setVisible(false);
     }
 
@@ -437,7 +447,7 @@ public class QuestionCtrl {
         if (input.equals("") || input == null) {
             answerGiven = 0;
         } else {
-            answerGiven = Integer.parseInt(input);
+            answerGiven = formatNumberBack(input);
         }
 
         answerGivenActivityOne.setDisable(true);
@@ -456,6 +466,12 @@ public class QuestionCtrl {
         points.setText(mainCtrl.points + " points");
         if (!multiplayer)
             newQuestion();
+    }
+
+    public int formatNumberBack(String number) {
+        if (number.equals("")) return 0;
+        String number2 = number.replaceAll(",", "");
+        return Integer.parseInt(number2);
     }
 
 
@@ -606,10 +622,14 @@ public class QuestionCtrl {
         answerOneInput.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    answerOneInput.setText(newValue.replaceAll("[^\\d]", ""));
+                if (newValue.length() < 11) {
+                    if (!newValue.matches("\\d*")) {
+                        answerOneInput.setText(formatNumberString(newValue.replaceAll("[^\\d]", "")));
+                    } else {
+                        answerOneInput.setText(formatNumberString(newValue));
+                    }
                 } else {
-                    answerOneInput.setText(newValue);
+                    answerOneInput.setText(oldValue);
                 }
             }
         });
