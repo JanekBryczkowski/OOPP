@@ -22,7 +22,7 @@ import java.util.*;
 public class QuestionCtrl {
 
     private final ServerUtils server;
-    private final GameCtrl mainCtrl;
+    private final GameCtrl gameCtrl;
     public Stage primaryStage;
 
     public boolean multiplayer;
@@ -83,6 +83,8 @@ public class QuestionCtrl {
     private Text lowerBoundary;
     @FXML
     private Text upperBoundary;
+    @FXML
+    private Text gainedPoints;
 
     double randomLower;
     double randomUpper;
@@ -90,15 +92,10 @@ public class QuestionCtrl {
     int upperBoundaryNumber;
 
     @Inject
-    public QuestionCtrl(ServerUtils server, GameCtrl mainCtrl) {
+    public QuestionCtrl(ServerUtils server, GameCtrl gameCtrl) {
         this.server = server;
-        this.mainCtrl = mainCtrl;
-    }
-
-    private int checkNumberOfCharacters(String string) {
-        char[] characters = string.toCharArray();
-
-        return characters.length;
+        this.gameCtrl = gameCtrl;
+        //answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
     //Every new round, a new timer and new timertask have to be instantiated
@@ -177,8 +174,8 @@ public class QuestionCtrl {
 
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
-
         jokerTwo.setText("Eliminate one wrong answer");
+        answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
     public void startTwoActivityQuestion(Question question) {
@@ -223,6 +220,7 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
+        answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
     /*
@@ -275,6 +273,8 @@ public class QuestionCtrl {
 
         jokerTwo.setText("Narrow down the boundaries");
         setUpTheBoundaries();
+
+        answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
     private void setUpTheBoundaries() {
@@ -314,7 +314,6 @@ public class QuestionCtrl {
         emojiOne.setDisable(true);
         emojiTwo.setDisable(true);
         emojiThree.setDisable(true);
-        answersGiven.setVisible(false);
     }
 
 
@@ -330,7 +329,6 @@ public class QuestionCtrl {
         answerOnePane.setDisable(false);
         answerTwoPane.setDisable(false);
         answerThreePane.setDisable(false);
-
     }
 
     //Function for when the player OKs the input for 1activity question
@@ -418,12 +416,22 @@ public class QuestionCtrl {
             clicked.setStyle("-fx-border-color: red; -fx-border-width: 5; -fx-border-radius: 20;");
             //clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
         } else if (correctAnswer == click && !(click > 3)) {
-            System.out.println(mainCtrl.points);
-            mainCtrl.points += (jokerOneActive * 10 * secondsPassed[0]);
-            System.out.println(mainCtrl.points);
-        }
+            int pointsGainedInRound = jokerOneActive * 10 * secondsPassed[0];
+            gainedPoints.setText("+ " + pointsGainedInRound + " points");
 
-        points.setText(mainCtrl.points + " points");
+            gainedPoints.setVisible(true);
+            Timer myTimers = new Timer();
+            myTimers.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gainedPoints.setVisible(false);
+                }
+            }, 2000);
+
+            gameCtrl.points += pointsGainedInRound;
+        }
+        points.setText(gameCtrl.points + " points");
         if (!multiplayer)
             newQuestion();
         else {
@@ -454,16 +462,55 @@ public class QuestionCtrl {
         answerOneInput.setEditable(false);
         answerOneInput.setText("correct: " + correctAnswer);
         if (answerGiven == correctAnswer) {
-            mainCtrl.points += (jokerOneActive * 10 * secondsPassed[0]);
+            int pointsGainedInRound = jokerOneActive * 10 * secondsPassed[0];
+            gameCtrl.points += pointsGainedInRound;
+            gainedPoints.setText("+ " + pointsGainedInRound + " points");
+
+            gainedPoints.setVisible(true);
+            Timer myTimers = new Timer();
+            myTimers.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gainedPoints.setVisible(false);
+                }
+            }, 2000);
+
             answerOneInput.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else if (answerGiven > lowerBoundaryNumber && answerGiven < upperBoundaryNumber) {
-            mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
+            int pointsGainedInRound = jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven);
+            gameCtrl.points += pointsGainedInRound;
+            gainedPoints.setText("+ " + pointsGainedInRound + " points");
+
+            gainedPoints.setVisible(true);
+            Timer myTimers = new Timer();
+            myTimers.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gainedPoints.setVisible(false);
+                }
+            }, 2000);
+
             answerOneInput.setBorder(new Border(new BorderStroke(Color.ORANGE, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else {
-            mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
+            int pointsGainedInRound = jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven);
+            gameCtrl.points += pointsGainedInRound;
+            gainedPoints.setText("+ " + pointsGainedInRound + " points");
+
+            gainedPoints.setVisible(true);
+            Timer myTimers = new Timer();
+            myTimers.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gainedPoints.setVisible(false);
+                }
+            }, 2000);
+
             answerOneInput.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         }
-        points.setText(mainCtrl.points + " points");
+        points.setText(gameCtrl.points + " points");
         if (!multiplayer)
             newQuestion();
     }
@@ -484,11 +531,11 @@ public class QuestionCtrl {
             public void run() {
                 Platform.runLater(() -> {
                     removeBorders();
-                    round.setText("round " + ++mainCtrl.round);
-                    if (mainCtrl.round > ROUNDS) {
-                        mainCtrl.showLeaderBoard();
+                    round.setText("round " + ++gameCtrl.round);
+                    if (gameCtrl.round > ROUNDS) {
+                        gameCtrl.showLeaderBoard();
                     } else {
-                        mainCtrl.SoloGameRound();
+                        gameCtrl.SoloGameRound();
                     }
                 });
             }
@@ -497,11 +544,12 @@ public class QuestionCtrl {
 
     //This function returns to the splash screen (for when a user clicks 'back')
     public void backToSplash() {
-        mainCtrl.points = 0;
-        mainCtrl.round = 1;
-        mainCtrl.username = "";
-        mainCtrl.firstJokerUsed = false;
-        mainCtrl.secondJokerUsed = false;
+        gainedPoints.setText("");
+        gameCtrl.points = 0;
+        gameCtrl.round = 1;
+        gameCtrl.username = "";
+        gameCtrl.firstJokerUsed = false;
+        gameCtrl.secondJokerUsed = false;
         jokerOne.setStyle("-fx-border-width: 0");
         jokerTwo.setStyle("-fx-border-width: 0");
         jokerOne.setDisable(false);
@@ -511,20 +559,20 @@ public class QuestionCtrl {
         answerThreePane.setStyle("-fx-border-width: 0;");
         myTimer.cancel();
         points.setText("0 points");
-        mainCtrl.showSplashScreen();
+        gameCtrl.showSplashScreen();
         myTimer.cancel();
     }
 
     //Function for when joker one is pressed
     public void jokerOne() {
-        if (!mainCtrl.firstJokerUsed) {
+        if (!gameCtrl.firstJokerUsed) {
             this.jokerOneActive = 2;
             jokerOne.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
             //jokerOne.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
             jokerOne.setDisable(true);
             jokerTwo.setDisable(true);
             //jokerThree.setDisable(true);
-            mainCtrl.firstJokerUsed = true;
+            gameCtrl.firstJokerUsed = true;
         } else {
             jokerOne.setDisable(true);
         }
@@ -532,19 +580,19 @@ public class QuestionCtrl {
 
     //Function for joker two (Eliminating wrong answer)
     public void jokerTwo() {
-        if (!mainCtrl.secondJokerUsed) {
+        if (!gameCtrl.secondJokerUsed) {
             if (oneActivityAnchorPane.isVisible()) {
                 int difference = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
                 int newLowerBoundaryNumber = lowerBoundaryNumber + difference;
                 int newUpperBoundaryNumber = upperBoundaryNumber - difference;
-                lowerBoundary.setText(String.valueOf(newLowerBoundaryNumber));
-                upperBoundary.setText(String.valueOf(newUpperBoundaryNumber));
+                lowerBoundary.setText(formatNumber(newLowerBoundaryNumber));
+                upperBoundary.setText(formatNumber(newUpperBoundaryNumber));
                 jokerTwo.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
                 //jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
                 jokerOne.setDisable(true);
                 jokerTwo.setDisable(true);
                 //jokerThree.setDisable(true);
-                mainCtrl.secondJokerUsed = true;
+                gameCtrl.secondJokerUsed = true;
             } else if (threeActivitiesAnchorPane.isVisible()) {
                 int random = correctAnswer;
                 while (random == correctAnswer) {
@@ -575,7 +623,7 @@ public class QuestionCtrl {
                 jokerOne.setDisable(true);
                 jokerTwo.setDisable(true);
                 //jokerThree.setDisable(true);
-                mainCtrl.secondJokerUsed = true;
+                gameCtrl.secondJokerUsed = true;
             }
         } else {
             jokerTwo.setDisable(true);

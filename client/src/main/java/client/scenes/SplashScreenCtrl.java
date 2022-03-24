@@ -5,17 +5,25 @@ import com.google.inject.Inject;
 import com.google.inject.Stage;
 import commons.Question;
 import commons.User;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
+import org.checkerframework.checker.units.qual.C;
 
+import java.io.File;
 import java.net.MalformedURLException;
+import java.util.concurrent.TimeUnit;
 
 public class SplashScreenCtrl {
 
@@ -38,12 +46,10 @@ public class SplashScreenCtrl {
     private TextField usernameInput;
     @FXML
     private Label logoLabel;
-//    @FXML
+    //    @FXML
 //    private AnchorPane modeSwitch;
     @FXML
     private AnchorPane modeOne;
-    @FXML
-    private AnchorPane modeTwo;
     @FXML
     private Label modeText;
     @FXML
@@ -54,7 +60,10 @@ public class SplashScreenCtrl {
     private AnchorPane gameRules;
     @FXML
     private Button rulesButton;
-
+    @FXML
+    private ImageView singlePlayerImageView;
+    @FXML
+    private ImageView multiPlayerImageView;
 
     @Inject
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
@@ -75,7 +84,7 @@ public class SplashScreenCtrl {
                 gameCtrl.SoloGameRound();
             } else {
                 boolean isValidUsername = server.isValidUsername(usernameInput.getText());
-                if(isValidUsername == false)
+                if (isValidUsername == false)
                     alert.setText("This username is already taken");
                 else
                     startMultiPlayerGame();
@@ -96,7 +105,7 @@ public class SplashScreenCtrl {
     public void startMultiPlayerGame() {
         String username = usernameInput.getText();
         gameCtrl.username = usernameInput.getText();
-        User user = new User(username,0);
+        User user = new User(username, 0);
         server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
         String destination = "/topic/question" + String.valueOf(currentOpenLobby);
@@ -128,9 +137,7 @@ public class SplashScreenCtrl {
         rulesButton.setDisable(false);
         Big.setEffect(null);
 
-        }
-
-
+    }
 
 
     //This function is a setup for the splash screen.
@@ -149,16 +156,34 @@ public class SplashScreenCtrl {
     The switch will change on the front end, and on the backend the mode will change.
      */
     public void switchMode() {
-        if(mode == 0) {
-            modeOne.setVisible(false);
-            modeTwo.setVisible(true);
+        if (mode == 0) {
+            changeSwitch();
             mode = 1;
             modeText.setText("Multi Player");
+            singlePlayerImageView.setVisible(false);
+            multiPlayerImageView.setVisible(true);
         } else {
-            modeOne.setVisible(true);
-            modeTwo.setVisible(false);
+            changeSwitch();
             mode = 0;
             modeText.setText("Single Player");
+            singlePlayerImageView.setVisible(true);
+            multiPlayerImageView.setVisible(false);
+        }
+    }
+
+    public void changeSwitch() {
+        if (mode == 0) {
+            TranslateTransition transition = new TranslateTransition();
+            transition.setDuration(Duration.seconds(0.2));
+            transition.setToX(71);
+            transition.setNode(modeOne);
+            transition.play();
+        } else {
+            TranslateTransition transition = new TranslateTransition();
+            transition.setDuration(Duration.seconds(0.2));
+            transition.setToX(0);
+            transition.setNode(modeOne);
+            transition.play();
         }
     }
 
