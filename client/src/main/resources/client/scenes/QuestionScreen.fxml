@@ -52,7 +52,7 @@
          </image>
       </ImageView>
       <Text fx:id="round" layoutX="1182.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text fx:id="secondsLeft" layoutX="792.0" layoutY="751.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="399.9999999999999" />
+      <Text fx:id="secondsLeft" layoutX="792.0" layoutY="751.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="319.9999999999999" />
       <ImageView fitHeight="124.0" fitWidth="100.0" layoutX="65.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/earthLogo.png" />
