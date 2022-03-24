@@ -65,6 +65,7 @@ public class SplashScreenCtrl {
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
         this.server = server;
         this.gameCtrl = gameCtrl;
+        Path path = Paths.get("");
     }
 
     //This function sets the username and moves to the gamescreen
