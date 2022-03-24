@@ -14,6 +14,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.layout.AnchorPane;
+import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.net.MalformedURLException;
 
@@ -21,12 +22,11 @@ public class SplashScreenCtrl {
 
     private final ServerUtils server;
     private final GameCtrl gameCtrl;
-    private final QuestionCtrl questionCtrl;
     private Stage primaryStage;
 
     //If mode is set to 0, then single player is active
     //If mode is set to 1, then multi player is active
-    private int mode = 0;
+    public int mode = 0;
 
     @FXML
     private AnchorPane Big;
@@ -60,8 +60,6 @@ public class SplashScreenCtrl {
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
         this.server = server;
         this.gameCtrl = gameCtrl;
-        this.questionCtrl = questionCtrl;
-
     }
 
     //This function sets the username and moves to the gamescreen
@@ -72,7 +70,11 @@ public class SplashScreenCtrl {
             alert.setText("");
             if (mode == 0) {
                 gameCtrl.setUsername(usernameInput.getText());
-                gameCtrl.SoloGameRound();
+                try {
+                    gameCtrl.SoloGameRound();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             } else {
                 boolean isValidUsername = server.isValidUsername(usernameInput.getText());
                 if(isValidUsername == false)
@@ -100,7 +102,7 @@ public class SplashScreenCtrl {
         server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
         String destination = "/topic/question" + String.valueOf(currentOpenLobby);
-        server.registerForMessages(destination, q -> {
+        StompSession.Subscription subscription = server.registerForMessages(destination, q -> {
 
             System.out.println("RECEIVED A QUESTION FROM /topic/question");
             Platform.runLater(() -> {
@@ -108,6 +110,7 @@ public class SplashScreenCtrl {
             });
 
         });
+        gameCtrl.subscription = subscription;
         gameCtrl.joinCurrentLobby();
     }
 
