@@ -105,7 +105,7 @@ public class ServerUtils {
 
     public List<User> getUsersInLobby() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/user") //
+                .target(SERVER).path("api/user/currentLobby") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<User>>() {});

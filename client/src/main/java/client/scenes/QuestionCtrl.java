@@ -566,6 +566,9 @@ public class QuestionCtrl {
         points.setText("0 points");
         gameCtrl.showSplashScreen();
         myTimer.cancel();
+//        if (gameCtrl.getMode() == 1) {
+//            server.unsubscribeForMessages();
+//        }
     }
 
     //Function for when joker one is pressed

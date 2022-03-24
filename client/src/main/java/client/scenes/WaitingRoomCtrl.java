@@ -4,7 +4,12 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.User;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,9 @@ public class WaitingRoomCtrl {
 
     @FXML
     private Text playersInRoom;
+
+    @FXML
+    private ScrollPane waitingScroll;
 
 
     @Inject
@@ -43,12 +51,41 @@ public class WaitingRoomCtrl {
 
     public void backButton() {
         mainCtrl.showSplashScreen();
+        server.unsubscribeForMessages();
 
     }
 
     public void setWaitingRoomTable() {
-
+        userList.addAll(server.getUsersInLobby());
+        System.out.println(userList);
+        showInWaitingRoomTable();
     }
 
-
+    public void showInWaitingRoomTable() {
+        VBox vbox = new VBox();
+        for (User user : userList) {
+            AnchorPane anchorPane = new AnchorPane();
+            anchorPane.setMaxHeight(30);
+            anchorPane.setMinHeight(30);
+            anchorPane.setMinHeight(30);
+            anchorPane.setMaxWidth(620);
+            anchorPane.setMinWidth(620);
+            anchorPane.setPrefWidth(620);
+            javafx.scene.control.Label playerList = new javafx.scene.control.Label(user.username);
+            playerList.setWrapText(true);
+            playerList.setTextAlignment(TextAlignment.CENTER);
+            playerList.setPrefHeight(30);
+            playerList.setMaxHeight(30);
+            playerList.setMinHeight(30);
+            playerList.setMaxWidth(350);
+            playerList.setMinWidth(350);
+            playerList.setPrefWidth(350);
+            playerList.setLayoutX(0);
+            playerList.setLayoutY(0);
+            playerList.setStyle("-fx-font-size: 16;");
+            playerList.setAlignment(Pos.CENTER);
+        }
+        System.out.println(userList);
+        waitingScroll.setContent(vbox);
+    }
 }
