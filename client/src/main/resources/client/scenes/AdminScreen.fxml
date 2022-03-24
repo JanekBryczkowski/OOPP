@@ -25,17 +25,17 @@
       </Text>
       <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="24.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/adminIcon.png" />
+            <Image url="@/client.images/adminIcon.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="91.0" fitWidth="460.0" layoutX="378.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/energyGameLogo.png" />
+            <Image url="@/client.images/energyGameLogo.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="67.0" fitWidth="76.0" layoutX="1128.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../client.images/earthLogo.png" />
+            <Image url="@/client.images/earthLogo.png" />
          </image>
       </ImageView>
       <Button fx:id="inspectButton" alignment="CENTER" graphicTextGap="0.0" layoutX="245.0" layoutY="197.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#setTable" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Inspect" textFill="WHITE">

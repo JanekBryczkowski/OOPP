@@ -47,7 +47,7 @@
          </image>
       </ImageView>
       <Text fx:id="round" layoutX="1182.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text fx:id="secondsLeft" layoutX="740.0" layoutY="733.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="RIGHT" wrappingWidth="453.3333129882813" />
+      <Text fx:id="secondsLeft" layoutX="792.0" layoutY="751.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="319.9999999999999" />
       <ImageView fitHeight="124.0" fitWidth="100.0" layoutX="65.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/earthLogo.png" />
@@ -139,9 +139,14 @@
       </AnchorPane>
       <AnchorPane layoutX="992.0" layoutY="16.0" maxHeight="135.0" maxWidth="229.0" minHeight="135.0" minWidth="229.0" prefHeight="135.0" prefWidth="229.0" styleClass="pointsLabel">
          <children>
-            <Text fx:id="points" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pointsLabel" text="0 points" textAlignment="CENTER" wrappingWidth="229.33333333333326">
+            <Text fx:id="points" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pointsLabel" text="0 points" textAlignment="CENTER" wrappingWidth="229.33333333333326">
                <font>
                   <Font name="System Bold" size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="gainedPoints" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="229.33333333333326">
+               <font>
+                  <Font size="27.0" />
                </font>
             </Text>
          </children>

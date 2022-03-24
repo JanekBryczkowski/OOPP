@@ -11,21 +11,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class QuestionCtrl {
 
     private final ServerUtils server;
-    private final GameCtrl mainCtrl;
+    private final GameCtrl gameCtrl;
     public Stage primaryStage;
 
     public boolean multiplayer;
@@ -87,7 +85,7 @@ public class QuestionCtrl {
     @FXML
     private Text upperBoundary;
     @FXML
-    private ImageView mainImage;
+    private Text gainedPoints;
 
     double randomLower;
     double randomUpper;
@@ -95,15 +93,10 @@ public class QuestionCtrl {
     int upperBoundaryNumber;
 
     @Inject
-    public QuestionCtrl(ServerUtils server, GameCtrl mainCtrl) {
+    public QuestionCtrl(ServerUtils server, GameCtrl gameCtrl) {
         this.server = server;
-        this.mainCtrl = mainCtrl;
-    }
-
-    private int checkNumberOfCharacters(String string) {
-        char[] characters = string.toCharArray();
-
-        return characters.length;
+        this.gameCtrl = gameCtrl;
+        //answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
     //Every new round, a new timer and new timertask have to be instantiated
@@ -127,8 +120,7 @@ public class QuestionCtrl {
                             revealAnswersThreeActivities(null, 4);
                         }
                     }
-                }
-                else {
+                } else {
                     if (secondsPassed[0] == 6) {
                         if (!answered)
                             secondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " second");
@@ -168,15 +160,6 @@ public class QuestionCtrl {
     A question is given as input and this question is displayed on the screen.
      */
     public void startThreeActivityQuestion(Question question) {
-
-        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
-        System.out.println(imageFile);
-        try {
-            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
         answerOne.setText(question.activityList.get(0).title);
         answerTwo.setText(question.activityList.get(1).title);
         answerThree.setText(question.activityList.get(2).title);
@@ -192,18 +175,11 @@ public class QuestionCtrl {
 
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
-
         jokerTwo.setText("Eliminate one wrong answer");
+        answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
     public void startTwoActivityQuestion(Question question) {
-        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
-        System.out.println(imageFile);
-        try {
-            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
         int firstActivityConsumption = question.activityList.get(0).consumption;
         int secondActivityConsumption = question.activityList.get(1).consumption;
         question.setCorrectAnswer();
@@ -245,6 +221,7 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
+        answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
     /*
@@ -279,13 +256,6 @@ public class QuestionCtrl {
     }
 
     public void startOneActivityQuestion(Question question) {
-        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
-        System.out.println(imageFile);
-        try {
-            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
         answerGivenActivityOne.setDisable(false);
         answerOneInput.setText("");
         answerOneInput.setEditable(true);
@@ -304,6 +274,8 @@ public class QuestionCtrl {
 
         jokerTwo.setText("Narrow down the boundaries");
         setUpTheBoundaries();
+
+        answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
     private void setUpTheBoundaries() {
@@ -311,14 +283,24 @@ public class QuestionCtrl {
         randomUpper = (Math.random() * 39 + 1) / 100;
         lowerBoundaryNumber = correctAnswer - (int) (correctAnswer * randomLower);
         upperBoundaryNumber = correctAnswer + (int) (correctAnswer * randomUpper);
-        lowerBoundary.setText(String.valueOf(lowerBoundaryNumber));
-        upperBoundary.setText(String.valueOf(upperBoundaryNumber));
+        lowerBoundary.setText(formatNumber(lowerBoundaryNumber));
+        upperBoundary.setText(formatNumber(upperBoundaryNumber));
+    }
 
-        System.out.println("correct: " + correctAnswer);
-        System.out.println("random lower: " + randomLower);
-        System.out.println("random upper: " + randomUpper);
-        System.out.println("lower: " + lowerBoundaryNumber);
-        System.out.println("upper: " + upperBoundaryNumber);
+    private String formatNumber(int number) {
+        NumberFormat myFormat = NumberFormat.getInstance();
+        myFormat.setGroupingUsed(true);
+        return myFormat.format(number);
+    }
+
+    private String formatNumberString(String number) {
+        if (number.equals("")) return "";
+        else {
+            int numberInInt = Integer.parseInt(number);
+            NumberFormat myFormat = NumberFormat.getInstance();
+            myFormat.setGroupingUsed(true);
+            return myFormat.format(numberInInt);
+        }
     }
 
     //This functions starts the timer. When the timer finishes, the answers are revealed
@@ -330,10 +312,9 @@ public class QuestionCtrl {
     //This function is for hiding the elements on solo player that do not make sense
     public void hideSoloPlayerElements() {
         //jokerThree.setVisible(false);
-        emojiOne.setVisible(false);
-        emojiTwo.setVisible(false);
-        emojiThree.setVisible(false);
-        answersGiven.setVisible(false);
+        emojiOne.setDisable(true);
+        emojiTwo.setDisable(true);
+        emojiThree.setDisable(true);
     }
 
 
@@ -349,7 +330,6 @@ public class QuestionCtrl {
         answerOnePane.setDisable(false);
         answerTwoPane.setDisable(false);
         answerThreePane.setDisable(false);
-
     }
 
     //Function for when the player OKs the input for 1activity question
@@ -437,12 +417,22 @@ public class QuestionCtrl {
             clicked.setStyle("-fx-border-color: red; -fx-border-width: 5; -fx-border-radius: 20;");
             //clicked.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(5))));
         } else if (correctAnswer == click && !(click > 3)) {
-            System.out.println(mainCtrl.points);
-            mainCtrl.points += (jokerOneActive * 10 * secondsPassed[0]);
-            System.out.println(mainCtrl.points);
-        }
+            int pointsGainedInRound = jokerOneActive * 10 * secondsPassed[0];
+            gainedPoints.setText("+ " + pointsGainedInRound + " points");
 
-        points.setText(mainCtrl.points + " points");
+            gainedPoints.setVisible(true);
+            Timer myTimers = new Timer();
+            myTimers.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gainedPoints.setVisible(false);
+                }
+            }, 2000);
+
+            gameCtrl.points += pointsGainedInRound;
+        }
+        points.setText(gameCtrl.points + " points");
         if (!multiplayer)
             newQuestion();
         else {
@@ -466,25 +456,70 @@ public class QuestionCtrl {
         if (input.equals("") || input == null) {
             answerGiven = 0;
         } else {
-            answerGiven = Integer.parseInt(input);
+            answerGiven = formatNumberBack(input);
         }
 
         answerGivenActivityOne.setDisable(true);
         answerOneInput.setEditable(false);
         answerOneInput.setText("correct: " + correctAnswer);
         if (answerGiven == correctAnswer) {
-            mainCtrl.points += (jokerOneActive * 10 * secondsPassed[0]);
+            int pointsGainedInRound = jokerOneActive * 10 * secondsPassed[0];
+            gameCtrl.points += pointsGainedInRound;
+            gainedPoints.setText("+ " + pointsGainedInRound + " points");
+
+            gainedPoints.setVisible(true);
+            Timer myTimers = new Timer();
+            myTimers.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gainedPoints.setVisible(false);
+                }
+            }, 2000);
+
             answerOneInput.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else if (answerGiven > lowerBoundaryNumber && answerGiven < upperBoundaryNumber) {
-            mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
+            int pointsGainedInRound = jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven);
+            gameCtrl.points += pointsGainedInRound;
+            gainedPoints.setText("+ " + pointsGainedInRound + " points");
+
+            gainedPoints.setVisible(true);
+            Timer myTimers = new Timer();
+            myTimers.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gainedPoints.setVisible(false);
+                }
+            }, 2000);
+
             answerOneInput.setBorder(new Border(new BorderStroke(Color.ORANGE, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         } else {
-            mainCtrl.points += (jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven));
+            int pointsGainedInRound = jokerOneActive * calculatePointsForOpenAnswer(correctAnswer, answerGiven);
+            gameCtrl.points += pointsGainedInRound;
+            gainedPoints.setText("+ " + pointsGainedInRound + " points");
+
+            gainedPoints.setVisible(true);
+            Timer myTimers = new Timer();
+            myTimers.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gainedPoints.setVisible(false);
+                }
+            }, 2000);
+
             answerOneInput.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         }
-        points.setText(mainCtrl.points + " points");
+        points.setText(gameCtrl.points + " points");
         if (!multiplayer)
             newQuestion();
+    }
+
+    public int formatNumberBack(String number) {
+        if (number.equals("")) return 0;
+        String number2 = number.replaceAll(",", "");
+        return Integer.parseInt(number2);
     }
 
 
@@ -497,12 +532,12 @@ public class QuestionCtrl {
             public void run() {
                 Platform.runLater(() -> {
                     removeBorders();
-                    round.setText("round " + ++mainCtrl.round);
-                    if (mainCtrl.round > ROUNDS) {
-                        mainCtrl.showLeaderBoard();
+                    round.setText("round " + ++gameCtrl.round);
+                    if (gameCtrl.round > ROUNDS) {
+                        gameCtrl.showLeaderBoard();
                     } else {
                         try {
-                            mainCtrl.SoloGameRound();
+                            gameCtrl.SoloGameRound();
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
@@ -514,13 +549,12 @@ public class QuestionCtrl {
 
     //This function returns to the splash screen (for when a user clicks 'back')
     public void backToSplash() {
-        System.out.println(mainCtrl.getMode());
-        mainCtrl.subscription.unsubscribe();
-        mainCtrl.points = 0;
-        mainCtrl.round = 1;
-        mainCtrl.username = "";
-        mainCtrl.firstJokerUsed = false;
-        mainCtrl.secondJokerUsed = false;
+        gainedPoints.setText("");
+        gameCtrl.points = 0;
+        gameCtrl.round = 1;
+        gameCtrl.username = "";
+        gameCtrl.firstJokerUsed = false;
+        gameCtrl.secondJokerUsed = false;
         jokerOne.setStyle("-fx-border-width: 0");
         jokerTwo.setStyle("-fx-border-width: 0");
         jokerOne.setDisable(false);
@@ -530,20 +564,20 @@ public class QuestionCtrl {
         answerThreePane.setStyle("-fx-border-width: 0;");
         myTimer.cancel();
         points.setText("0 points");
-        mainCtrl.showSplashScreen();
+        gameCtrl.showSplashScreen();
         myTimer.cancel();
     }
 
     //Function for when joker one is pressed
     public void jokerOne() {
-        if (!mainCtrl.firstJokerUsed) {
+        if (!gameCtrl.firstJokerUsed) {
             this.jokerOneActive = 2;
             jokerOne.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
             //jokerOne.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
             jokerOne.setDisable(true);
             jokerTwo.setDisable(true);
             //jokerThree.setDisable(true);
-            mainCtrl.firstJokerUsed = true;
+            gameCtrl.firstJokerUsed = true;
         } else {
             jokerOne.setDisable(true);
         }
@@ -551,19 +585,19 @@ public class QuestionCtrl {
 
     //Function for joker two (Eliminating wrong answer)
     public void jokerTwo() {
-        if (!mainCtrl.secondJokerUsed) {
+        if (!gameCtrl.secondJokerUsed) {
             if (oneActivityAnchorPane.isVisible()) {
                 int difference = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
                 int newLowerBoundaryNumber = lowerBoundaryNumber + difference;
                 int newUpperBoundaryNumber = upperBoundaryNumber - difference;
-                lowerBoundary.setText(String.valueOf(newLowerBoundaryNumber));
-                upperBoundary.setText(String.valueOf(newUpperBoundaryNumber));
+                lowerBoundary.setText(formatNumber(newLowerBoundaryNumber));
+                upperBoundary.setText(formatNumber(newUpperBoundaryNumber));
                 jokerTwo.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
                 //jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
                 jokerOne.setDisable(true);
                 jokerTwo.setDisable(true);
                 //jokerThree.setDisable(true);
-                mainCtrl.secondJokerUsed = true;
+                gameCtrl.secondJokerUsed = true;
             } else if (threeActivitiesAnchorPane.isVisible()) {
                 int random = correctAnswer;
                 while (random == correctAnswer) {
@@ -594,7 +628,7 @@ public class QuestionCtrl {
                 jokerOne.setDisable(true);
                 jokerTwo.setDisable(true);
                 //jokerThree.setDisable(true);
-                mainCtrl.secondJokerUsed = true;
+                gameCtrl.secondJokerUsed = true;
             }
         } else {
             jokerTwo.setDisable(true);
@@ -641,10 +675,14 @@ public class QuestionCtrl {
         answerOneInput.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    answerOneInput.setText(newValue.replaceAll("[^\\d]", ""));
+                if (newValue.length() < 11) {
+                    if (!newValue.matches("\\d*")) {
+                        answerOneInput.setText(formatNumberString(newValue.replaceAll("[^\\d]", "")));
+                    } else {
+                        answerOneInput.setText(formatNumberString(newValue));
+                    }
                 } else {
-                    answerOneInput.setText(newValue);
+                    answerOneInput.setText(oldValue);
                 }
             }
         });
