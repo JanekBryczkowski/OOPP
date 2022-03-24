@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -159,6 +160,15 @@ public class QuestionCtrl {
     A question is given as input and this question is displayed on the screen.
      */
     public void startThreeActivityQuestion(Question question) {
+
+        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
+        System.out.println(imageFile);
+        try {
+            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         answerOne.setText(question.activityList.get(0).title);
         answerTwo.setText(question.activityList.get(1).title);
         answerThree.setText(question.activityList.get(2).title);
@@ -179,6 +189,13 @@ public class QuestionCtrl {
     }
 
     public void startTwoActivityQuestion(Question question) {
+        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
+        System.out.println(imageFile);
+        try {
+            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         int firstActivityConsumption = question.activityList.get(0).consumption;
         int secondActivityConsumption = question.activityList.get(1).consumption;
         question.setCorrectAnswer();
@@ -255,6 +272,13 @@ public class QuestionCtrl {
     }
 
     public void startOneActivityQuestion(Question question) {
+        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
+        System.out.println(imageFile);
+        try {
+            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         answerGivenActivityOne.setDisable(false);
         answerOneInput.setText("");
         answerOneInput.setEditable(true);
@@ -544,12 +568,13 @@ public class QuestionCtrl {
 
     //This function returns to the splash screen (for when a user clicks 'back')
     public void backToSplash() {
-        gainedPoints.setText("");
-        gameCtrl.points = 0;
-        gameCtrl.round = 1;
-        gameCtrl.username = "";
-        gameCtrl.firstJokerUsed = false;
-        gameCtrl.secondJokerUsed = false;
+        System.out.println(mainCtrl.getMode());
+        mainCtrl.subscription.unsubscribe();
+        mainCtrl.points = 0;
+        mainCtrl.round = 1;
+        mainCtrl.username = "";
+        mainCtrl.firstJokerUsed = false;
+        mainCtrl.secondJokerUsed = false;
         jokerOne.setStyle("-fx-border-width: 0");
         jokerTwo.setStyle("-fx-border-width: 0");
         jokerOne.setDisable(false);
