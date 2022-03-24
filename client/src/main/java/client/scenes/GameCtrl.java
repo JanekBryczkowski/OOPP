@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import org.springframework.messaging.simp.stomp.StompSession;
 
 public class GameCtrl {
 
@@ -51,6 +52,8 @@ public class GameCtrl {
     public  boolean secondJokerUsed = false;
     private final int ROUNDS = 10;
 
+    public StompSession.Subscription subscription = null;
+
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
         this.primaryStage = primaryStage;
 
@@ -79,6 +82,10 @@ public class GameCtrl {
         primaryStage.setScene(splashScreenScene);
         //primaryStage.setFullScreen(true);
         //primaryStage.setFullScreenExitHint("");
+    }
+
+    public int getMode() {
+        return splashScreenCtrl.mode;
     }
 
     //Setter for username

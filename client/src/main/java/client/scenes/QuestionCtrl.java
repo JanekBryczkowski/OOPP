@@ -481,6 +481,8 @@ public class QuestionCtrl {
 
     //This function returns to the splash screen (for when a user clicks 'back')
     public void backToSplash() {
+        System.out.println(mainCtrl.getMode());
+        mainCtrl.subscription.unsubscribe();
         mainCtrl.points = 0;
         mainCtrl.round = 1;
         mainCtrl.username = "";
