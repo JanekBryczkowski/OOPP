@@ -16,6 +16,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.springframework.messaging.simp.stomp.StompSession;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.net.MalformedURLException;
 
