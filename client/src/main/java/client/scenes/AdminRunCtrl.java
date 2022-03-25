@@ -30,6 +30,11 @@ public class AdminRunCtrl {
 
     private ServerUtils server;
 
+    /**
+     * This initializes the adminScene and the primaryStage.
+     * @param primaryStage
+     * @param admin
+     */
     public void initialize(Stage primaryStage, Pair<AdminCtrl, Parent> admin) {
         this.primaryStage = primaryStage;
 
@@ -40,7 +45,10 @@ public class AdminRunCtrl {
         primaryStage.show();
     }
 
-    //This function is for showing the SplashScreen
+    /**
+     * This function sets the adminScene as the primaryScene, so it shows up to the
+     * administrator who runs AdminMain.
+     */
     public void showAdminScreen() {
         primaryStage.setTitle("Admin Screen");
         adminScene.getStylesheets().add("client.styles/AdminScreenStyle.css");
