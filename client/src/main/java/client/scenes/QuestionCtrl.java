@@ -315,7 +315,7 @@ public class QuestionCtrl {
     }
 
     /**
-     *
+     * Correct format of a number as an int.
      * @param number that will be formatted.
      * @return String of formatted number.
      */
@@ -326,9 +326,9 @@ public class QuestionCtrl {
     }
 
     /**
-     *
-     * @param number
-     * @return
+     * Correct format of a number as a String.
+     * @param number that will be formatted.
+     * @return String of correctly formatted number.
      */
     private String formatNumberString(String number) {
         if (number.equals("")) return "";
