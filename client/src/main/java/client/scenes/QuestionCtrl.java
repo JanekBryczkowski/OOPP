@@ -92,6 +92,11 @@ public class QuestionCtrl {
     int lowerBoundaryNumber;
     int upperBoundaryNumber;
 
+    /**
+     * Constructor for QuestionCtrl and instantiation of the server and the gameCtrl.
+     * @param server
+     * @param gameCtrl
+     */
     @Inject
     public QuestionCtrl(ServerUtils server, GameCtrl gameCtrl) {
         this.server = server;
@@ -99,7 +104,13 @@ public class QuestionCtrl {
         //answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
-    //Every new round, a new timer and new timertask have to be instantiated
+    /**
+     * Every new round, a new timer and new timer task have to be instantiated.
+     * The run method from the TimerTask class is called to start the 15s countdown timer.
+     * The mode(single player/ multiplayer) is checked because if the mode is in solo mode, then once the user has answered,
+     * the answer can be revealed immediately. However, in multiplayer mode, the user needs to wait the whole 15s for everyone
+     * else in the game to have answered.
+     */
     public void instantiateTimer() {
         secondsPassed[0] = 15;
         myTimer = new Timer();
@@ -155,9 +166,10 @@ public class QuestionCtrl {
         };
     }
 
-    /*
-    This function is a setup for the GameScreen.
-    A question is given as input and this question is displayed on the screen.
+    /**
+     * This function is a setup for the GameScreen when there is a three activity question.
+     * A question is given as input and this question is displayed on the screen.
+     * @param question is the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
         answerOne.setText(question.activityList.get(0).title);
@@ -179,6 +191,10 @@ public class QuestionCtrl {
         answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
+    /**
+     * This function is a setup for the GameScreen when there is a one activity question.
+     * @param question : A question is given as input and this question is displayed on the screen.
+     */
     public void startTwoActivityQuestion(Question question) {
         int firstActivityConsumption = question.activityList.get(0).consumption;
         int secondActivityConsumption = question.activityList.get(1).consumption;
@@ -224,10 +240,11 @@ public class QuestionCtrl {
         answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
-    /*
-    In this function the multiplayer question gets set up. For now, the only thing done is setting the
-    question title to the title of the first activity. This needs to be changed so that it checks how long
-    the question is. This function will also have to instantiate a timer.
+    /**
+     * In this function the multiplayer question gets set up. For now, the only thing done is setting the
+     * question title to the title of the first activity. This needs to be changed so that it checks how long
+     * the question is. This function will also have to instantiate a timer.
+     * @param question given as input and this question is displayed on the screen.
      */
     public void setUpMultiPlayerQuestion(Question question) {
         System.out.println("MP question size" + question.activityList.size());
@@ -255,6 +272,11 @@ public class QuestionCtrl {
 
     }
 
+    /**
+     * This function is a setup for the GameScreen when there is a three activity question.
+     * A question is given as input and this question is displayed on the screen.
+     * @param question given as input and this question is displayed on the screen.
+     */
     public void startOneActivityQuestion(Question question) {
         answerGivenActivityOne.setDisable(false);
         answerOneInput.setText("");
@@ -278,6 +300,11 @@ public class QuestionCtrl {
         answersGiven.setText(gameCtrl.round + " / 10 rounds");
     }
 
+    /**
+     * Function containing an algorithm to calculate the boundaries around a one activity question.
+     * These boundaries are not too far off the answer, enough to guide the user without revealing the answer and are
+     * also computed in a way that the answer will not lie in the middle of both boundaries.
+     */
     private void setUpTheBoundaries() {
         randomLower = (Math.random() * 39 + 1) / 100;
         randomUpper = (Math.random() * 39 + 1) / 100;
@@ -287,12 +314,22 @@ public class QuestionCtrl {
         upperBoundary.setText(formatNumber(upperBoundaryNumber));
     }
 
+    /**
+     * Correct format of a number as an int.
+     * @param number that will be formatted.
+     * @return String of formatted number.
+     */
     private String formatNumber(int number) {
         NumberFormat myFormat = NumberFormat.getInstance();
         myFormat.setGroupingUsed(true);
         return myFormat.format(number);
     }
 
+    /**
+     * Correct format of a number as a String.
+     * @param number that will be formatted.
+     * @return String of correctly formatted number.
+     */
     private String formatNumberString(String number) {
         if (number.equals("")) return "";
         else {
@@ -303,13 +340,17 @@ public class QuestionCtrl {
         }
     }
 
-    //This functions starts the timer. When the timer finishes, the answers are revealed
+    /**
+     * This functions starts the timer. When the timer finishes, the answers are revealed.
+     */
     public void startTimer() {
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
 
-    //This function is for hiding the elements on solo player that do not make sense
+    /**
+     * This function is for hiding the elements on solo player that do not make sense.
+     */
     public void hideSoloPlayerElements() {
         //jokerThree.setVisible(false);
         emojiOne.setDisable(true);
@@ -318,28 +359,37 @@ public class QuestionCtrl {
     }
 
 
-    //This function disables the answer buttons when an answer has been clicked
+    /**
+     * This function disables the answer buttons when an answer has been clicked.
+     */
     public void disableButtons() {
         answerOnePane.setDisable(true);
         answerTwoPane.setDisable(true);
         answerThreePane.setDisable(true);
     }
 
-    //This function enables the answer buttons when a new round starts
+    /**
+     * This function enables the answer buttons when a new round starts.
+     */
     public void enableButtons() {
         answerOnePane.setDisable(false);
         answerTwoPane.setDisable(false);
         answerThreePane.setDisable(false);
     }
 
-    //Function for when the player OKs the input for 1activity question
+    /**
+     * Function for when the player OKs the input for a one activity question.
+     * UNUSED.
+     */
     public void answerNumberGiven() {
         if (!multiplayer)
             revealAnswersOneActivities();
         disableButtons();
     }
 
-    //Function for when the player answers one
+    /**
+     * Function for when the player answers one.
+     */
     public void answerOneGiven() {
         if (!multiplayer)
             revealAnswersThreeActivities(answerOnePane, 1);
@@ -350,7 +400,9 @@ public class QuestionCtrl {
         disableButtons();
     }
 
-    //Function for when the player answers two
+    /**
+     * Function for when the player answers two.
+     */
     public void answerTwoGiven() {
         if (!multiplayer)
             revealAnswersThreeActivities(answerTwoPane, 2);
@@ -361,7 +413,9 @@ public class QuestionCtrl {
         disableButtons();
     }
 
-    //Function for when the player answers three
+    /**
+     * Function for when the player answers three.
+     */
     public void answerThreeGiven() {
         if (!multiplayer)
             revealAnswersThreeActivities(answerThreePane, 3);
@@ -372,7 +426,9 @@ public class QuestionCtrl {
         disableButtons();
     }
 
-    //Remove the coloured borders when a new round starts
+    /**
+     * Remove the coloured borders when a new round starts.
+     */
     public void removeBorders() {
         answerOnePane.setStyle("-fx-border-width: 0");
         answerTwoPane.setStyle("-fx-border-width: 0");
@@ -388,9 +444,9 @@ public class QuestionCtrl {
         jokerOneActive = 1;
     }
 
-    /*
-    This function reveals the correct and wrong answer by colouring the borders of the answers.
-    It adds points and calls the newQuestion function
+    /**
+     * This function reveals the correct and wrong answer by colouring the borders of the answers.
+     * It adds points and calls the newQuestion function.
      */
     public void revealAnswersThreeActivities(Pane clicked, int click) {
         myTimer.cancel();
@@ -446,6 +502,11 @@ public class QuestionCtrl {
         revealAnswersOneActivities(answer);
     }*/
 
+    /**
+     * This function reveals the correct answer by filling in the answer text box with the
+     * correct number.
+     * It adds points and calls the newQuestion function.
+     */
     public void revealAnswersOneActivities() {
         myTimer.cancel();
 
@@ -516,14 +577,20 @@ public class QuestionCtrl {
             newQuestion();
     }
 
+    /**
+     * Formats numbers so that large numbers do not contain any ','.
+     * @param number as a String.
+     * @return a number.
+     */
     public int formatNumberBack(String number) {
         if (number.equals("")) return 0;
         String number2 = number.replaceAll(",", "");
         return Integer.parseInt(number2);
     }
 
-
-    //This function will start a new question after 5 seconds.
+    /**
+     * This function will start a new question after 5 seconds.
+     */
     public void newQuestion() {
         Timer myTimers = new Timer();
         myTimers.schedule(new TimerTask() {
@@ -547,7 +614,9 @@ public class QuestionCtrl {
         }, 1000);
     }
 
-    //This function returns to the splash screen (for when a user clicks 'back')
+    /**
+     * This function returns to the splash screen (for when a user clicks 'BACK') from any round in the question page.
+     */
     public void backToSplash() {
         gainedPoints.setText("");
         gameCtrl.points = 0;
@@ -568,7 +637,9 @@ public class QuestionCtrl {
         myTimer.cancel();
     }
 
-    //Function for when joker one is pressed
+    /**
+     * Function for when joker one is pressed. Jokers are disabled for the remainder of the round.
+     */
     public void jokerOne() {
         if (!gameCtrl.firstJokerUsed) {
             this.jokerOneActive = 2;
@@ -583,7 +654,9 @@ public class QuestionCtrl {
         }
     }
 
-    //Function for joker two (Eliminating wrong answer)
+    /**
+     * Function for joker two (Eliminating wrong answer).
+     */
     public void jokerTwo() {
         if (!gameCtrl.secondJokerUsed) {
             if (oneActivityAnchorPane.isVisible()) {
@@ -635,21 +708,39 @@ public class QuestionCtrl {
         }
     }
 
+    /**
+     * Sets the anchor pane for a one activity question visible in the Question Screen.
+     */
     public void setOneActivity() {
         oneActivityAnchorPane.setVisible(true);
         threeActivitiesAnchorPane.setVisible(false);
     }
 
+    /**
+     * Sets the anchor pane for a two activity question visible in the Question Screen.
+     */
     public void setTwoActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }
 
+    /**
+     * Sets the anchor pane for a three activity question visible in the Question Screen.
+     */
     public void setThreeActivities() {
         oneActivityAnchorPane.setVisible(false);
         threeActivitiesAnchorPane.setVisible(true);
     }
 
+    /**
+     * Calculates the number of points that should be awarded to a user in a one activity question.
+     * This is calculated by an algorithm that considers two things: how close your numerical answer
+     * was to the actual answer and how long you took to answer. The closer you are to the answer and
+     * the less time you take, the more points you get awarded.
+     * @param correctAnswer is the correct numerical answer.
+     * @param givenAnswer is the answer input by the user.
+     * @return int representing the points awarded to the user.
+     */
     public int calculatePointsForOpenAnswer(int correctAnswer, int givenAnswer) {
         if (givenAnswer < lowerBoundaryNumber || givenAnswer > upperBoundaryNumber) {
             return 0;
@@ -662,15 +753,25 @@ public class QuestionCtrl {
         }
     }
 
+    /**
+     * Resets the borders of the jokers in the next round after they are used.
+     */
     public void resetJokers() {
         jokerOne.setStyle("-fx-border-width: 0");
         jokerTwo.setStyle("-fx-border-width: 0");
     }
 
+    /**
+     * Setting the text of the points to 0 if the user didn't achieve any points in that round.
+     */
     public void resetPoints() {
         points.setText("0 points");
     }
 
+    /**
+     * Function that checks that only numerical answers are input into the text box for a one
+     * activity question.
+     */
     public void validateInput() {
         answerOneInput.textProperty().addListener(new ChangeListener<String>() {
             @Override
