@@ -83,7 +83,7 @@
             </ImageView>
     </children>
 </AnchorPane>
-  <AnchorPane fx:id="gameRules" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #D2EC7E; -fx-background-radius: 20; -fx-border-color: black; -fx-border-width: 4;" visible="false" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="219.0" AnchorPane.topAnchor="150.0">
+  <AnchorPane fx:id="gameRules" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #D2EC7E; -fx-background-radius: 30; -fx-border-color: black; -fx-border-width: 4; -fx-border-radius: 30;" visible="false" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="219.0" AnchorPane.topAnchor="150.0">
       <children>
           <Button fx:id="exitButtonRules" alignment="CENTER" layoutX="304.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" prefHeight="60.0" prefWidth="152.0" style="-fx-background-color: #819E21; -fx-background-radius: 20;" text="EXIT" textFill="WHITE" AnchorPane.leftAnchor="324.0" AnchorPane.rightAnchor="324.0" AnchorPane.topAnchor="14.0">
               <font>
