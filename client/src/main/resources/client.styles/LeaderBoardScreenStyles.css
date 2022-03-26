@@ -1,3 +1,18 @@
+.greenButton {
+    -fx-background-radius: 36;
+    -fx-background-color: #819E21;
+}
+
+.greenButton:hover {
+    -fx-background-radius: 36;
+    -fx-background-color: #708A1C;
+}
+
+.greenButton:pressed {
+    -fx-background-radius: 36;
+    -fx-background-color: #617818;
+}
+
 .background {
     -fx-background-color: #D2EC7E;
 }
