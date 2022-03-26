@@ -13,15 +13,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.util.*;
+import java.util.Timer;
 
 public class QuestionCtrl {
 
@@ -97,6 +102,9 @@ public class QuestionCtrl {
 
     @FXML
     private Label emojiThreeLabel;
+
+    @FXML
+    private ImageView mainImage;
 
     double randomLower;
     double randomUpper;
@@ -183,6 +191,14 @@ public class QuestionCtrl {
      * @param question is the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
+        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
+        System.out.println(imageFile);
+        try {
+            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         answerOne.setText(question.activityList.get(0).title);
         answerTwo.setText(question.activityList.get(1).title);
         answerThree.setText(question.activityList.get(2).title);
@@ -207,6 +223,14 @@ public class QuestionCtrl {
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
+        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
+        System.out.println(imageFile);
+        try {
+            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         int firstActivityConsumption = question.activityList.get(0).consumption;
         int secondActivityConsumption = question.activityList.get(1).consumption;
         question.setCorrectAnswer();
@@ -288,6 +312,14 @@ public class QuestionCtrl {
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
+        Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
+        System.out.println(imageFile);
+        try {
+            mainImage.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         answerGivenActivityOne.setDisable(false);
         answerOneInput.setText("");
         answerOneInput.setEditable(true);
@@ -628,6 +660,7 @@ public class QuestionCtrl {
      * This function returns to the splash screen (for when a user clicks 'BACK') from any round in the question page.
      */
     public void backToSplash() {
+        gameCtrl.subscription.unsubscribe();
         gainedPoints.setText("");
         gameCtrl.points = 0;
         gameCtrl.round = 1;
