@@ -43,40 +43,59 @@ public class AdminCtrl {
         VBox vbox = new VBox();
         for (Activity activity : activityList) {
             AnchorPane anchorPane = new AnchorPane();
-            anchorPane.setMaxHeight(30 * ((int) (activity.title.length() / 40) + 1));
-            anchorPane.setMinHeight(30 * ((int) (activity.title.length() / 40) + 1));
-            anchorPane.setMinHeight(30 * ((int) (activity.title.length() / 40) + 1));
+            anchorPane.setMaxHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            anchorPane.setMinHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            anchorPane.setMinHeight(30 * ((int) (activity.title.length() / 35) + 1));
             anchorPane.setMaxWidth(620);
             anchorPane.setMinWidth(620);
             anchorPane.setPrefWidth(620);
+
+            Label id = new Label(String.valueOf(activity.id));
+            id.setWrapText(true);
+            id.setTextAlignment(TextAlignment.CENTER);
+            id.setMaxHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            id.setMinHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            id.setPrefHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            id.setMaxWidth(190);
+            id.setMinWidth(190);
+            id.setPrefWidth(190);
+            id.setLayoutX(8);
+            id.setLayoutY(0);
+            id.setStyle("-fx-font-size: 16;");
+            id.setAlignment(Pos.CENTER_LEFT);
+
             Label activityLabel = new Label(activity.title);
             activityLabel.setWrapText(true);
             activityLabel.setTextAlignment(TextAlignment.CENTER);
-            activityLabel.setPrefHeight(30 * ((int) (activity.title.length() / 40) + 1));
-            activityLabel.setMaxHeight(30 * ((int) (activity.title.length() / 40) + 1));
-            activityLabel.setMinHeight(30 * ((int) (activity.title.length() / 40) + 1));
+            activityLabel.setPrefHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            activityLabel.setMaxHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            activityLabel.setMinHeight(30 * ((int) (activity.title.length() / 35) + 1));
             activityLabel.setMaxWidth(350);
             activityLabel.setMinWidth(350);
             activityLabel.setPrefWidth(350);
-            activityLabel.setLayoutX(0);
+            activityLabel.setLayoutX(155);
             activityLabel.setLayoutY(0);
             activityLabel.setStyle("-fx-font-size: 16;");
             activityLabel.setAlignment(Pos.CENTER);
 
             Label consumption = new Label(String.valueOf(activity.consumption));
-            consumption.setMaxHeight(30 * ((int) (activity.title.length() / 40) + 1));
-            consumption.setMinHeight(30 * ((int) (activity.title.length() / 40) + 1));
-            consumption.setPrefHeight(30 * ((int) (activity.title.length() / 40) + 1));
+            consumption.setMaxHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            consumption.setMinHeight(30 * ((int) (activity.title.length() / 35) + 1));
+            consumption.setPrefHeight(30 * ((int) (activity.title.length() / 35) + 1));
             consumption.setMaxWidth(190);
             consumption.setMinWidth(190);
             consumption.setPrefWidth(190);
-            consumption.setLayoutX(350);
+            consumption.setLayoutX(450);
             consumption.setLayoutY(0);
             consumption.setStyle("-fx-font-size: 16;");
             consumption.setAlignment(Pos.CENTER);
+
+            anchorPane.getChildren().add(id);
             anchorPane.getChildren().add(activityLabel);
             anchorPane.getChildren().add(consumption);
             vbox.getChildren().add(anchorPane);
+
+
         }
         scroll.setContent(vbox);
 

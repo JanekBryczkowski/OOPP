@@ -18,6 +18,7 @@ public class WaitingRoomCtrl {
 
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
+//    private User user;
 
 
     private List<User> userList = new ArrayList<>();
@@ -33,6 +34,7 @@ public class WaitingRoomCtrl {
     public WaitingRoomCtrl(ServerUtils server, GameCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+
     }
 
     /*
@@ -71,7 +73,7 @@ public class WaitingRoomCtrl {
             anchorPane.setMaxWidth(620);
             anchorPane.setMinWidth(620);
             anchorPane.setPrefWidth(620);
-            javafx.scene.control.Label playerList = new javafx.scene.control.Label(user.username);
+            javafx.scene.control.Label playerList = new javafx.scene.control.Label(user.getUsername());
             playerList.setWrapText(true);
             playerList.setTextAlignment(TextAlignment.CENTER);
             playerList.setPrefHeight(30);
@@ -84,8 +86,9 @@ public class WaitingRoomCtrl {
             playerList.setLayoutY(0);
             playerList.setStyle("-fx-font-size: 16;");
             playerList.setAlignment(Pos.CENTER);
+
         }
-        System.out.println(userList);
+        System.out.println(vbox);
         waitingScroll.setContent(vbox);
     }
 }

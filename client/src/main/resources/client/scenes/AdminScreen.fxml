@@ -54,13 +54,18 @@
             <Image url="@/client.images/environmentLogo.png" />
          </image>
       </ImageView>
-      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="64.0" layoutY="347.0" maxHeight="336.0" maxWidth="640.0" minHeight="336.0" minWidth="450.0" prefHeight="336.0" prefWidth="596.0" styleClass="scrollPane" vbarPolicy="ALWAYS" />
-      <Label alignment="CENTER" layoutX="64.0" layoutY="307.0" maxHeight="40.0" maxWidth="350.0" minHeight="40.0" minWidth="284.0" prefHeight="40.0" prefWidth="315.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 18 0 0 0;" text="Activities">
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="64.0" layoutY="347.0" maxHeight="336.0" maxWidth="640.0" minHeight="336.0" minWidth="450.0" prefHeight="336.0" prefWidth="628.0" styleClass="scrollPane" vbarPolicy="ALWAYS" />
+      <Label alignment="CENTER" layoutX="180.0" layoutY="307.0" maxHeight="40.0" maxWidth="390.0" minHeight="40.0" minWidth="235.0" prefHeight="40.0" prefWidth="390.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 18 0 0 0;" text="Activities">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="347.0" layoutY="307.0" maxHeight="40.0" maxWidth="315.0" minHeight="40.0" minWidth="100.0" prefHeight="40.0" prefWidth="315.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 0 18 0 0;" text="Consumption" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="540.0" layoutY="307.0" maxHeight="40.0" maxWidth="315.0" minHeight="40.0" minWidth="100.0" prefHeight="40.0" prefWidth="154.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 0 18 0 0;" text="Consumption" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="64.0" layoutY="307.0" maxHeight="40.0" maxWidth="350.0" minHeight="32.0" minWidth="94.0" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 18 0 0 0;" text="ID">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
