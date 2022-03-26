@@ -660,24 +660,32 @@ public class QuestionCtrl {
      * This function returns to the splash screen (for when a user clicks 'BACK') from any round in the question page.
      */
     public void backToSplash() {
-        gameCtrl.subscription.unsubscribe();
-        gainedPoints.setText("");
-        gameCtrl.points = 0;
-        gameCtrl.round = 1;
-        gameCtrl.username = "";
-        gameCtrl.firstJokerUsed = false;
-        gameCtrl.secondJokerUsed = false;
-        jokerOne.setStyle("-fx-border-width: 0");
-        jokerTwo.setStyle("-fx-border-width: 0");
-        jokerOne.setDisable(false);
-        jokerTwo.setDisable(false);
-        answerOnePane.setStyle("-fx-border-width: 0;");
-        answerTwoPane.setStyle("-fx-border-width: 0;");
-        answerThreePane.setStyle("-fx-border-width: 0;");
-        myTimer.cancel();
-        points.setText("0 points");
-        gameCtrl.showSplashScreen();
-        myTimer.cancel();
+        if(gameCtrl.getMode()==1) {
+            gameCtrl.subscription.unsubscribe();
+            gainedPoints.setText("");
+            gameCtrl.points = 0;
+            gameCtrl.round = 1;
+            gameCtrl.username = "";
+            gameCtrl.firstJokerUsed = false;
+            gameCtrl.secondJokerUsed = false;
+            jokerOne.setStyle("-fx-border-width: 0");
+            jokerTwo.setStyle("-fx-border-width: 0");
+            jokerOne.setDisable(false);
+            jokerTwo.setDisable(false);
+            answerOnePane.setStyle("-fx-border-width: 0;");
+            answerTwoPane.setStyle("-fx-border-width: 0;");
+            answerThreePane.setStyle("-fx-border-width: 0;");
+            myTimer.cancel();
+            points.setText("0 points");
+            gameCtrl.showSplashScreen();
+            myTimer.cancel();
+        } else if(gameCtrl.getMode()==0) {
+            gameCtrl.points = 0;
+            gameCtrl.round = 1;
+            gameCtrl.firstJokerUsed = false;
+            gameCtrl.secondJokerUsed = false;
+            gameCtrl.showSplashScreen();
+        }
     }
 
     /**
