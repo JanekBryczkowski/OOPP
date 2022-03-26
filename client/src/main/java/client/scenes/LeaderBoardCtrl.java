@@ -54,12 +54,22 @@ public class LeaderBoardCtrl {
     List<Score> scoreList;
     ObservableList<Score> scores;
 
+    /**
+     * Constructor for the Leader Board.
+     * @param server
+     * @param mainCtrl
+     */
     @Inject
     public LeaderBoardCtrl(ServerUtils server, GameCtrl mainCtrl) {
         this.server = server;
         this.gameCtrl = mainCtrl;
     }
 
+    /**
+     * This function is called when the Leader Board scene is going to show.
+     * The usernames along with their scores will be stored in the database for solo player.
+     * Surrounded by a try catch block in case an exception is raised during this process.
+     */
     public void storePoints() {
         try {
             Score score = new Score(gameCtrl.username, gameCtrl.points);
@@ -74,6 +84,12 @@ public class LeaderBoardCtrl {
         }
     }
 
+    /**
+     * This function will set up the top three scores in the Leader Board scene.
+     * It will retrieve all the Scores from the database and check the length of this List.
+     * Depending on the size of the List we can either set up the first player, the first two players or
+     * the first three players.
+     */
     public void setLeaderBoard() {
         scores = FXCollections.observableArrayList();
         scoreList = new ArrayList<>();
@@ -103,6 +119,10 @@ public class LeaderBoardCtrl {
         }
     }
 
+    /**
+     * This function will set the List of all the Scores in the database. It will also
+     * order them by calling the sortList function.
+     */
     public void setList() {
         if (multiplayer) {
             //scores.addAll(server.scores);
@@ -115,6 +135,12 @@ public class LeaderBoardCtrl {
         uploadScoresIntoTheRanking(scoreList);
     }
 
+    /**
+     * In this function the scroll pane of the Leader Board screen is set up. We retrieve all the Scores
+     * from the scoreList parameter and create a label for each one. All labels are added to the ranking list.
+     * The user who is currently playing will see their own score in bold.
+     * @param scoreList
+     */
     private void uploadScoresIntoTheRanking(List<Score> scoreList) {
         VBox vbox = new VBox();
         for (Score score : scoreList) {
@@ -158,6 +184,10 @@ public class LeaderBoardCtrl {
         leaderBoardScrollPane.setContent(vbox);
     }
 
+    /**
+     * If the button in the Leaderboard screen for going back to the Splash Screen is pressed, the user will be
+     * directed back to the Splash Screen.
+     */
     public void backToSplash() {
         gameCtrl.points = 0;
         gameCtrl.round = 1;
@@ -166,6 +196,11 @@ public class LeaderBoardCtrl {
         gameCtrl.showSplashScreen();
     }
 
+    /**
+     * If the button in the Leaderboard screen for going back to the Waiting Room Screen is pressed, the user will be
+     * directed back to the Waiting Room Screen. The user will be added to the current open lobby, and they will be added to
+     * the socket for that client.
+     */
     public void backToWaitingRoom() {
         String username = gameCtrl.username;
         User user = new User(username, 0);
@@ -189,6 +224,10 @@ public class LeaderBoardCtrl {
         gameCtrl.showWaitingRoomScreen();
     }
 
+    /**
+     * This function will compare the Scores using the compare method and sort the List of Scores according
+     * to that.
+     */
     public void sortList() {
         scoreList.sort(new Comparator<Score>() {
             public int compare(Score score1, Score score2) {

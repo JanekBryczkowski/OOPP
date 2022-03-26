@@ -62,6 +62,16 @@ public class GameCtrl {
 
     //public int multiPlayerRound = 1;
 
+    /**
+     * Initializes all the controllers and all the scenes that are used throughout the game.
+     * The game starts in the Splash Screen, so we call showSplashScreen to make it visible
+     * We show the Primary Stage.
+     * @param primaryStage
+     * @param splash
+     * @param questionCtrl
+     * @param leaderBoardCtrl
+     * @param waitingRoomCtrl
+     */
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
         this.primaryStage = primaryStage;
 
@@ -81,7 +91,9 @@ public class GameCtrl {
         primaryStage.show();
     }
 
-    //This function is for showing the SplashScreen
+    /**
+     * This function is for showing the SplashScreen.
+     */
     public void showSplashScreen() {
         System.out.println("Xd 2");
         primaryStage.setTitle("Splash Screen");
@@ -92,16 +104,30 @@ public class GameCtrl {
         //primaryStage.setFullScreenExitHint("");
     }
 
+    /**
+     * Get the mode of the game (single player/ multiplayer).
+     * @return
+     */
     public int getMode() {
         return splashScreenCtrl.mode;
     }
 
-    //Setter for username
+    /**
+     * Setter for username.
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    //This function is for showing the gamescreen
+    /**
+     * This function is for showing the Game Screen.
+     * The number of rounds are checked. If this variable is larger than the set number of rounds,
+     * then the points for the user are reset as the current game is over and the function for showing the
+     * Leader Board is called.
+     * If the number of rounds has not yet reached the maximum, then we generate another random question
+     * and depending on the number of activities in the question, we call a function tailored to word the new question.
+     */
     public void SoloGameRound() throws MalformedURLException {
         questionCtrl.multiplayer = false;
         leaderBoardCtrl.multiplayer = false;
@@ -134,7 +160,11 @@ public class GameCtrl {
         }
     }
 
-    //Setup for a question with three activities
+    /**
+     * Setup for a question with three activities.
+     * The setOneActivity function is called.
+     * @param question
+     */
     public void oneActivityQuestion(Question question) {
         questionCtrl.startOneActivityQuestion(question);
         primaryStage.setTitle("Game screen - 1 activity question");
@@ -144,7 +174,11 @@ public class GameCtrl {
         checkJokers(questionCtrl);
     }
 
-    //Setup for a question with three activities
+    /**
+     * Setup for a question with three activities
+     * The setTwoActivities function is called.
+     * @param question
+     */
     public void twoActivityQuestion(Question question) {
         questionCtrl.startTwoActivityQuestion(question);
         primaryStage.setTitle("Game screen - 2 activities question");
@@ -154,7 +188,11 @@ public class GameCtrl {
         checkJokers(questionCtrl);
     }
 
-    //Setup for a question with three activities
+    /**
+     * Setup for a question with three activities
+     * The setThreeActivities function is called.
+     * @param question
+     */
     public void threeActivityQuestion(Question question) throws MalformedURLException {
         questionCtrl.startThreeActivityQuestion(question);
         primaryStage.setTitle("Game screen - 3 activities question");
@@ -164,25 +202,30 @@ public class GameCtrl {
         checkJokers(questionCtrl);
     }
 
-    /*
-    Player joining the current lobby of the multi player game
+    /**
+     * Player joining the current lobby of the multiplayer game.
      */
     public void joinCurrentLobby() {
         primaryStage.setTitle("Waiting Room");
         primaryStage.setScene(waitingRoom);
+        waitingRoomCtrl.setWaitingRoomTable();
     }
 
+    /**
+     * The scene is set to show the Waiting Room.
+     */
     public void showWaitingRoomScreen() {
         primaryStage.setTitle("Waiting Room");
         waitingRoom.getStylesheets().add("client.styles/WaitingRoomStyle.css");
         primaryStage.setScene(waitingRoom);
     }
 
-    /*
-    This function gets called whenever a player receives a question from the server
-    in multiplayer mode. The question is printed to the terminal for testing. The scene is set
-    to the question screen and on the question controller, the setup function is called with
-    the question, which will set up the question properly
+    /**
+     * This function gets called whenever a player receives a question from the server
+     * in multiplayer mode. The question is printed to the terminal for testing. The scene is set
+     * to the question screen and on the question controller, the setup function is called with
+     * the question, which will set up the question properly.
+     * @param question
      */
     public void startMultiPlayerQuestion(Question question) {
         System.out.println("MADE IT");
@@ -206,8 +249,11 @@ public class GameCtrl {
     }
 
 
-    //Function for storing the user and their points in the database and
-    //loading the leaderboard scene
+    /**
+     * Function for storing the user and their points in the database is called.
+     * The Leader Board Scene is set, and we create a list with all the users in the database
+     * to output to the scroll pane when the scene is set as the Primary Stage.
+     */
     public void showLeaderBoard() {
         questionCtrl.resetPoints();
         questionCtrl.resetJokers();
@@ -218,6 +264,11 @@ public class GameCtrl {
         primaryStage.setScene(leaderBoardScreen);
     }
 
+    /**
+     * This function will check if the jokers have been used by the user playing.
+     * If a user has been used, then that joker will be disabled for the remaining of the game.
+     * @param questionCtrl
+     */
     public void checkJokers(QuestionCtrl questionCtrl) {
         if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
         if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);

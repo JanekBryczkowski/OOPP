@@ -36,4 +36,10 @@ public class WaitingRoomCtrl {
     public void backButton() {
         mainCtrl.showSplashScreen();
     }
+
+    public void setWaitingRoomTable() {
+
+    }
+
+
 }

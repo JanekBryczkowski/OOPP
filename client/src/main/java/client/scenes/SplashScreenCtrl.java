@@ -28,8 +28,10 @@ public class SplashScreenCtrl {
     private final GameCtrl gameCtrl;
     private Stage primaryStage;
 
-    //If mode is set to 0, then single player is active
-    //If mode is set to 1, then multi player is active
+    /**
+     * If mode is set to 0, then single player is active.
+     * If mode is set to 1, then multiplayer is active.
+     */
     public int mode = 0;
 
     @FXML
@@ -61,6 +63,14 @@ public class SplashScreenCtrl {
     @FXML
     private ImageView multiPlayerImageView;
 
+    /**
+     * Constructor for the SplashScreenCtrl. We also initialize the gameCtrl and questionCtrl because these
+     * scenes will be set from this class.
+     * @param server
+     * @param gameCtrl
+     * @param questionCtrl
+     * @throws MalformedURLException
+     */
     @Inject
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
         this.server = server;
@@ -68,7 +78,12 @@ public class SplashScreenCtrl {
         Path path = Paths.get("");
     }
 
-    //This function sets the username and moves to the gamescreen
+    /**
+     * This function sets the username and moves to the gameScreen.
+     * It checks that the username has been input before being able to join, if not, an alert is raised.
+     * For solo player, the gameCtrl sets the attributes for the User to play and for multiplayer it checks
+     * that this username isn't taken.
+     */
     public void join() {
         if (usernameInput.getText().equals("") || usernameInput.getText() == null) {
             alert.setText("Please, provide your username");
@@ -91,15 +106,15 @@ public class SplashScreenCtrl {
         }
     }
 
-    /*
-    This function gets called whenever a player presses join to start a multiplayer game.
-    First a User is made and this user gets send to the server. The server will add this user to the
-    current lobby.
-
-    Then, the user GETs the number of the current open lobby. With this number, the player registers
-    for the websocket channel of that lobby. Everytime the player receives a question from this channel,
-    the startMultiPlayerQuestion function in the gameCtrl is called and the question gets passed. In this
-    function, the client side will set up the given question
+    /**
+     * This function gets called whenever a player presses join to start a multiplayer game.
+     * First a User is made and this user gets send to the server. The server will add this user to the
+     * current lobby.
+     *
+     * Then, the user GETs the number of the current open lobby. With this number, the player registers
+     * for the web socket channel of that lobby. Everytime the player receives a question from this channel,
+     * the startMultiPlayerQuestion function in the gameCtrl is called and the question gets past. In this
+     * function, the client side will set up the given question.
      */
     public void startMultiPlayerGame() {
         String username = usernameInput.getText();
@@ -120,6 +135,11 @@ public class SplashScreenCtrl {
         gameCtrl.joinCurrentLobby();
     }
 
+    /**
+     * If the Rules button in the Splash Screen is pressed, it will disable the other buttons whilst the
+     * rules pop up is there.
+     * It also blurs the main scene.
+     */
     public void GameRulesButton() {
         gameRules.setVisible(true);
         joinButton.setDisable(true);
@@ -131,6 +151,9 @@ public class SplashScreenCtrl {
 
     }
 
+    /**
+     * If the Exit button from the Rules pop up is pressed, the scene is set back to the Splash Screen.
+     */
     public void exit() {
         gameRules.setVisible(false);
         joinButton.setDisable(false);
@@ -140,20 +163,24 @@ public class SplashScreenCtrl {
     }
 
 
-    //This function is a setup for the splash screen.
+    /**
+     * This function is a setup for the splash screen.
+     */
     public void setSplashScreen() {
-//        setUsername.setVisible(false);
-//        modeTwo.setVisible(false);
         usernameInput.setText("");
     }
 
+    /**
+     * This will get a random question from the Activity database
+     * @return random question from the serverUtils.
+     */
     public Question getRandomQuestion() {
         return server.getQuestion();
     }
 
-    /*
-    This function gets called whenever a player switches the mode.
-    The switch will change on the front end, and on the backend the mode will change.
+    /**
+     * This function gets called whenever a player switches the mode.
+     * The switch will change on the front end, and on the backend the mode will change.
      */
     public void switchMode() {
         if (mode == 0) {
@@ -171,6 +198,10 @@ public class SplashScreenCtrl {
         }
     }
 
+    /**
+     * Function for making the transition of the switch from single player mode to
+     * multiplayer mode smooth.
+     */
     public void changeSwitch() {
         if (mode == 0) {
             TranslateTransition transition = new TranslateTransition();
