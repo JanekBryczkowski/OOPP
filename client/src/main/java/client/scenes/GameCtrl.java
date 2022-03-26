@@ -17,6 +17,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import commons.Question;
+import commons.Score;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,6 +25,8 @@ import javafx.util.Pair;
 import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameCtrl {
 
@@ -50,11 +53,14 @@ public class GameCtrl {
     public int round = 1;
     public String username;
 
-    public  boolean firstJokerUsed = false;
-    public  boolean secondJokerUsed = false;
+    public boolean firstJokerUsed = false;
+    public boolean secondJokerUsed = false;
     private final int ROUNDS = 10;
 
     public StompSession.Subscription subscription = null;
+    public List<Score> multiplayerUsers = new ArrayList<>();
+
+    //public int multiPlayerRound = 1;
 
     /**
      * Initializes all the controllers and all the scenes that are used throughout the game.
@@ -124,6 +130,7 @@ public class GameCtrl {
      */
     public void SoloGameRound() throws MalformedURLException {
         questionCtrl.multiplayer = false;
+        leaderBoardCtrl.multiplayer = false;
         System.out.println("Xd 3");
         //Plays 5 rounds
         if (round > ROUNDS) {
@@ -224,13 +231,21 @@ public class GameCtrl {
         System.out.println("MADE IT");
         System.out.println(question.toString());
 
-        questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
-        primaryStage.setScene(questionScreen);
-        primaryStage.setTitle("Question");
+        if (round > ROUNDS) {
+            questionCtrl.resetPoints();
+            showLeaderBoard();
+        } else {
+            questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
+            primaryStage.setScene(questionScreen);
+            primaryStage.setTitle("Question");
 
-        checkJokers(questionCtrl);
-        questionCtrl.multiplayer = true;
-        questionCtrl.setUpMultiPlayerQuestion(question);
+            checkJokers(questionCtrl);
+            questionCtrl.multiplayer = true;
+            leaderBoardCtrl.multiplayer = true;
+            questionCtrl.setUpMultiPlayerQuestion(question);
+        }
+        round++;
+        System.out.println("#########################" + round);
     }
 
 

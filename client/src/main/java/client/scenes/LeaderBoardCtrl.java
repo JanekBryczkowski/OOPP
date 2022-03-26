@@ -27,6 +27,7 @@ public class LeaderBoardCtrl {
     private Score first;
     private Score second;
     private Score third;
+    public boolean multiplayer;
 
     @FXML
     private Text firstName;
@@ -72,7 +73,8 @@ public class LeaderBoardCtrl {
     public void storePoints() {
         try {
             Score score = new Score(gameCtrl.username, gameCtrl.points);
-            server.addScore(score);
+            if (!multiplayer) server.addScore(score);
+            //server.scores.add(score);
         } catch (WebApplicationException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
@@ -122,8 +124,13 @@ public class LeaderBoardCtrl {
      * order them by calling the sortList function.
      */
     public void setList() {
-        scores.addAll(server.getScores());
-        scoreList.addAll(server.getScores());
+        if (multiplayer) {
+            //scores.addAll(server.scores);
+            //scoreList.addAll(server.scores);
+        } else {
+            scores.addAll(server.getScores());
+            scoreList.addAll(server.getScores());
+        }
         sortList();
         uploadScoresIntoTheRanking(scoreList);
     }

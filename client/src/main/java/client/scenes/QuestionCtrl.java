@@ -4,6 +4,8 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Stage;
 import commons.Question;
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import java.net.MalformedURLException;
@@ -91,6 +94,15 @@ public class QuestionCtrl {
     private Text upperBoundary;
     @FXML
     private Text gainedPoints;
+    @FXML
+    private Label emojiOneLabel;
+
+    @FXML
+    private Label emojiTwoLabel;
+
+    @FXML
+    private Label emojiThreeLabel;
+
     @FXML
     private ImageView mainImage;
 
@@ -292,7 +304,6 @@ public class QuestionCtrl {
                 break;
             }
         }
-
     }
 
     /**
@@ -384,9 +395,9 @@ public class QuestionCtrl {
      */
     public void hideSoloPlayerElements() {
         //jokerThree.setVisible(false);
-        emojiOne.setDisable(true);
+        /*emojiOne.setDisable(true);
         emojiTwo.setDisable(true);
-        emojiThree.setDisable(true);
+        emojiThree.setDisable(true);*/
     }
 
 
@@ -819,5 +830,56 @@ public class QuestionCtrl {
                 }
             }
         });
+    }
+
+    public void showEmojiOne() {
+        ScaleTransition transition = new ScaleTransition();
+        transition.setByX(1.3);
+        transition.setByY(1.3);
+        transition.setDuration(Duration.seconds(0.3));
+        transition.setNode(emojiOne);
+        transition.setAutoReverse(true);
+        transition.setCycleCount(4);
+        transition.play();
+        emojiOne.toFront();
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+        emojiOneLabel.setText(gameCtrl.username);
+        emojiOneLabel.setVisible(true);
+        pauseTransition.play();
+        pauseTransition.setOnFinished(e -> emojiOneLabel.setVisible(false));
+    }
+
+    public void showEmojiTwo() {
+        ScaleTransition transition = new ScaleTransition();
+        transition.setByX(1.3);
+        transition.setByY(1.3);
+        transition.setDuration(Duration.seconds(0.3));
+        transition.setNode(emojiTwo);
+        transition.setAutoReverse(true);
+        transition.setCycleCount(4);
+        transition.play();
+        emojiTwo.toFront();
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+        emojiTwoLabel.setText(gameCtrl.username);
+        emojiTwoLabel.setVisible(true);
+        pauseTransition.play();
+        pauseTransition.setOnFinished(e -> emojiTwoLabel.setVisible(false));
+    }
+
+    public void showEmojiThree() {
+        ScaleTransition transition = new ScaleTransition();
+        transition.setByX(1.3);
+        transition.setByY(1.3);
+        transition.setDuration(Duration.seconds(0.3));
+        transition.setNode(emojiThree);
+        transition.setAutoReverse(true);
+        transition.setCycleCount(4);
+        transition.play();
+        emojiThree.toFront();
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+        emojiThreeLabel.setText(gameCtrl.username);
+        emojiThreeLabel.setVisible(true);
+        pauseTransition.play();
+        pauseTransition.setOnFinished(e -> emojiThreeLabel.setVisible(false));
     }
 }
