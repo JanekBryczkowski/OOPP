@@ -266,6 +266,20 @@ public class GameCtrl {
     }
 
     /**
+     * The half-time Leader Board Scene is set, this is called during the Multiplayer game.
+     */
+
+    public void showHalfTimeLeaderBoard() {
+        leaderBoardCtrl.storePoints();
+        leaderBoardCtrl.setLeaderBoard();
+        leaderBoardCtrl.setList();
+        leaderBoardCtrl.halfTimeLeaderBoard();
+        leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
+        primaryStage.setScene(leaderBoardScreen);
+    }
+
+
+    /**
      * This function will check if the jokers have been used by the user playing.
      * If a user has been used, then that joker will be disabled for the remaining of the game.
      * @param questionCtrl

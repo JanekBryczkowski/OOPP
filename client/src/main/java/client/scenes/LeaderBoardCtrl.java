@@ -191,6 +191,20 @@ public class LeaderBoardCtrl {
     }
 
     /**
+     * In Multiplayer the Half-time Leaderboard shows up after 10 questions, users will see their score, which
+     * they achieved so far.
+     */
+
+    public void halfTimeLeaderBoard() {
+        waitingRoom.setVisible(false);
+        waitingRoom.setManaged(false);
+        splash.setVisible(false);
+        splash.setManaged(false);
+        leaderBoardScrollPane.setTranslateY(565);
+    }
+
+
+    /**
      * If the button in the Leaderboard screen for going back to the Splash Screen is pressed, the user will be
      * directed back to the Splash Screen.
      */
