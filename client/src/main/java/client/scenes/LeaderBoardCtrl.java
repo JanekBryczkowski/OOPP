@@ -50,6 +50,12 @@ public class LeaderBoardCtrl {
     @FXML
     private ScrollPane leaderBoardScrollPane;
 
+    @FXML
+    private Button waitingRoom;
+
+    @FXML
+    private Button splash;
+
     List<Score> topThreeList;
     List<Score> scoreList;
     ObservableList<Score> scores;
@@ -194,6 +200,17 @@ public class LeaderBoardCtrl {
         gameCtrl.firstJokerUsed = false;
         gameCtrl.secondJokerUsed = false;
         gameCtrl.showSplashScreen();
+    }
+
+    /**
+     * On the solo player Leaderboard screen, the 'back to the Waiting Room' button is not an option anymore.
+     */
+    public void backToWaitingRoomButton() {
+        if(SplashScreenCtrl.mode == 0) {
+            waitingRoom.setVisible(false);
+            waitingRoom.setManaged(false);
+            splash.setTranslateY(94);
+        }
     }
 
     /**

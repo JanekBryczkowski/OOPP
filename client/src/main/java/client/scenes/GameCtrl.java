@@ -260,6 +260,7 @@ public class GameCtrl {
         leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         leaderBoardCtrl.setList();
+        leaderBoardCtrl.backToWaitingRoomButton();
         leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
         primaryStage.setScene(leaderBoardScreen);
     }
