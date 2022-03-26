@@ -18,7 +18,6 @@ package client.scenes;
 import client.utils.ServerUtils;
 import commons.Question;
 import commons.Score;
-import commons.User;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

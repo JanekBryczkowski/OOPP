@@ -6,7 +6,6 @@ import com.google.inject.Stage;
 import commons.Question;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,7 +22,6 @@ import javafx.util.Duration;
 import java.net.MalformedURLException;
 import java.text.NumberFormat;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class QuestionCtrl {
 
