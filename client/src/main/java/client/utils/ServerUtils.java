@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
 import commons.*;
+import jakarta.ws.rs.core.Configuration;
 import org.glassfish.jersey.client.ClientConfig;
 
 import jakarta.ws.rs.client.ClientBuilder;
@@ -109,6 +110,14 @@ public class ServerUtils {
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<User>>() {});
+    }
+
+    public void removeUser(String username) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user/removePlayer/"+ username) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get();
     }
 
     public void startGame() {

@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import commons.User;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -18,6 +19,7 @@ public class WaitingRoomCtrl {
 
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
+
 //    private User user;
 
 
@@ -53,8 +55,9 @@ public class WaitingRoomCtrl {
 
     public void backButton() {
         mainCtrl.showSplashScreen();
-        server.unsubscribeForMessages();
-
+        mainCtrl.subscription.unsubscribe();
+        server.removeUser(mainCtrl.username);
+        setWaitingRoomTable();
     }
 
     public void setWaitingRoomTable() {
@@ -69,11 +72,9 @@ public class WaitingRoomCtrl {
             AnchorPane anchorPane = new AnchorPane();
             anchorPane.setMaxHeight(30);
             anchorPane.setMinHeight(30);
-            anchorPane.setMinHeight(30);
             anchorPane.setMaxWidth(620);
             anchorPane.setMinWidth(620);
-            anchorPane.setPrefWidth(620);
-            javafx.scene.control.Label playerList = new javafx.scene.control.Label(user.getUsername());
+            Label playerList = new Label(user.getUsername());
             playerList.setWrapText(true);
             playerList.setTextAlignment(TextAlignment.CENTER);
             playerList.setPrefHeight(30);
@@ -87,8 +88,9 @@ public class WaitingRoomCtrl {
             playerList.setStyle("-fx-font-size: 16;");
             playerList.setAlignment(Pos.CENTER);
 
+            anchorPane.getChildren().add(playerList);
+            vbox.getChildren().add(anchorPane);
         }
-        System.out.println(vbox);
         waitingScroll.setContent(vbox);
     }
 }

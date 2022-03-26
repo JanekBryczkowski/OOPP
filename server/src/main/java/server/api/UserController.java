@@ -36,6 +36,16 @@ public class UserController {
 //            listeners.forEach((k,l) -> l.accept(user));
             return lobbyController.getOpenLobby().addUser(user);
     }
+    @GetMapping("/removePlayer/{username}")
+    public void removeUser(@PathVariable("username") String username) {
+        List<User> userList = lobbyController.openLobby.getUserList();
+        for (User user : userList) {
+            if (user.getUsername().equals(username)) {
+                userList.remove(user);
+                return;
+            }
+        }
+    }
 
     @GetMapping("/currentLobby")
     public List<User> getUsersOfOpenLobby() {

@@ -118,6 +118,7 @@ public class SplashScreenCtrl {
         });
         gameCtrl.subscription = subscription;
         gameCtrl.joinCurrentLobby();
+
     }
 
     public void GameRulesButton() {
