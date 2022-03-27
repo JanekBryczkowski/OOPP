@@ -28,7 +28,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
 import commons.*;
-import jakarta.ws.rs.core.Configuration;
 import org.glassfish.jersey.client.ClientConfig;
 
 import jakarta.ws.rs.client.ClientBuilder;

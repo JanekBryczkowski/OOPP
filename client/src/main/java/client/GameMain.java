@@ -25,7 +25,7 @@ import com.google.inject.Injector;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+
 
 public class GameMain extends Application {
 

@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import org.glassfish.jersey.internal.inject.ParamConverters;
+
 
 import java.util.ArrayList;
 import java.util.List;
