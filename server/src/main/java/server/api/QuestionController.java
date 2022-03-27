@@ -2,8 +2,6 @@ package server.api;
 
 import commons.Activity;
 import commons.Question;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.database.QuestionRepository;
 import org.springframework.http.ResponseEntity;
@@ -25,29 +23,35 @@ public class QuestionController {
         this.msgs = msgs;
     }
 
-    public Iterable<Activity> save(List<Activity> users) {
-//        dropTable();
-        return repo.saveAll(users);
+    /**
+     * This function stores a list of type Activity inside the database.
+     * This function gets called at the start of running
+     * the server to store every activity from the json file.
+     *
+     * @param   activities a list of activities to store in the database.
+     * @return  A iterable list of all activities in the database.
+     */
+    public Iterable<Activity> save(List<Activity> activities) {
+        return repo.saveAll(activities);
     }
 
+    /**
+     * This functions gets called to see all the activities
+     * that are present in the database.
+     *
+     * @return  A list of all activities in the database.
+     */
     @GetMapping("/")
-    public List<Activity> getQuestions() {
+    public List<Activity> getAllActivities() {
         return repo.findAll();
     }
 
-    @GetMapping("/getRandom")
-    public Activity getRandomQuestion() {
-        List<Activity> activityList = repo.findAll();
-        int numberOfQuestions = activityList.size();
-        int randomNumber = (int) (Math.random() * numberOfQuestions);
-        return activityList.get(randomNumber);
-    }
-
-    public void dropTable() {
-        repo.dropTable();
-        repo.createTable();
-    }
-
+    /**
+     * This functions gets called whenever a client needs a question
+     * in a solo player game.
+     *
+     * @return  A random question with 1,2 or 3 activities
+     */
     @GetMapping("/getQuestion")
     public Question getActivities() {
         Question question = new Question();
@@ -83,6 +87,14 @@ public class QuestionController {
         return question;
     }
 
+    /**
+     * This function is called whenever the user needs a specific activity.
+     * The function does not get called by the client but can be used
+     * for debugging through the localhost.
+     *
+     * @param id    The id of the question.
+     * @return      The requested question.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getById(@PathVariable("id") long id) {
         if (id < 0 || !repo.existsById(id)) {
@@ -111,11 +123,12 @@ public class QuestionController {
         repo.deleteById(id);
     }
 
-    @MessageMapping("/question")
-    @SendTo("/topic/question")
-    public Question sendQuestion(Question question) {
-        System.out.println("SENDING QUESTION " + question.toString());
-        return question;
-    }
+//    @MessageMapping("/question{path}")
+//    @SendTo("/topic/question0")
+//    public WebsocketMessage sendQuestion(WebsocketMessage websocketMessage, @PathVariable String path) {
+//        System.out.println("RECEIVED A WEBSOCKETMESSAGE ON question"+path);
+//        System.out.println("SENDING QUESTION " + websocketMessage.toString());
+//        return websocketMessage;
+//    }
 
 }

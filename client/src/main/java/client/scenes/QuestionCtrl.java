@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Stage;
 import commons.Question;
+import commons.WebsocketMessage;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
@@ -306,6 +307,24 @@ public class QuestionCtrl {
         }
     }
 
+    public void setupJoker() {
+        emojiOne.setOnMouseClicked(event -> {
+            WebsocketMessage websocketMessage = new WebsocketMessage("EMOJIONE");
+            websocketMessage.setEmojiUsername(gameCtrl.username);
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
+        });
+        emojiTwo.setOnMouseClicked(event -> {
+            WebsocketMessage websocketMessage = new WebsocketMessage("EMOJITWO");
+            websocketMessage.setEmojiUsername(gameCtrl.username);
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
+        });
+        emojiThree.setOnMouseClicked(event -> {
+            WebsocketMessage websocketMessage = new WebsocketMessage("EMOJITHREE");
+            websocketMessage.setEmojiUsername(gameCtrl.username);
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
+        });
+    }
+
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
      * A question is given as input and this question is displayed on the screen.
@@ -394,10 +413,11 @@ public class QuestionCtrl {
      * This function is for hiding the elements on solo player that do not make sense.
      */
     public void hideSoloPlayerElements() {
-        //jokerThree.setVisible(false);
-        /*emojiOne.setDisable(true);
-        emojiTwo.setDisable(true);
-        emojiThree.setDisable(true);*/
+//        jokerThree.setVisible(false);
+        emojiOne.setDisable(false);
+        emojiTwo.setDisable(false);
+        emojiThree.setDisable(false);
+
     }
 
 
@@ -832,7 +852,16 @@ public class QuestionCtrl {
         });
     }
 
-    public void showEmojiOne() {
+//    emojiOne.setOnAction(new EventHandler() {
+//
+//        @Override
+//        public void handle(ActionEvent event) {
+//            System.out.println("Hi there! You clicked me!");
+//        }
+//    });
+
+    public void showEmojiOne(String username) {
+
         ScaleTransition transition = new ScaleTransition();
         transition.setByX(1.3);
         transition.setByY(1.3);
@@ -843,13 +872,13 @@ public class QuestionCtrl {
         transition.play();
         emojiOne.toFront();
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiOneLabel.setText(gameCtrl.username);
+        emojiOneLabel.setText(username);
         emojiOneLabel.setVisible(true);
         pauseTransition.play();
         pauseTransition.setOnFinished(e -> emojiOneLabel.setVisible(false));
     }
 
-    public void showEmojiTwo() {
+    public void showEmojiTwo(String username) {
         ScaleTransition transition = new ScaleTransition();
         transition.setByX(1.3);
         transition.setByY(1.3);
@@ -860,13 +889,13 @@ public class QuestionCtrl {
         transition.play();
         emojiTwo.toFront();
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiTwoLabel.setText(gameCtrl.username);
+        emojiTwoLabel.setText(username);
         emojiTwoLabel.setVisible(true);
         pauseTransition.play();
         pauseTransition.setOnFinished(e -> emojiTwoLabel.setVisible(false));
     }
 
-    public void showEmojiThree() {
+    public void showEmojiThree(String username) {
         ScaleTransition transition = new ScaleTransition();
         transition.setByX(1.3);
         transition.setByY(1.3);
@@ -877,9 +906,10 @@ public class QuestionCtrl {
         transition.play();
         emojiThree.toFront();
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiThreeLabel.setText(gameCtrl.username);
+        emojiThreeLabel.setText(username);
         emojiThreeLabel.setVisible(true);
         pauseTransition.play();
         pauseTransition.setOnFinished(e -> emojiThreeLabel.setVisible(false));
     }
+
 }
