@@ -60,6 +60,10 @@ public class GameCtrl {
     public StompSession.Subscription subscription = null;
     public List<Score> multiplayerUsers = new ArrayList<>();
 
+    /**
+     * This is for the multiplayer game, since there is a half-time Leaderboard set in the 11th round,
+     * we need 21 rounds all together.
+     */
     public final int MULTIROUNDS = 21;
 
     /**

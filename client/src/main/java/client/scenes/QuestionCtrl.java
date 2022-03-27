@@ -187,6 +187,8 @@ public class QuestionCtrl {
 
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
+     * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
+     * showing the half-time Leaderboard.
      * A question is given as input and this question is displayed on the screen.
      * @param question is the question that will be set up in the Scene.
      */
@@ -230,6 +232,8 @@ public class QuestionCtrl {
 
     /**
      * This function is a setup for the GameScreen when there is a one activity question.
+     * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
+     * showing the half-time Leaderboard.
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
@@ -328,6 +332,8 @@ public class QuestionCtrl {
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
      * A question is given as input and this question is displayed on the screen.
+     * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
+     * showing the half-time Leaderboard.
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {

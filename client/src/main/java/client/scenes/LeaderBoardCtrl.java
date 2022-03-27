@@ -197,7 +197,6 @@ public class LeaderBoardCtrl {
      * In Multiplayer the Half-time Leaderboard shows up after 10 questions, users will see their score, which
      * they achieved so far.
      */
-
     public void halfTimeLeaderBoard() {
         waitingRoom.setVisible(false);
         waitingRoom.setManaged(false);
@@ -209,6 +208,9 @@ public class LeaderBoardCtrl {
         leaderBoardScrollPane.setPrefHeight(629);
     }
 
+    /**
+     * This function sets the Leaderboard back to the original.
+     */
     public void endLeaderBoard() {
         waitingRoom.setVisible(true);
         waitingRoom.setManaged(true);
