@@ -62,6 +62,23 @@ public class ServerUtils {
                 });
     }
 
+    public Activity getByID(String id) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/questions/" + id) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<Activity>() {
+                });
+    }
+
+    public void addActivity(Activity activity) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/questions") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(activity, APPLICATION_JSON), Activity.class);
+    }
+
     public List<Activity> showAll() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/questions/") //
@@ -70,6 +87,7 @@ public class ServerUtils {
                 .get(new GenericType<List<Activity>>() {
                 });
     }
+
 
     public Quote addQuote(Quote quote) {
         return ClientBuilder.newClient(new ClientConfig()) //
@@ -87,6 +105,14 @@ public class ServerUtils {
                             .get(new GenericType<Question>() {
                             });
         }
+
+    public void deleteQuestion(String id) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/questions/"+ id) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .delete();
+    }
 
     public int getCurrentLobby() {
         return ClientBuilder.newClient(new ClientConfig()) //

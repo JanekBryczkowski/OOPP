@@ -64,7 +64,12 @@ public class WaitingRoomCtrl {
 
     public void setWaitingRoomTable() {
         userList.addAll(server.getUsersInLobby());
-        numberOf.setText(String.valueOf(userList.size()));
+        numberOf.setText("");
+        if (userList.size() == 1) {
+            numberOf.setText(userList.size() + " player in the waiting room");
+        } else {
+            numberOf.setText(userList.size() + " players in the waiting room");
+        }
         showInWaitingRoomTable();
     }
 

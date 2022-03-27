@@ -34,12 +34,12 @@
             <Image url="@/client.images/energyGameLogo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="67.0" fitWidth="76.0" layoutX="1128.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="67.0" fitWidth="76.0" layoutX="1128.0" layoutY="700.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/earthLogo.png" />
          </image>
       </ImageView>
-      <Button fx:id="inspectButton" alignment="CENTER" graphicTextGap="0.0" layoutX="245.0" layoutY="197.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#setTable" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Inspect" textFill="WHITE">
+      <Button fx:id="inspectButton" alignment="CENTER" graphicTextGap="0.0" layoutX="245.0" layoutY="197.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#setTable" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Refresh" textFill="WHITE">
          <font>
             <Font name="System Bold" size="48.0" />
          </font>
@@ -66,7 +66,7 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <Text layoutX="793.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit an activity" textAlignment="CENTER">
+      <Text layoutX="700.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit/Delete an activity" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="48.0" />
          </font>
@@ -76,17 +76,17 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextField fx:id="consumptionText" layoutX="825.0" layoutY="400.0" prefHeight="53.0" prefWidth="225.0" promptText="Edit Consumption..." style="-fx-background-color: transparent; -fx-border-color: #6a6a6a;">
+      <TextField fx:id="consumptionText" layoutX="825.0" layoutY="400.0" prefHeight="53.0" prefWidth="225.0" promptText="Consumption..." style="-fx-background-color: transparent; -fx-border-color: #6a6a6a;">
          <font>
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextField fx:id="activityText" layoutX="825.0" layoutY="320.0" prefHeight="53.0" prefWidth="225.0" promptText="Edit Activity..." style="-fx-background-color: transparent; -fx-border-color: #6a6a6a;">
+      <TextField fx:id="activityText" layoutX="825.0" layoutY="320.0" prefHeight="53.0" prefWidth="225.0" promptText="Activity..." style="-fx-background-color: transparent; -fx-border-color: #6a6a6a;">
          <font>
             <Font size="24.0" />
          </font>
       </TextField>
-      <Button fx:id="editButton" alignment="CENTER" graphicTextGap="0.0" layoutX="827.0" layoutY="500.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Edit" textFill="WHITE">
+      <Button fx:id="editButton" alignment="CENTER" graphicTextGap="0.0" layoutX="827.0" layoutY="607.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Edit" textFill="WHITE">
          <font>
             <Font name="System Bold" size="48.0" />
          </font>
@@ -97,10 +97,43 @@
             <Insets bottom="1.0" />
          </padding>
       </Button>
-      <Text fx:id="alert" fill="RED" layoutX="815.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="283.69183349609375">
+      <Text fx:id="alert" fill="RED" layoutX="710.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="488.99993896484375">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
+      <Button alignment="CENTER" graphicTextGap="0.0" layoutX="1116.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToSplash" prefHeight="48.0" prefWidth="108.0" styleClass="inspectButton" text="Back" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <padding>
+            <Insets bottom="1.0" />
+         </padding>
+      </Button>
+      <Button fx:id="DeleteButton" alignment="CENTER" graphicTextGap="0.0" layoutX="827.0" layoutY="714.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#deleteActivity" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <padding>
+            <Insets bottom="1.0" />
+         </padding>
+      </Button>
+      <Button fx:id="addButton" alignment="CENTER" graphicTextGap="0.0" layoutX="827.0" layoutY="500.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#addActivity" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Add" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <padding>
+            <Insets bottom="1.0" />
+         </padding>
+      </Button>
    </children>
 </AnchorPane>

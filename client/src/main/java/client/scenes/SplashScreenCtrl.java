@@ -187,5 +187,8 @@ public class SplashScreenCtrl {
             transition.play();
         }
     }
+    public void toAdminScreen() {
+        gameCtrl.showAdminScreen();
+    }
 
 }

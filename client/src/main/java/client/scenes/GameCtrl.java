@@ -44,6 +44,9 @@ public class GameCtrl {
     private WaitingRoomCtrl waitingRoomCtrl;
     private Scene waitingRoom;
 
+    private AdminCtrl adminCtrl;
+    private Scene admin;
+
     private ServerUtils server;
 
     public int points = 0;
@@ -56,7 +59,7 @@ public class GameCtrl {
 
     public StompSession.Subscription subscription = null;
 
-    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl) {
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl, Pair<AdminCtrl, Parent> adminCtrl) {
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splash.getKey();
@@ -70,6 +73,9 @@ public class GameCtrl {
 
         this.waitingRoomCtrl = waitingRoomCtrl.getKey();
         this.waitingRoom = new Scene(waitingRoomCtrl.getValue());
+
+        this.adminCtrl = adminCtrl.getKey();
+        this.admin = new Scene(adminCtrl.getValue());
 
         showSplashScreen();
         primaryStage.show();
@@ -207,5 +213,12 @@ public class GameCtrl {
     public void checkJokers(QuestionCtrl questionCtrl) {
         if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
         if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);
+    }
+
+    public void showAdminScreen() {
+        primaryStage.setTitle("Admin Screen");
+        admin.getStylesheets().add("client.styles/AdminScreenStyle.css");
+        primaryStage.setScene(admin);
+        adminCtrl.setTable();
     }
 }
