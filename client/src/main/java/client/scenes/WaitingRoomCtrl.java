@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import org.glassfish.jersey.internal.inject.ParamConverters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +27,17 @@ public class WaitingRoomCtrl {
     private List<User> userList = new ArrayList<>();
 
     @FXML
-    private Text playersInRoom;
+    private Text numberOf;
 
     @FXML
     private ScrollPane waitingScroll;
 
 
     @Inject
-    public WaitingRoomCtrl(ServerUtils server, GameCtrl mainCtrl) {
+    public WaitingRoomCtrl(ServerUtils server, GameCtrl mainCtrl, Text numberOf) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.numberOf = numberOf;
 
     }
 
@@ -62,7 +64,7 @@ public class WaitingRoomCtrl {
 
     public void setWaitingRoomTable() {
         userList.addAll(server.getUsersInLobby());
-        System.out.println(userList);
+        numberOf.setText(String.valueOf(userList.size()));
         showInWaitingRoomTable();
     }
 

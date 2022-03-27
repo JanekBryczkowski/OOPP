@@ -9,8 +9,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
@@ -24,6 +26,14 @@ public class AdminCtrl {
 
     @FXML
     private ScrollPane scroll;
+    @FXML
+    private TextField idText;
+    @FXML
+    private TextField activityText;
+    @FXML
+    private TextField consumptionText;
+    @FXML
+    private Text alert;
 
 
     //Connecting the page with the server, and the GameCtrl
@@ -49,7 +59,6 @@ public class AdminCtrl {
             anchorPane.setMaxWidth(620);
             anchorPane.setMinWidth(620);
             anchorPane.setPrefWidth(620);
-
             Label id = new Label(String.valueOf(activity.id));
             id.setWrapText(true);
             id.setTextAlignment(TextAlignment.CENTER);
@@ -63,7 +72,6 @@ public class AdminCtrl {
             id.setLayoutY(0);
             id.setStyle("-fx-font-size: 16;");
             id.setAlignment(Pos.CENTER_LEFT);
-
             Label activityLabel = new Label(activity.title);
             activityLabel.setWrapText(true);
             activityLabel.setTextAlignment(TextAlignment.CENTER);
@@ -77,7 +85,6 @@ public class AdminCtrl {
             activityLabel.setLayoutY(0);
             activityLabel.setStyle("-fx-font-size: 16;");
             activityLabel.setAlignment(Pos.CENTER);
-
             Label consumption = new Label(String.valueOf(activity.consumption));
             consumption.setMaxHeight(30 * ((int) (activity.title.length() / 35) + 1));
             consumption.setMinHeight(30 * ((int) (activity.title.length() / 35) + 1));
@@ -89,15 +96,20 @@ public class AdminCtrl {
             consumption.setLayoutY(0);
             consumption.setStyle("-fx-font-size: 16;");
             consumption.setAlignment(Pos.CENTER);
-
             anchorPane.getChildren().add(id);
             anchorPane.getChildren().add(activityLabel);
             anchorPane.getChildren().add(consumption);
             vbox.getChildren().add(anchorPane);
-
-
         }
         scroll.setContent(vbox);
+    }
+
+    public void editActivity() {
+        if (idText.getText() == null || idText.getText().equals("")) {
+            alert.setText("Input ID of the activity");
+        }
+
+
 
     }
 
