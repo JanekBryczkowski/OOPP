@@ -56,7 +56,7 @@ public class GameCtrl {
 
     public boolean firstJokerUsed = false;
     public boolean secondJokerUsed = false;
-    private final int ROUNDS = 10;
+    private final int ROUNDS = 20;
 
     public StompSession.Subscription subscription = null;
     public List<Score> multiplayerUsers = new ArrayList<>();
@@ -67,6 +67,7 @@ public class GameCtrl {
      * Initializes all the controllers and all the scenes that are used throughout the game.
      * The game starts in the Splash Screen, so we call showSplashScreen to make it visible
      * We show the Primary Stage.
+     *
      * @param primaryStage
      * @param splash
      * @param questionCtrl
@@ -96,17 +97,15 @@ public class GameCtrl {
      * This function is for showing the SplashScreen.
      */
     public void showSplashScreen() {
-        System.out.println("Xd 2");
         primaryStage.setTitle("Splash Screen");
         splashScreenCtrl.setSplashScreen();
         splashScreenScene.getStylesheets().add("client.styles/SplashScreenStyle.css");
         primaryStage.setScene(splashScreenScene);
-        //primaryStage.setFullScreen(true);
-        //primaryStage.setFullScreenExitHint("");
     }
 
     /**
      * Get the mode of the game (single player/ multiplayer).
+     *
      * @return
      */
     public int getMode() {
@@ -115,6 +114,7 @@ public class GameCtrl {
 
     /**
      * Setter for username.
+     *
      * @param username
      */
     public void setUsername(String username) {
@@ -132,14 +132,11 @@ public class GameCtrl {
     public void SoloGameRound() throws MalformedURLException {
         questionCtrl.multiplayer = false;
         leaderBoardCtrl.multiplayer = false;
-        System.out.println("Xd 3");
-        //Plays 5 rounds
         if (round > ROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
         } else {
             Question question = splashScreenCtrl.getRandomQuestion();
-            System.out.println("size" + question.activityList.size());
             switch (question.activityList.size()) {
                 case (1): {
                     oneActivityQuestion(question);
@@ -153,10 +150,6 @@ public class GameCtrl {
                     threeActivityQuestion(question);
                     break;
                 }
-                default: {
-                    threeActivityQuestion(question);
-                    break;
-                }
             }
         }
     }
@@ -164,6 +157,7 @@ public class GameCtrl {
     /**
      * Setup for a question with three activities.
      * The setOneActivity function is called.
+     *
      * @param question
      */
     public void oneActivityQuestion(Question question) {
@@ -178,6 +172,7 @@ public class GameCtrl {
     /**
      * Setup for a question with three activities
      * The setTwoActivities function is called.
+     *
      * @param question
      */
     public void twoActivityQuestion(Question question) {
@@ -192,6 +187,7 @@ public class GameCtrl {
     /**
      * Setup for a question with three activities
      * The setThreeActivities function is called.
+     *
      * @param question
      */
     public void threeActivityQuestion(Question question) throws MalformedURLException {
@@ -226,6 +222,7 @@ public class GameCtrl {
      * in multiplayer mode. The question is printed to the terminal for testing. The scene is set
      * to the question screen and on the question controller, the setup function is called with
      * the question, which will set up the question properly.
+     *
      * @param question
      */
     public void startMultiPlayerQuestion(Question question) {
@@ -269,6 +266,7 @@ public class GameCtrl {
     /**
      * This function will check if the jokers have been used by the user playing.
      * If a user has been used, then that joker will be disabled for the remaining of the game.
+     *
      * @param questionCtrl
      */
     public void checkJokers(QuestionCtrl questionCtrl) {
@@ -277,20 +275,19 @@ public class GameCtrl {
     }
 
     public void showEmoji(int emojiNumber, String username) {
-        switch(emojiNumber) {
+        switch (emojiNumber) {
 
-            case(1):
+            case (1):
                 questionCtrl.showEmojiOne(username);
                 break;
-            case(2):
+            case (2):
                 questionCtrl.showEmojiTwo(username);
                 break;
-            case(3):
+            case (3):
                 questionCtrl.showEmojiThree(username);
                 break;
             default:
                 break;
         }
     }
-
 }

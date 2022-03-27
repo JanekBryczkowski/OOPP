@@ -20,6 +20,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -42,11 +44,11 @@ public class QuestionCtrl {
 
     public int correctAnswer;
     public int jokerOneActive = 1; //double points
-    final int[] secondsPassed = {15};
+    int[] secondsPassed = {15};
     Timer myTimer;
     TimerTask task;
 
-    private final int ROUNDS = 10;
+    private final int ROUNDS = 20;
 
     private boolean emojiOneCurrentlyBeingChanged = false;
     private boolean emojiTwoCurrentlyBeingChanged = false;
@@ -77,7 +79,9 @@ public class QuestionCtrl {
     @FXML
     private Button jokerThree;
     @FXML
-    private Text secondsLeft;
+    private Text singlePlayerSecondsLeft;
+    @FXML
+    private Text multiPlayerSecondsLeft;
     @FXML
     private ImageView emojiOne;
     @FXML
@@ -112,10 +116,46 @@ public class QuestionCtrl {
     @FXML
     private ImageView mainImage;
 
+    @FXML
+    private AnchorPane mainAnchorPane;
+
+    @FXML
+    private Arc clock;
+
     double randomLower;
     double randomUpper;
     int lowerBoundaryNumber;
     int upperBoundaryNumber;
+
+    List<Color> colorsForClockSinglePlayer = Arrays.asList(new Color(0, 0.3, 0.15, 1),
+            new Color(0.07, 0.51, 0.23, 1),
+            new Color(0.28, 0.75, 0.33, 1),
+            new Color(0.57, 0.94, 0.53, 1),
+            new Color(1, 0.95, 0.14, 1),
+            new Color(1, 0.79, 0.01, 1),
+            new Color(1, 0.74, 0.5, 1),
+            new Color(0.99, 0.66, 0.35, 1),
+            new Color(1, 0.62, 0.27, 1),
+            new Color(0.97, 0.43, 0.07, 1),
+            new Color(0.99, 0.31, 0.31, 1),
+            new Color(0.91, 0.23, 0.08, 1),
+            new Color(0.54, 0.06, 0.05, 1),
+            new Color(0.39, 0.02, 0.02, 1),
+            new Color(0, 0, 0, 1),
+            new Color(0, 0, 0, 1));
+
+    List<Color> colorsForClockMultiPlayer = Arrays.asList(new Color(0, 0.3, 0.15, 1),
+            new Color(0.28, 0.75, 0.33, 1),
+            new Color(0.57, 0.94, 0.53, 1),
+            new Color(1, 0.95, 0.14, 1),
+            new Color(1, 0.74, 0.5, 1),
+            new Color(1, 0.62, 0.27, 1),
+            new Color(0.97, 0.43, 0.07, 1),
+            new Color(0.91, 0.23, 0.08, 1),
+            new Color(0.54, 0.06, 0.05, 1),
+            new Color(0.39, 0.02, 0.02, 1),
+            new Color(0, 0, 0, 1),
+            new Color(0, 0, 0, 1));
 
     /**
      * Constructor for QuestionCtrl and instantiation of the server and the gameCtrl.
@@ -143,12 +183,18 @@ public class QuestionCtrl {
         task = new TimerTask() {
             @Override
             public void run() {
-                secondsPassed[0]--;
                 if (!multiplayer) {
+                    secondsPassed[0]--;
+                    clock.setStartAngle(0.0);
+                    double proportion = (double) secondsPassed[0] / 15.0;
+                    double finalNumber = proportion * 360;
+                    clock.setLength(finalNumber);
+                    clock.setType(ArcType.ROUND);
+                    clock.setFill(colorsForClockSinglePlayer.get(15 - secondsPassed[0]));
                     if (secondsPassed[0] == 1) {
-                        secondsLeft.setText("Time left: " + secondsPassed[0] + " second");
+                        singlePlayerSecondsLeft.setText("Time left: " + secondsPassed[0] + " second");
                     } else if (secondsPassed[0] > 0)
-                        secondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
+                        singlePlayerSecondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
                     else {
                         if (oneActivityAnchorPane.isVisible()) {
                             revealAnswersOneActivities();
@@ -158,18 +204,25 @@ public class QuestionCtrl {
                         }
                     }
                 } else {
+                    secondsPassed[0]--;
+                    clock.setStartAngle(0.0);
+                    double proportion = (double) (secondsPassed[0] - 5) / 10.0;
+                    double finalNumber = proportion * 360;
+                    clock.setLength(finalNumber);
+                    clock.setType(ArcType.ROUND);
+                    clock.setFill(colorsForClockMultiPlayer.get(15 - secondsPassed[0]));
                     if (secondsPassed[0] == 6) {
                         if (!answered)
-                            secondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " second");
+                            multiPlayerSecondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " second");
                         else
-                            secondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " second");
+                            multiPlayerSecondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " second");
                     } else if (secondsPassed[0] > 5)
                         if (!answered)
-                            secondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " seconds");
+                            multiPlayerSecondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " seconds");
                         else
-                            secondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " seconds");
+                            multiPlayerSecondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " seconds");
                     else if (secondsPassed[0] > 0) {
-                        secondsLeft.setText("Answers revealed! Next round starting soon");
+                        multiPlayerSecondsLeft.setText("Answers revealed! Starting next round!");
                         if (oneActivityAnchorPane.isVisible()) {
                             revealAnswersOneActivities();
                         }
@@ -207,9 +260,30 @@ public class QuestionCtrl {
             e.printStackTrace();
         }
 
-        answerOne.setText(question.activityList.get(0).title);
-        answerTwo.setText(question.activityList.get(1).title);
-        answerThree.setText(question.activityList.get(2).title);
+        if (question.activityList.get(0).title.length() > 22) {
+            answerOne.setText(question.activityList.get(0).title);
+            answerOne.setStyle("-fx-font-size: 15;");
+        } else {
+            answerOne.setText(question.activityList.get(0).title);
+            answerOne.setStyle("-fx-font-size: 25;");
+        }
+
+        if (question.activityList.get(1).title.length() > 22) {
+            answerTwo.setText(question.activityList.get(1).title);
+            answerTwo.setStyle("-fx-font-size: 15;");
+        } else {
+            answerTwo.setText(question.activityList.get(1).title);
+            answerTwo.setStyle("-fx-font-size: 25;");
+        }
+
+        if (question.activityList.get(2).title.length() > 22) {
+            answerThree.setText(question.activityList.get(2).title);
+            answerThree.setStyle("-fx-font-size: 15;");
+        } else {
+            answerThree.setText(question.activityList.get(2).title);
+            answerThree.setStyle("-fx-font-size: 25;");
+        }
+
         questionText.setText("Which of these activities takes more energy?");
         questionText.setStyle("-fx-font-size: 47;");
         question.setCorrectAnswer();
@@ -223,7 +297,7 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         jokerTwo.setText("Eliminate one wrong answer");
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**
@@ -281,7 +355,7 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**
@@ -368,7 +442,7 @@ public class QuestionCtrl {
         jokerTwo.setText("Narrow down the boundaries");
         setUpTheBoundaries();
 
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**
@@ -697,7 +771,6 @@ public class QuestionCtrl {
         gainedPoints.setText("");
         gameCtrl.points = 0;
         gameCtrl.round = 1;
-        gameCtrl.username = "";
         gameCtrl.firstJokerUsed = false;
         gameCtrl.secondJokerUsed = false;
         jokerOne.setStyle("-fx-border-width: 0");

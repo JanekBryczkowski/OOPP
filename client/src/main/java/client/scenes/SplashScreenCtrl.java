@@ -128,10 +128,10 @@ public class SplashScreenCtrl {
         StompSession.Subscription subscription = server.registerForMessages(destination, q -> {
 
             Platform.runLater(() -> {
-                if(q.typeOfMessage.equals("QUESTION")) {
+                if (q.typeOfMessage.equals("QUESTION")) {
                     System.out.println("CLIENT RECEIVED QUESTION OVER WEBSOCKET");
                     gameCtrl.startMultiPlayerQuestion(q.question);
-                } else if(q.typeOfMessage.equals("EMOJIONE")) {
+                } else if (q.typeOfMessage.equals("EMOJIONE")) {
                     System.out.println("CLIENT RECEIVED EMOJIONE OVER WEBSOCKET");
                     gameCtrl.showEmoji(1, q.emojiUsername);
                 } else if (q.typeOfMessage.equals("EMOJITWO")) {
@@ -140,7 +140,7 @@ public class SplashScreenCtrl {
                 } else if (q.typeOfMessage.equals("EMOJITHREE")) {
                     System.out.println("CLIENT RECEIVED EMOJITHREE OVER WEBSOCKET");
                     gameCtrl.showEmoji(3, q.emojiUsername);
-                } else if(q.typeOfMessage.equals("LEADERBOARD")) {
+                } else if (q.typeOfMessage.equals("LEADERBOARD")) {
                     System.out.println("TIME FOR LEADERBOARD!");
                     //function for showing the leaderboard
                 }
@@ -184,7 +184,13 @@ public class SplashScreenCtrl {
      * This function is a setup for the splash screen.
      */
     public void setSplashScreen() {
-        usernameInput.setText("");
+        /*if (gameCtrl.username == null || gameCtrl.username.equals("")) {
+            usernameInput.setText("");
+        } else {
+            usernameInput.setText(gameCtrl.username);
+        }*/
+        System.out.println(gameCtrl.username);
+        usernameInput.setText(gameCtrl.username);
     }
 
     /**
