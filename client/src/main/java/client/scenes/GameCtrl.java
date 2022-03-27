@@ -56,7 +56,7 @@ public class GameCtrl {
 
     public boolean firstJokerUsed = false;
     public boolean secondJokerUsed = false;
-    private final int ROUNDS = 3;
+    private final int ROUNDS = 20;
 
     public StompSession.Subscription subscription = null;
     public List<Score> multiplayerUsers = new ArrayList<>();
