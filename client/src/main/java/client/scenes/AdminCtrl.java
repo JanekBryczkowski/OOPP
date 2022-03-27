@@ -42,19 +42,30 @@ public class AdminCtrl {
 
 
 
-    //Connecting the page with the server, and the GameCtrl
+    /**
+     * Connecting the page with the server and the GameCtrl.
+     * @param server
+     * @param gameCtrl
+     */
     @Inject
     public AdminCtrl(ServerUtils server, GameCtrl gameCtrl) {
         this.server = server;
         this.gameCtrl = gameCtrl;
     }
 
+    /**
+     * Adds all the activities to the table and calls the function showAllActivities.
+     */
     public void setTable() {
         System.out.println("xd");
         activityList.addAll(server.showAll());
         showAllActivities(activityList);
     }
 
+    /**
+     * Sets the table where all the activities are going to appear in the AdminScreen.
+     * @param activityList
+     */
     public void showAllActivities(List<Activity> activityList) {
         VBox vbox = new VBox();
         for (Activity activity : activityList) {

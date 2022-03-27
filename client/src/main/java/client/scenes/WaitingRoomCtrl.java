@@ -2,7 +2,6 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import commons.User;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -12,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +19,7 @@ public class WaitingRoomCtrl {
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
 
-//    private User user;
-
-
     private List<User> userList = new ArrayList<>();
-
     @FXML
     private Text numberOf;
 
