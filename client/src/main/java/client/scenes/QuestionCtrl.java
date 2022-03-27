@@ -16,12 +16,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,6 +47,10 @@ public class QuestionCtrl {
     TimerTask task;
 
     private final int ROUNDS = 10;
+
+    private boolean emojiOneCurrentlyBeingChanged = false;
+    private boolean emojiTwoCurrentlyBeingChanged = false;
+    private boolean emojiThreeCurrentlyBeingChanged = false;
 
     @FXML
     private Label questionText;
@@ -114,6 +119,7 @@ public class QuestionCtrl {
 
     /**
      * Constructor for QuestionCtrl and instantiation of the server and the gameCtrl.
+     *
      * @param server
      * @param gameCtrl
      */
@@ -189,6 +195,7 @@ public class QuestionCtrl {
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
      * A question is given as input and this question is displayed on the screen.
+     *
      * @param question is the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
@@ -221,6 +228,7 @@ public class QuestionCtrl {
 
     /**
      * This function is a setup for the GameScreen when there is a one activity question.
+     *
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
@@ -280,6 +288,7 @@ public class QuestionCtrl {
      * In this function the multiplayer question gets set up. For now, the only thing done is setting the
      * question title to the title of the first activity. This needs to be changed so that it checks how long
      * the question is. This function will also have to instantiate a timer.
+     *
      * @param question given as input and this question is displayed on the screen.
      */
     public void setUpMultiPlayerQuestion(Question question) {
@@ -328,6 +337,7 @@ public class QuestionCtrl {
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
      * A question is given as input and this question is displayed on the screen.
+     *
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
@@ -377,6 +387,7 @@ public class QuestionCtrl {
 
     /**
      * Correct format of a number as an int.
+     *
      * @param number that will be formatted.
      * @return String of formatted number.
      */
@@ -388,6 +399,7 @@ public class QuestionCtrl {
 
     /**
      * Correct format of a number as a String.
+     *
      * @param number that will be formatted.
      * @return String of correctly formatted number.
      */
@@ -641,6 +653,7 @@ public class QuestionCtrl {
 
     /**
      * Formats numbers so that large numbers do not contain any ','.
+     *
      * @param number as a String.
      * @return a number.
      */
@@ -680,7 +693,7 @@ public class QuestionCtrl {
      * This function returns to the splash screen (for when a user clicks 'BACK') from any round in the question page.
      */
     public void backToSplash() {
-        gameCtrl.subscription.unsubscribe();
+        if (multiplayer) gameCtrl.subscription.unsubscribe();
         gainedPoints.setText("");
         gameCtrl.points = 0;
         gameCtrl.round = 1;
@@ -800,8 +813,9 @@ public class QuestionCtrl {
      * This is calculated by an algorithm that considers two things: how close your numerical answer
      * was to the actual answer and how long you took to answer. The closer you are to the answer and
      * the less time you take, the more points you get awarded.
+     *
      * @param correctAnswer is the correct numerical answer.
-     * @param givenAnswer is the answer input by the user.
+     * @param givenAnswer   is the answer input by the user.
      * @return int representing the points awarded to the user.
      */
     public int calculatePointsForOpenAnswer(int correctAnswer, int givenAnswer) {
@@ -852,64 +866,80 @@ public class QuestionCtrl {
         });
     }
 
-//    emojiOne.setOnAction(new EventHandler() {
-//
-//        @Override
-//        public void handle(ActionEvent event) {
-//            System.out.println("Hi there! You clicked me!");
-//        }
-//    });
-
     public void showEmojiOne(String username) {
-
-        ScaleTransition transition = new ScaleTransition();
-        transition.setByX(1.3);
-        transition.setByY(1.3);
-        transition.setDuration(Duration.seconds(0.3));
-        transition.setNode(emojiOne);
-        transition.setAutoReverse(true);
-        transition.setCycleCount(4);
-        transition.play();
-        emojiOne.toFront();
-        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiOneLabel.setText(username);
-        emojiOneLabel.setVisible(true);
-        pauseTransition.play();
-        pauseTransition.setOnFinished(e -> emojiOneLabel.setVisible(false));
+        if (!emojiOneCurrentlyBeingChanged) {
+            emojiOneCurrentlyBeingChanged = true;
+            ScaleTransition transition = new ScaleTransition();
+            transition.setByX(1.3);
+            transition.setByY(1.3);
+            transition.setDuration(Duration.seconds(0.3));
+            transition.setNode(emojiOne);
+            transition.setAutoReverse(true);
+            transition.setCycleCount(4);
+            transition.play();
+            emojiOne.toFront();
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+            emojiOneLabel.setText(username);
+            emojiOneLabel.setVisible(true);
+            pauseTransition.play();
+            pauseTransition.setOnFinished(e -> {
+                emojiOneLabel.setVisible(false);
+                emojiOneCurrentlyBeingChanged = false;
+            });
+        }
     }
 
     public void showEmojiTwo(String username) {
-        ScaleTransition transition = new ScaleTransition();
-        transition.setByX(1.3);
-        transition.setByY(1.3);
-        transition.setDuration(Duration.seconds(0.3));
-        transition.setNode(emojiTwo);
-        transition.setAutoReverse(true);
-        transition.setCycleCount(4);
-        transition.play();
-        emojiTwo.toFront();
-        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiTwoLabel.setText(username);
-        emojiTwoLabel.setVisible(true);
-        pauseTransition.play();
-        pauseTransition.setOnFinished(e -> emojiTwoLabel.setVisible(false));
+        if (!emojiTwoCurrentlyBeingChanged) {
+            emojiTwoCurrentlyBeingChanged = true;
+            ScaleTransition transition = new ScaleTransition();
+            transition.setByX(1.3);
+            transition.setByY(1.3);
+            transition.setDuration(Duration.seconds(0.3));
+            transition.setNode(emojiTwo);
+            transition.setAutoReverse(true);
+            transition.setCycleCount(4);
+            transition.play();
+            emojiTwo.toFront();
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+            emojiTwoLabel.setText(username);
+            emojiTwoLabel.setVisible(true);
+            pauseTransition.play();
+            pauseTransition.setOnFinished(e -> {
+                emojiTwoLabel.setVisible(false);
+                emojiTwoCurrentlyBeingChanged = false;
+            });
+        }
     }
 
     public void showEmojiThree(String username) {
-        ScaleTransition transition = new ScaleTransition();
-        transition.setByX(1.3);
-        transition.setByY(1.3);
-        transition.setDuration(Duration.seconds(0.3));
-        transition.setNode(emojiThree);
-        transition.setAutoReverse(true);
-        transition.setCycleCount(4);
-        transition.play();
-        emojiThree.toFront();
-        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiThreeLabel.setText(username);
-        emojiThreeLabel.setVisible(true);
-        pauseTransition.play();
-        pauseTransition.setOnFinished(e -> emojiThreeLabel.setVisible(false));
+        if (!emojiThreeCurrentlyBeingChanged) {
+            emojiThreeCurrentlyBeingChanged = true;
+            ScaleTransition transition = new ScaleTransition();
+            transition.setByX(1.3);
+            transition.setByY(1.3);
+            transition.setDuration(Duration.seconds(0.3));
+            transition.setNode(emojiThree);
+            transition.setAutoReverse(true);
+            transition.setCycleCount(4);
+            transition.play();
+            emojiThree.toFront();
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+            emojiThreeLabel.setText(username);
+            emojiThreeLabel.setVisible(true);
+            pauseTransition.play();
+            pauseTransition.setOnFinished(e -> {
+                emojiThreeLabel.setVisible(false);
+                emojiThreeCurrentlyBeingChanged = false;
+            });
+        }
+    }
+
+    @FXML
+    void clickEnter(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            revealAnswersOneActivities();
+        }
     }
 
 }

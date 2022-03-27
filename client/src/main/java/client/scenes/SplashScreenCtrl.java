@@ -13,12 +13,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.springframework.messaging.simp.stomp.StompSession;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.net.MalformedURLException;
 
@@ -66,6 +66,7 @@ public class SplashScreenCtrl {
     /**
      * Constructor for the SplashScreenCtrl. We also initialize the gameCtrl and questionCtrl because these
      * scenes will be set from this class.
+     *
      * @param server
      * @param gameCtrl
      * @param questionCtrl
@@ -75,7 +76,6 @@ public class SplashScreenCtrl {
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
         this.server = server;
         this.gameCtrl = gameCtrl;
-        Path path = Paths.get("");
     }
 
     /**
@@ -110,7 +110,7 @@ public class SplashScreenCtrl {
      * This function gets called whenever a player presses join to start a multiplayer game.
      * First a User is made and this user gets send to the server. The server will add this user to the
      * current lobby.
-     *
+     * <p>
      * Then, the user GETs the number of the current open lobby. With this number, the player registers
      * for the web socket channel of that lobby. Everytime the player receives a question from this channel,
      * the startMultiPlayerQuestion function in the gameCtrl is called and the question gets past. In this
@@ -189,6 +189,7 @@ public class SplashScreenCtrl {
 
     /**
      * This will get a random question from the Activity database
+     *
      * @return random question from the serverUtils.
      */
     public Question getRandomQuestion() {
@@ -235,4 +236,10 @@ public class SplashScreenCtrl {
         }
     }
 
+    @FXML
+    void keyPressed(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            join();
+        }
+    }
 }
