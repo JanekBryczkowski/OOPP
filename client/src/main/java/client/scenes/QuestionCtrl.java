@@ -247,6 +247,8 @@ public class QuestionCtrl {
 
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
+     * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
+     * showing the half-time Leaderboard.
      * A question is given as input and this question is displayed on the screen.
      *
      * @param question is the question that will be set up in the Scene.
@@ -297,12 +299,23 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         jokerTwo.setText("Eliminate one wrong answer");
-        answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        if(multiplayer) {
+            if (gameCtrl.round > 11) {
+                int current = gameCtrl.round - 1;
+                answersGiven.setText(current + " / 20 rounds");
+            } else {
+                answersGiven.setText(gameCtrl.round + " / 20 rounds");
+            }
+        } else {
+            answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        }
+
     }
 
     /**
      * This function is a setup for the GameScreen when there is a one activity question.
-     *
+     * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
+     * showing the half-time Leaderboard.
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
@@ -355,7 +368,16 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
-        answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        if(multiplayer) {
+            if (gameCtrl.round > 11) {
+                int current = gameCtrl.round - 1;
+                answersGiven.setText(current + " / 20 rounds");
+            } else {
+                answersGiven.setText(gameCtrl.round + " / 20 rounds");
+            }
+        } else {
+            answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        }
     }
 
     /**
@@ -411,7 +433,8 @@ public class QuestionCtrl {
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
      * A question is given as input and this question is displayed on the screen.
-     *
+     * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
+     * showing the half-time Leaderboard.
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
@@ -442,7 +465,16 @@ public class QuestionCtrl {
         jokerTwo.setText("Narrow down the boundaries");
         setUpTheBoundaries();
 
-        answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        if(multiplayer) {
+            if (gameCtrl.round > 11) {
+                int current = gameCtrl.round - 1;
+                answersGiven.setText(current + " / 20 rounds");
+            } else {
+                answersGiven.setText(gameCtrl.round + " / 20 rounds");
+            }
+        } else {
+            answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        }
     }
 
     /**

@@ -9,14 +9,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="    -fx-background-color: #D2EC7E;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.LeaderBoardCtrl">
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="    -fx-background-color: #D2EC7E;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.LeaderBoardCtrl">
    <children>
-      <Button layoutX="822.0" layoutY="698.0" mnemonicParsing="false" onAction="#backToWaitingRoom" prefHeight="64.0" prefWidth="367.0" styleClass="greenButton" text="Return to Waiting Room" textFill="WHITE">
+      <Button fx:id="waitingRoom" layoutX="822.0" layoutY="698.0" mnemonicParsing="false" onAction="#backToWaitingRoom" prefHeight="64.0" prefWidth="367.0" styleClass="greenButton" text="Return to Waiting Room" textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button layoutX="822.0" layoutY="604.0" mnemonicParsing="false" onAction="#backToSplash" prefHeight="64.0" prefWidth="367.0" styleClass="greenButton" text="Return to Splash Screen" textFill="WHITE">
+      <Button fx:id="splash" layoutX="822.0" layoutY="604.0" mnemonicParsing="false" onAction="#backToSplash" prefHeight="64.0" prefWidth="367.0" styleClass="greenButton" text="Return to Splash Screen" textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>
@@ -93,5 +93,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Button fx:id="backButton" layoutX="85.0" layoutY="37.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToSplash" prefHeight="59.0" prefWidth="150.0" styleClass="greenButton" text="BACK" textFill="WHITE" visible="false">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

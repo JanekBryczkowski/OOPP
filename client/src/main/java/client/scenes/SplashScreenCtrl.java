@@ -32,7 +32,7 @@ public class SplashScreenCtrl {
      * If mode is set to 0, then single player is active.
      * If mode is set to 1, then multiplayer is active.
      */
-    public int mode = 0;
+    public static int mode = 0;
 
     @FXML
     private AnchorPane Big;

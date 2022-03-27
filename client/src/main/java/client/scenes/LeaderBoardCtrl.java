@@ -48,6 +48,15 @@ public class LeaderBoardCtrl {
     @FXML
     private ScrollPane leaderBoardScrollPane;
 
+    @FXML
+    private Button waitingRoom;
+
+    @FXML
+    private Button splash;
+
+    @FXML
+    private Button backButton;
+
     List<Score> topThreeList;
     List<Score> scoreList;
     ObservableList<Score> scores;
@@ -218,6 +227,36 @@ public class LeaderBoardCtrl {
 
 
     /**
+     * In Multiplayer the Half-time Leaderboard shows up after 10 questions, users will see their score, which
+     * they achieved so far.
+     */
+    public void halfTimeLeaderBoard() {
+        waitingRoom.setVisible(false);
+        waitingRoom.setManaged(false);
+        splash.setVisible(false);
+        splash.setManaged(false);
+        backButton.setVisible(true);
+        leaderBoardScrollPane.setMinHeight(629);
+        leaderBoardScrollPane.setMaxHeight(629);
+        leaderBoardScrollPane.setPrefHeight(629);
+    }
+
+    /**
+     * This function sets the Leaderboard back to the original.
+     */
+    public void endLeaderBoard() {
+        waitingRoom.setVisible(true);
+        waitingRoom.setManaged(true);
+        splash.setVisible(true);
+        splash.setManaged(true);
+        backButton.setVisible(false);
+        leaderBoardScrollPane.setMinHeight(417);
+        leaderBoardScrollPane.setMaxHeight(417);
+        leaderBoardScrollPane.setPrefHeight(417);
+    }
+
+
+    /**
      * If the button in the Leaderboard screen for going back to the Splash Screen is pressed, the user will be
      * directed back to the Splash Screen.
      */
@@ -227,6 +266,17 @@ public class LeaderBoardCtrl {
         gameCtrl.firstJokerUsed = false;
         gameCtrl.secondJokerUsed = false;
         gameCtrl.showSplashScreen();
+    }
+
+    /**
+     * On the solo player Leaderboard screen, the 'back to the Waiting Room' button is not an option anymore.
+     */
+    public void backToWaitingRoomButton() {
+        if(SplashScreenCtrl.mode == 0) {
+            waitingRoom.setVisible(false);
+            waitingRoom.setManaged(false);
+            splash.setTranslateY(94);
+        }
     }
 
     /**

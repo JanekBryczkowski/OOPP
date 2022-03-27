@@ -61,7 +61,11 @@ public class GameCtrl {
     public StompSession.Subscription subscription = null;
     public List<Score> multiplayerUsers = new ArrayList<>();
 
-    //public int multiPlayerRound = 1;
+    /**
+     * This is for the multiplayer game, since there is a half-time Leaderboard set in the 11th round,
+     * we need 21 rounds all together.
+     */
+    public final int MULTIROUNDS = 21;
 
     /**
      * Initializes all the controllers and all the scenes that are used throughout the game.
@@ -205,6 +209,7 @@ public class GameCtrl {
     public void joinCurrentLobby() {
         primaryStage.setTitle("Waiting Room");
         primaryStage.setScene(waitingRoom);
+        waitingRoom.getStylesheets().add("client.styles/WaitingRoomStyle.css");
         waitingRoomCtrl.setWaitingRoomTable();
     }
 
@@ -230,9 +235,11 @@ public class GameCtrl {
         System.out.println("MADE IT");
         System.out.println(question.toString());
 
-        if (round > ROUNDS) {
+        if (round > MULTIROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
+        } else if (round == 11) {
+            showHalfTimeLeaderBoard();
         } else {
             questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
             primaryStage.setScene(questionScreen);
@@ -259,9 +266,25 @@ public class GameCtrl {
         leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         leaderBoardCtrl.setList();
+        leaderBoardCtrl.endLeaderBoard();
+        leaderBoardCtrl.backToWaitingRoomButton();
         leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
         primaryStage.setScene(leaderBoardScreen);
     }
+
+    /**
+     * The half-time Leader Board Scene is set, this is called during the Multiplayer game.
+     */
+
+    public void showHalfTimeLeaderBoard() {
+        leaderBoardCtrl.storePoints();
+        leaderBoardCtrl.setLeaderBoard();
+        leaderBoardCtrl.setList();
+        leaderBoardCtrl.halfTimeLeaderBoard();
+        leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
+        primaryStage.setScene(leaderBoardScreen);
+    }
+
 
     /**
      * This function will check if the jokers have been used by the user playing.
