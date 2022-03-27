@@ -14,7 +14,7 @@
 <AnchorPane fx:id="SplashScreen" maxHeight="800.0" maxWidth="1238.0" minHeight="800.0" minWidth="1238.0" prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #D2EC7E;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
     <children>
         <AnchorPane fx:id="Big" prefHeight="800.0" prefWidth="1238.0"><children>
-        <Button fx:id="joinButton" alignment="CENTER" layoutX="328.0" layoutY="614.0" maxHeight="108.0" maxWidth="247.0" minHeight="108.0" minWidth="247.0" mnemonicParsing="false" onAction="#join" prefHeight="108.0" prefWidth="247.0" styleClass="joinButton" text="Join" textFill="WHITE">
+        <Button fx:id="joinButton" alignment="CENTER" layoutX="328.0" layoutY="614.0" maxHeight="108.0" maxWidth="247.0" minHeight="108.0" minWidth="247.0" mnemonicParsing="false" onAction="#join" onKeyPressed="#keyPressed" prefHeight="108.0" prefWidth="247.0" styleClass="joinButton" text="Join" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="65.0" />
             </font>
