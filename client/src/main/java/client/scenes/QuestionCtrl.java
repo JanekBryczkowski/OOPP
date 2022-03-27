@@ -254,9 +254,30 @@ public class QuestionCtrl {
             e.printStackTrace();
         }
 
-        answerOne.setText(question.activityList.get(0).title);
-        answerTwo.setText(question.activityList.get(1).title);
-        answerThree.setText(question.activityList.get(2).title);
+        if (question.activityList.get(0).title.length() > 22) {
+            answerOne.setText(question.activityList.get(0).title);
+            answerOne.setStyle("-fx-font-size: 15;");
+        } else {
+            answerOne.setText(question.activityList.get(0).title);
+            answerOne.setStyle("-fx-font-size: 25;");
+        }
+
+        if (question.activityList.get(1).title.length() > 22) {
+            answerTwo.setText(question.activityList.get(1).title);
+            answerTwo.setStyle("-fx-font-size: 15;");
+        } else {
+            answerTwo.setText(question.activityList.get(1).title);
+            answerTwo.setStyle("-fx-font-size: 25;");
+        }
+
+        if (question.activityList.get(2).title.length() > 22) {
+            answerThree.setText(question.activityList.get(2).title);
+            answerThree.setStyle("-fx-font-size: 15;");
+        } else {
+            answerThree.setText(question.activityList.get(2).title);
+            answerThree.setStyle("-fx-font-size: 25;");
+        }
+
         questionText.setText("Which of these activities takes more energy?");
         questionText.setStyle("-fx-font-size: 47;");
         question.setCorrectAnswer();
@@ -270,7 +291,7 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         jokerTwo.setText("Eliminate one wrong answer");
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**
@@ -328,7 +349,7 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**
@@ -415,7 +436,7 @@ public class QuestionCtrl {
         jokerTwo.setText("Narrow down the boundaries");
         setUpTheBoundaries();
 
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**
