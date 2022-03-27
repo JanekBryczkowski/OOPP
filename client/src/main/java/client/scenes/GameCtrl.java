@@ -55,7 +55,7 @@ public class GameCtrl {
 
     public boolean firstJokerUsed = false;
     public boolean secondJokerUsed = false;
-    private final int ROUNDS = 10;
+    private final int ROUNDS = 21;
 
     public StompSession.Subscription subscription = null;
     public List<Score> multiplayerUsers = new ArrayList<>();
@@ -234,6 +234,8 @@ public class GameCtrl {
         if (round > ROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
+        } else if(round == 2){
+            showHalfTimeLeaderBoard();
         } else {
             questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
             primaryStage.setScene(questionScreen);

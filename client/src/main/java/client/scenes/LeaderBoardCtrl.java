@@ -200,7 +200,6 @@ public class LeaderBoardCtrl {
         waitingRoom.setManaged(false);
         splash.setVisible(false);
         splash.setManaged(false);
-        leaderBoardScrollPane.setTranslateY(565);
     }
 
 

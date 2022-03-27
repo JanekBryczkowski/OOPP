@@ -44,7 +44,7 @@ public class QuestionCtrl {
     Timer myTimer;
     TimerTask task;
 
-    private final int ROUNDS = 10;
+    private final int ROUNDS = 21;
 
     @FXML
     private Label questionText;
