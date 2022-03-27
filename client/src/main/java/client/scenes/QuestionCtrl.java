@@ -16,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -47,6 +49,10 @@ public class QuestionCtrl {
     TimerTask task;
 
     private final int ROUNDS = 20;
+
+    private boolean emojiOneCurrentlyBeingChanged = false;
+    private boolean emojiTwoCurrentlyBeingChanged = false;
+    private boolean emojiThreeCurrentlyBeingChanged = false;
 
     @FXML
     private Label questionText;
@@ -933,64 +939,80 @@ public class QuestionCtrl {
         });
     }
 
-//    emojiOne.setOnAction(new EventHandler() {
-//
-//        @Override
-//        public void handle(ActionEvent event) {
-//            System.out.println("Hi there! You clicked me!");
-//        }
-//    });
-
     public void showEmojiOne(String username) {
-
-        ScaleTransition transition = new ScaleTransition();
-        transition.setByX(1.3);
-        transition.setByY(1.3);
-        transition.setDuration(Duration.seconds(0.3));
-        transition.setNode(emojiOne);
-        transition.setAutoReverse(true);
-        transition.setCycleCount(4);
-        transition.play();
-        emojiOne.toFront();
-        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiOneLabel.setText(username);
-        emojiOneLabel.setVisible(true);
-        pauseTransition.play();
-        pauseTransition.setOnFinished(e -> emojiOneLabel.setVisible(false));
+        if (!emojiOneCurrentlyBeingChanged) {
+            emojiOneCurrentlyBeingChanged = true;
+            ScaleTransition transition = new ScaleTransition();
+            transition.setByX(1.3);
+            transition.setByY(1.3);
+            transition.setDuration(Duration.seconds(0.3));
+            transition.setNode(emojiOne);
+            transition.setAutoReverse(true);
+            transition.setCycleCount(4);
+            transition.play();
+            emojiOne.toFront();
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+            emojiOneLabel.setText(username);
+            emojiOneLabel.setVisible(true);
+            pauseTransition.play();
+            pauseTransition.setOnFinished(e -> {
+                emojiOneLabel.setVisible(false);
+                emojiOneCurrentlyBeingChanged = false;
+            });
+        }
     }
 
     public void showEmojiTwo(String username) {
-        ScaleTransition transition = new ScaleTransition();
-        transition.setByX(1.3);
-        transition.setByY(1.3);
-        transition.setDuration(Duration.seconds(0.3));
-        transition.setNode(emojiTwo);
-        transition.setAutoReverse(true);
-        transition.setCycleCount(4);
-        transition.play();
-        emojiTwo.toFront();
-        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiTwoLabel.setText(username);
-        emojiTwoLabel.setVisible(true);
-        pauseTransition.play();
-        pauseTransition.setOnFinished(e -> emojiTwoLabel.setVisible(false));
+        if (!emojiTwoCurrentlyBeingChanged) {
+            emojiTwoCurrentlyBeingChanged = true;
+            ScaleTransition transition = new ScaleTransition();
+            transition.setByX(1.3);
+            transition.setByY(1.3);
+            transition.setDuration(Duration.seconds(0.3));
+            transition.setNode(emojiTwo);
+            transition.setAutoReverse(true);
+            transition.setCycleCount(4);
+            transition.play();
+            emojiTwo.toFront();
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+            emojiTwoLabel.setText(username);
+            emojiTwoLabel.setVisible(true);
+            pauseTransition.play();
+            pauseTransition.setOnFinished(e -> {
+                emojiTwoLabel.setVisible(false);
+                emojiTwoCurrentlyBeingChanged = false;
+            });
+        }
     }
 
     public void showEmojiThree(String username) {
-        ScaleTransition transition = new ScaleTransition();
-        transition.setByX(1.3);
-        transition.setByY(1.3);
-        transition.setDuration(Duration.seconds(0.3));
-        transition.setNode(emojiThree);
-        transition.setAutoReverse(true);
-        transition.setCycleCount(4);
-        transition.play();
-        emojiThree.toFront();
-        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-        emojiThreeLabel.setText(username);
-        emojiThreeLabel.setVisible(true);
-        pauseTransition.play();
-        pauseTransition.setOnFinished(e -> emojiThreeLabel.setVisible(false));
+        if (!emojiThreeCurrentlyBeingChanged) {
+            emojiThreeCurrentlyBeingChanged = true;
+            ScaleTransition transition = new ScaleTransition();
+            transition.setByX(1.3);
+            transition.setByY(1.3);
+            transition.setDuration(Duration.seconds(0.3));
+            transition.setNode(emojiThree);
+            transition.setAutoReverse(true);
+            transition.setCycleCount(4);
+            transition.play();
+            emojiThree.toFront();
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
+            emojiThreeLabel.setText(username);
+            emojiThreeLabel.setVisible(true);
+            pauseTransition.play();
+            pauseTransition.setOnFinished(e -> {
+                emojiThreeLabel.setVisible(false);
+                emojiThreeCurrentlyBeingChanged = false;
+            });
+        }
+    }
+
+    @FXML
+    void clickEnter(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            revealAnswersOneActivities();
+        }
     }
 
 }

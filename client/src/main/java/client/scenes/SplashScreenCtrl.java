@@ -13,13 +13,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.springframework.messaging.simp.stomp.StompSession;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.net.MalformedURLException;
 
@@ -77,7 +76,6 @@ public class SplashScreenCtrl {
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
         this.server = server;
         this.gameCtrl = gameCtrl;
-        Path path = Paths.get("");
     }
 
     /**
@@ -244,7 +242,10 @@ public class SplashScreenCtrl {
         }
     }
 
-    public void setTextFieldToUserName(String username) {
-        usernameInput.setText(username);
+    @FXML
+    void keyPressed(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            join();
+        }
     }
 }

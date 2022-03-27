@@ -25,7 +25,7 @@
                 <Insets bottom="1.0" />
             </padding>
         </Button>
-        <TextField fx:id="usernameInput" layoutX="211.35" layoutY="439.0" maxHeight="115.0" maxWidth="815.83333333333" minHeight="115.0" minWidth="815.83333333333" prefHeight="115.0" prefWidth="815.83333333333" promptText="Enter your name" styleClass="nameTextField" text="Janek">
+        <TextField fx:id="usernameInput" layoutX="211.35" layoutY="439.0" maxHeight="115.0" maxWidth="815.83333333333" minHeight="115.0" minWidth="815.83333333333" onKeyPressed="#keyPressed" prefHeight="115.0" prefWidth="815.83333333333" promptText="Enter your name" styleClass="nameTextField">
             <font>
                 <Font size="60.0" />
             </font>
