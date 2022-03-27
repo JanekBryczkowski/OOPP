@@ -136,29 +136,24 @@ public class ServerUtils {
         throw new IllegalStateException();
     }
 
-    public StompSession.Subscription registerForMessages(String dest, Consumer<Question> question) {
+    public StompSession.Subscription registerForMessages(String dest, Consumer<WebsocketMessage> websocketMessageConsumer) {
         StompSession.Subscription subscription = session.subscribe(dest, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
-                return Question.class;
+                return WebsocketMessage.class;
             }
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                question.accept((Question) payload);
+                websocketMessageConsumer.accept((WebsocketMessage) payload);
             }
         });
         return subscription;
     }
 
-    public void unsubscribeForMessages() {
-        session.disconnect();
-    }
-
-
-
-    public void send(String dest, Object o) {
-        session.send(dest, o);
+    public void send(String dest, WebsocketMessage websocketMessage) {
+        System.out.println("SENDING " + websocketMessage);
+        session.send(dest, websocketMessage);
     }
 
     public List<Score> getScores() {

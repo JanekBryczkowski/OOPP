@@ -7,6 +7,7 @@ public class Lobby {
 
     private List<User> userList;
     public int lobbyNumber;
+    public int roundNumber = 0;
 
     public Lobby(int lobbyNumber) {
         this.userList = new ArrayList<>();
