@@ -211,7 +211,9 @@ public class LeaderBoardCtrl {
 
             System.out.println("RECEIVED A QUESTION FROM /topic/question");
             Platform.runLater(() -> {
-                gameCtrl.startMultiPlayerQuestion(q);
+//                gameCtrl.startMultiPlayerQuestion(q);
+                System.out.println(q.typeOfMessage);
+                System.out.println(q.question.toString());
             });
 
         });

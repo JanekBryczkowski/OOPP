@@ -52,6 +52,7 @@ public class GameCtrl {
     public int points = 0;
     public int round = 1;
     public String username;
+    public int joinedLobby;
 
     public boolean firstJokerUsed = false;
     public boolean secondJokerUsed = false;
@@ -228,6 +229,7 @@ public class GameCtrl {
      * @param question
      */
     public void startMultiPlayerQuestion(Question question) {
+        questionCtrl.setupJoker();
         System.out.println("MADE IT");
         System.out.println(question.toString());
 
@@ -273,4 +275,22 @@ public class GameCtrl {
         if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
         if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);
     }
+
+    public void showEmoji(int emojiNumber, String username) {
+        switch(emojiNumber) {
+
+            case(1):
+                questionCtrl.showEmojiOne(username);
+                break;
+            case(2):
+                questionCtrl.showEmojiTwo(username);
+                break;
+            case(3):
+                questionCtrl.showEmojiThree(username);
+                break;
+            default:
+                break;
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Stage;
 import commons.Question;
+import commons.WebsocketMessage;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
@@ -315,6 +316,24 @@ public class QuestionCtrl {
         }
     }
 
+    public void setupJoker() {
+        emojiOne.setOnMouseClicked(event -> {
+            WebsocketMessage websocketMessage = new WebsocketMessage("EMOJIONE");
+            websocketMessage.setEmojiUsername(gameCtrl.username);
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
+        });
+        emojiTwo.setOnMouseClicked(event -> {
+            WebsocketMessage websocketMessage = new WebsocketMessage("EMOJITWO");
+            websocketMessage.setEmojiUsername(gameCtrl.username);
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
+        });
+        emojiThree.setOnMouseClicked(event -> {
+            WebsocketMessage websocketMessage = new WebsocketMessage("EMOJITHREE");
+            websocketMessage.setEmojiUsername(gameCtrl.username);
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
+        });
+    }
+
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
      * A question is given as input and this question is displayed on the screen.
@@ -406,10 +425,11 @@ public class QuestionCtrl {
      * This function is for hiding the elements on solo player that do not make sense.
      */
     public void hideSoloPlayerElements() {
-        //jokerThree.setVisible(false);
-        /*emojiOne.setDisable(true);
-        emojiTwo.setDisable(true);
-        emojiThree.setDisable(true);*/
+//        jokerThree.setVisible(false);
+        emojiOne.setDisable(false);
+        emojiTwo.setDisable(false);
+        emojiThree.setDisable(false);
+
     }
 
 
@@ -921,4 +941,5 @@ public class QuestionCtrl {
             revealAnswersOneActivities();
         }
     }
+
 }
