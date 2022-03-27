@@ -55,17 +55,18 @@ public class GameCtrl {
 
     public boolean firstJokerUsed = false;
     public boolean secondJokerUsed = false;
-    private final int ROUNDS = 21;
+    private final int ROUNDS = 20;
 
     public StompSession.Subscription subscription = null;
     public List<Score> multiplayerUsers = new ArrayList<>();
 
-    //public int multiPlayerRound = 1;
+    public final int MULTIROUNDS = 21;
 
     /**
      * Initializes all the controllers and all the scenes that are used throughout the game.
      * The game starts in the Splash Screen, so we call showSplashScreen to make it visible
      * We show the Primary Stage.
+     *
      * @param primaryStage
      * @param splash
      * @param questionCtrl
@@ -106,6 +107,7 @@ public class GameCtrl {
 
     /**
      * Get the mode of the game (single player/ multiplayer).
+     *
      * @return
      */
     public int getMode() {
@@ -114,6 +116,7 @@ public class GameCtrl {
 
     /**
      * Setter for username.
+     *
      * @param username
      */
     public void setUsername(String username) {
@@ -163,6 +166,7 @@ public class GameCtrl {
     /**
      * Setup for a question with three activities.
      * The setOneActivity function is called.
+     *
      * @param question
      */
     public void oneActivityQuestion(Question question) {
@@ -177,6 +181,7 @@ public class GameCtrl {
     /**
      * Setup for a question with three activities
      * The setTwoActivities function is called.
+     *
      * @param question
      */
     public void twoActivityQuestion(Question question) {
@@ -191,6 +196,7 @@ public class GameCtrl {
     /**
      * Setup for a question with three activities
      * The setThreeActivities function is called.
+     *
      * @param question
      */
     public void threeActivityQuestion(Question question) throws MalformedURLException {
@@ -208,6 +214,7 @@ public class GameCtrl {
     public void joinCurrentLobby() {
         primaryStage.setTitle("Waiting Room");
         primaryStage.setScene(waitingRoom);
+        waitingRoom.getStylesheets().add("client.styles/WaitingRoomStyle.css");
         waitingRoomCtrl.setWaitingRoomTable();
     }
 
@@ -225,16 +232,17 @@ public class GameCtrl {
      * in multiplayer mode. The question is printed to the terminal for testing. The scene is set
      * to the question screen and on the question controller, the setup function is called with
      * the question, which will set up the question properly.
+     *
      * @param question
      */
     public void startMultiPlayerQuestion(Question question) {
         System.out.println("MADE IT");
         System.out.println(question.toString());
 
-        if (round > ROUNDS) {
+        if (round > MULTIROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
-        } else if(round == 2){
+        } else if (round == 11) {
             showHalfTimeLeaderBoard();
         } else {
             questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
@@ -262,6 +270,7 @@ public class GameCtrl {
         leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         leaderBoardCtrl.setList();
+        leaderBoardCtrl.endLeaderBoard();
         leaderBoardCtrl.backToWaitingRoomButton();
         leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
         primaryStage.setScene(leaderBoardScreen);
@@ -284,6 +293,7 @@ public class GameCtrl {
     /**
      * This function will check if the jokers have been used by the user playing.
      * If a user has been used, then that joker will be disabled for the remaining of the game.
+     *
      * @param questionCtrl
      */
     public void checkJokers(QuestionCtrl questionCtrl) {

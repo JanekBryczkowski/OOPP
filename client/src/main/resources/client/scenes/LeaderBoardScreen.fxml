@@ -93,5 +93,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Button fx:id="backButton" layoutX="85.0" layoutY="37.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToSplash" prefHeight="59.0" prefWidth="150.0" styleClass="greenButton" text="BACK" textFill="WHITE" visible="false">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

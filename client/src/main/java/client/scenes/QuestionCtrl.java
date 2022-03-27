@@ -44,7 +44,7 @@ public class QuestionCtrl {
     Timer myTimer;
     TimerTask task;
 
-    private final int ROUNDS = 21;
+    private final int ROUNDS = 20;
 
     @FXML
     private Label questionText;
@@ -215,7 +215,17 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         jokerTwo.setText("Eliminate one wrong answer");
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        if(multiplayer) {
+            if (gameCtrl.round > 11) {
+                int current = gameCtrl.round - 1;
+                answersGiven.setText(current + " / 20 rounds");
+            } else {
+                answersGiven.setText(gameCtrl.round + " / 20 rounds");
+            }
+        } else {
+            answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        }
+
     }
 
     /**
@@ -272,7 +282,16 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        if(multiplayer) {
+            if (gameCtrl.round > 11) {
+                int current = gameCtrl.round - 1;
+                answersGiven.setText(current + " / 20 rounds");
+            } else {
+                answersGiven.setText(gameCtrl.round + " / 20 rounds");
+            }
+        } else {
+            answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        }
     }
 
     /**
@@ -339,7 +358,16 @@ public class QuestionCtrl {
         jokerTwo.setText("Narrow down the boundaries");
         setUpTheBoundaries();
 
-        answersGiven.setText(gameCtrl.round + " / 10 rounds");
+        if(multiplayer) {
+            if (gameCtrl.round > 11) {
+                int current = gameCtrl.round - 1;
+                answersGiven.setText(current + " / 20 rounds");
+            } else {
+                answersGiven.setText(gameCtrl.round + " / 20 rounds");
+            }
+        } else {
+            answersGiven.setText(gameCtrl.round + " / 20 rounds");
+        }
     }
 
     /**

@@ -56,6 +56,9 @@ public class LeaderBoardCtrl {
     @FXML
     private Button splash;
 
+    @FXML
+    private Button backButton;
+
     List<Score> topThreeList;
     List<Score> scoreList;
     ObservableList<Score> scores;
@@ -200,6 +203,21 @@ public class LeaderBoardCtrl {
         waitingRoom.setManaged(false);
         splash.setVisible(false);
         splash.setManaged(false);
+        backButton.setVisible(true);
+        leaderBoardScrollPane.setMinHeight(629);
+        leaderBoardScrollPane.setMaxHeight(629);
+        leaderBoardScrollPane.setPrefHeight(629);
+    }
+
+    public void endLeaderBoard() {
+        waitingRoom.setVisible(true);
+        waitingRoom.setManaged(true);
+        splash.setVisible(true);
+        splash.setManaged(true);
+        backButton.setVisible(false);
+        leaderBoardScrollPane.setMinHeight(417);
+        leaderBoardScrollPane.setMaxHeight(417);
+        leaderBoardScrollPane.setPrefHeight(417);
     }
 
 
