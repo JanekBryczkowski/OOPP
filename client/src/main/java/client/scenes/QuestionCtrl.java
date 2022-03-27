@@ -866,7 +866,7 @@ public class QuestionCtrl {
         });
     }
 
-    public void showEmojiOne() {
+    public void showEmojiOne(String username) {
         if (!emojiOneCurrentlyBeingChanged) {
             emojiOneCurrentlyBeingChanged = true;
             ScaleTransition transition = new ScaleTransition();
@@ -879,7 +879,7 @@ public class QuestionCtrl {
             transition.play();
             emojiOne.toFront();
             PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-            emojiOneLabel.setText(gameCtrl.username);
+            emojiOneLabel.setText(username);
             emojiOneLabel.setVisible(true);
             pauseTransition.play();
             pauseTransition.setOnFinished(e -> {
@@ -889,7 +889,7 @@ public class QuestionCtrl {
         }
     }
 
-    public void showEmojiTwo() {
+    public void showEmojiTwo(String username) {
         if (!emojiTwoCurrentlyBeingChanged) {
             emojiTwoCurrentlyBeingChanged = true;
             ScaleTransition transition = new ScaleTransition();
@@ -902,7 +902,7 @@ public class QuestionCtrl {
             transition.play();
             emojiTwo.toFront();
             PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-            emojiTwoLabel.setText(gameCtrl.username);
+            emojiTwoLabel.setText(username);
             emojiTwoLabel.setVisible(true);
             pauseTransition.play();
             pauseTransition.setOnFinished(e -> {
@@ -912,7 +912,7 @@ public class QuestionCtrl {
         }
     }
 
-    public void showEmojiThree() {
+    public void showEmojiThree(String username) {
         if (!emojiThreeCurrentlyBeingChanged) {
             emojiThreeCurrentlyBeingChanged = true;
             ScaleTransition transition = new ScaleTransition();
@@ -925,7 +925,7 @@ public class QuestionCtrl {
             transition.play();
             emojiThree.toFront();
             PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.2));
-            emojiThreeLabel.setText(gameCtrl.username);
+            emojiThreeLabel.setText(username);
             emojiThreeLabel.setVisible(true);
             pauseTransition.play();
             pauseTransition.setOnFinished(e -> {
