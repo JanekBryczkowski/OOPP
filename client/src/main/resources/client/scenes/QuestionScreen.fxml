@@ -120,7 +120,7 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <TextField fx:id="answerOneInput" layoutX="7.0" layoutY="113.0" maxHeight="80.0" maxWidth="300.0" minHeight="80.0" minWidth="300.0" onInputMethodTextChanged="#validateInput" onKeyTyped="#validateInput" prefHeight="80.0" prefWidth="223.0" promptText="Enter your answer" styleClass="nameTextField">
+            <TextField fx:id="answerOneInput" layoutX="7.0" layoutY="113.0" maxHeight="80.0" maxWidth="300.0" minHeight="80.0" minWidth="300.0" onInputMethodTextChanged="#validateInput" onKeyPressed="#clickEnter" onKeyTyped="#validateInput" prefHeight="80.0" prefWidth="223.0" promptText="Enter your answer" styleClass="nameTextField">
                <font>
                   <Font size="32.0" />
                </font>

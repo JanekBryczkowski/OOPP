@@ -7,7 +7,6 @@ import commons.Question;
 import commons.User;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,9 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.springframework.messaging.simp.stomp.StompSession;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.net.MalformedURLException;
 
@@ -80,7 +76,6 @@ public class SplashScreenCtrl {
     public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
         this.server = server;
         this.gameCtrl = gameCtrl;
-        Path path = Paths.get("");
     }
 
     /**
@@ -224,10 +219,9 @@ public class SplashScreenCtrl {
         }
     }
 
-    public void keyPressed(KeyEvent key) {
-        System.out.println("HEHE");
-        if (key.getCode().equals(KeyCode.ENTER)) {
-            System.out.println("XD");
+    @FXML
+    void keyPressed(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
             join();
         }
     }

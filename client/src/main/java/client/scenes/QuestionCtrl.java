@@ -15,12 +15,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -672,7 +673,7 @@ public class QuestionCtrl {
      * This function returns to the splash screen (for when a user clicks 'BACK') from any round in the question page.
      */
     public void backToSplash() {
-        gameCtrl.subscription.unsubscribe();
+        if (multiplayer) gameCtrl.subscription.unsubscribe();
         gainedPoints.setText("");
         gameCtrl.points = 0;
         gameCtrl.round = 1;
@@ -911,6 +912,13 @@ public class QuestionCtrl {
                 emojiThreeLabel.setVisible(false);
                 emojiThreeCurrentlyBeingChanged = false;
             });
+        }
+    }
+
+    @FXML
+    void clickEnter(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            revealAnswersOneActivities();
         }
     }
 }
