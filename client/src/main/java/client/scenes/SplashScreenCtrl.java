@@ -150,6 +150,7 @@ public class SplashScreenCtrl {
         });
         gameCtrl.subscription = subscription;
         gameCtrl.joinCurrentLobby();
+
     }
 
     /**
@@ -240,6 +241,9 @@ public class SplashScreenCtrl {
             transition.setNode(modeOne);
             transition.play();
         }
+    }
+    public void toAdminScreen() {
+        gameCtrl.showAdminScreen();
     }
 
     @FXML

@@ -26,6 +26,7 @@ import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+
 public class GameMain extends Application {
 
     private static final Injector INJECTOR = createInjector(new MyModule());
@@ -49,6 +50,8 @@ public class GameMain extends Application {
         var gameThreeScreen = FXML.load(QuestionCtrl.class, "client", "scenes", "QuestionScreen.fxml");
         var leaderBoard = FXML.load(LeaderBoardCtrl.class, "client", "scenes", "LeaderBoardScreen.fxml");
         var waitingRoom = FXML.load(WaitingRoomCtrl.class, "client", "scenes", "WaitingRoom.fxml");
+        var admin = FXML.load(AdminCtrl.class, "client", "scenes", "AdminScreen.fxml");
+
 
 //        var gameScreen = FXML.load(getClass().getResource("SplashScreen.fxml"))
 
@@ -74,7 +77,7 @@ public class GameMain extends Application {
 
 
         var gameCtrl = INJECTOR.getInstance(GameCtrl.class);
-        gameCtrl.initialize(primaryStage, splash, gameThreeScreen, leaderBoard, waitingRoom);
+        gameCtrl.initialize(primaryStage, splash, gameThreeScreen, leaderBoard, waitingRoom, admin);
 
 //        primaryStage.setOnCloseRequest(e -> {
 //            waitingRoom.getKey().stop();
