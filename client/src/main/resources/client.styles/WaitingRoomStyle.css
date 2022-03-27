@@ -59,3 +59,18 @@
     -fx-background-radius: 6;
     -fx-visible-amount: 100;
 }
+
+.joinButton {
+    -fx-background-radius: 36;
+    -fx-background-color: #819E21;
+}
+
+.joinButton:hover {
+    -fx-background-radius: 36;
+    -fx-background-color: #708A1C;
+}
+
+.joinButton:pressed {
+    -fx-background-radius: 36;
+    -fx-background-color: #617818;
+}
