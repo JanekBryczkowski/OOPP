@@ -83,12 +83,12 @@
          </font>
       </Text>
       <ScrollPane fx:id="leaderBoardScrollPane" hbarPolicy="NEVER" layoutX="822.0" layoutY="133.0" maxHeight="417.0" maxWidth="366.0" minHeight="417.0" minWidth="366.0" prefHeight="417.0" prefWidth="366.0" styleClass="scrollPane" vbarPolicy="ALWAYS" />
-      <Label alignment="CENTER" layoutX="822.0" layoutY="105.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-color: F5FFD3;" text="Username" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="822.0" layoutY="105.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-color: #dce6be;" text="Username" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="1022.0" layoutY="105.0" maxHeight="30.0" maxWidth="167.0" minHeight="30.0" minWidth="167.0" prefHeight="30.0" prefWidth="167.0" style="-fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-color: F5FFD3;" text="Score" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="1022.0" layoutY="105.0" maxHeight="30.0" maxWidth="167.0" minHeight="30.0" minWidth="167.0" prefHeight="30.0" prefWidth="167.0" style="-fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-color: #dce6be;" text="Score" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

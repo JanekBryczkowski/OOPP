@@ -52,6 +52,7 @@ public class GameCtrl {
     public int points = 0;
     public int round = 1;
     public String username;
+    public int joinedLobby;
 
     public boolean firstJokerUsed = false;
     public boolean secondJokerUsed = false;
@@ -100,13 +101,10 @@ public class GameCtrl {
      * This function is for showing the SplashScreen.
      */
     public void showSplashScreen() {
-        System.out.println("Xd 2");
         primaryStage.setTitle("Splash Screen");
         splashScreenCtrl.setSplashScreen();
         splashScreenScene.getStylesheets().add("client.styles/SplashScreenStyle.css");
         primaryStage.setScene(splashScreenScene);
-        //primaryStage.setFullScreen(true);
-        //primaryStage.setFullScreenExitHint("");
     }
 
     /**
@@ -138,14 +136,11 @@ public class GameCtrl {
     public void SoloGameRound() throws MalformedURLException {
         questionCtrl.multiplayer = false;
         leaderBoardCtrl.multiplayer = false;
-        System.out.println("Xd 3");
-        //Plays 5 rounds
         if (round > ROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
         } else {
             Question question = splashScreenCtrl.getRandomQuestion();
-            System.out.println("size" + question.activityList.size());
             switch (question.activityList.size()) {
                 case (1): {
                     oneActivityQuestion(question);
@@ -156,10 +151,6 @@ public class GameCtrl {
                     break;
                 }
                 case (3): {
-                    threeActivityQuestion(question);
-                    break;
-                }
-                default: {
                     threeActivityQuestion(question);
                     break;
                 }
@@ -240,6 +231,7 @@ public class GameCtrl {
      * @param question
      */
     public void startMultiPlayerQuestion(Question question) {
+        questionCtrl.setupJoker();
         System.out.println("MADE IT");
         System.out.println(question.toString());
 
@@ -303,5 +295,22 @@ public class GameCtrl {
     public void checkJokers(QuestionCtrl questionCtrl) {
         if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
         if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);
+    }
+
+    public void showEmoji(int emojiNumber, String username) {
+        switch (emojiNumber) {
+
+            case (1):
+                questionCtrl.showEmojiOne(username);
+                break;
+            case (2):
+                questionCtrl.showEmojiTwo(username);
+                break;
+            case (3):
+                questionCtrl.showEmojiThree(username);
+                break;
+            default:
+                break;
+        }
     }
 }

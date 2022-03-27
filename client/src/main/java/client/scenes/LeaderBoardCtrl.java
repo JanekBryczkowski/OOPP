@@ -16,9 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class LeaderBoardCtrl {
 
@@ -62,9 +60,11 @@ public class LeaderBoardCtrl {
     List<Score> topThreeList;
     List<Score> scoreList;
     ObservableList<Score> scores;
+    List<String> colors = Arrays.asList("#95B826", "#2E380C", "#627819", "#ADC364", "#819E21", "#8B9A46", "#064635", "#116530", "#116530", "#1E5128", "#3E7C17");
 
     /**
      * Constructor for the Leader Board.
+     *
      * @param server
      * @param mainCtrl
      */
@@ -148,15 +148,17 @@ public class LeaderBoardCtrl {
      * In this function the scroll pane of the Leader Board screen is set up. We retrieve all the Scores
      * from the scoreList parameter and create a label for each one. All labels are added to the ranking list.
      * The user who is currently playing will see their own score in bold.
+     *
      * @param scoreList
      */
     private void uploadScoresIntoTheRanking(List<Score> scoreList) {
         VBox vbox = new VBox();
+        int highestScore = findHighestScore(scoreList);
         for (Score score : scoreList) {
             AnchorPane anchorPane = new AnchorPane();
-            anchorPane.setMaxHeight(30);
-            anchorPane.setMinHeight(30);
-            anchorPane.setMinHeight(30);
+            anchorPane.setMaxHeight(50);
+            anchorPane.setMinHeight(50);
+            anchorPane.setMinHeight(50);
             anchorPane.setMaxWidth(347);
             anchorPane.setMinWidth(347);
             anchorPane.setPrefWidth(347);
@@ -183,15 +185,46 @@ public class LeaderBoardCtrl {
             scoreLabel.setStyle("-fx-font-size: 16;");
             scoreLabel.setAlignment(Pos.CENTER);
             if (gameCtrl.username.equals(score.getUsername()) && gameCtrl.points == score.getScore()) {
-                usernameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: #D5DEB6;");
-                scoreLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: #D5DEB6;");
+                usernameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: transparent;");
+                scoreLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: transparent;");
+                anchorPane.setStyle("-fx-background-color: #D5DEB6");
             }
+            AnchorPane bar = new AnchorPane();
+            bar.setMinHeight(6);
+            bar.setMaxHeight(6);
+            bar.setPrefWidth(6);
+            double ratio = (double) score.score / highestScore;
+            double finalWidth = ratio * 317;
+            bar.setPrefWidth(finalWidth);
+            bar.setMinWidth(finalWidth);
+            bar.setMaxWidth(finalWidth);
+            bar.setLayoutX(15);
+            bar.setLayoutY(26.5);
+            bar.setStyle("-fx-background-color: " + getRandomColor() + "; -fx-background-radius: 4;");
             anchorPane.getChildren().add(usernameLabel);
             anchorPane.getChildren().add(scoreLabel);
+            anchorPane.getChildren().add(bar);
             vbox.getChildren().add(anchorPane);
         }
         leaderBoardScrollPane.setContent(vbox);
     }
+
+    private int findHighestScore(List<Score> scoreList) {
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < scoreList.size(); i++) {
+            if (max < scoreList.get(i).score) {
+                max = scoreList.get(i).score;
+            }
+        }
+        return max;
+    }
+
+
+    public String getRandomColor() {
+        int random = (int) (Math.random() * colors.size() - 1);
+        return colors.get(random);
+    }
+
 
     /**
      * In Multiplayer the Half-time Leaderboard shows up after 10 questions, users will see their score, which
@@ -261,7 +294,9 @@ public class LeaderBoardCtrl {
 
             System.out.println("RECEIVED A QUESTION FROM /topic/question");
             Platform.runLater(() -> {
-                gameCtrl.startMultiPlayerQuestion(q);
+//                gameCtrl.startMultiPlayerQuestion(q);
+                System.out.println(q.typeOfMessage);
+                System.out.println(q.question.toString());
             });
 
         });

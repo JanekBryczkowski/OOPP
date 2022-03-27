@@ -8,10 +8,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Arc?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #D2EC7E;" styleClass="background" stylesheets="@../../client.styles/QuestionScreenStyles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuestionCtrl">
+<AnchorPane fx:id="mainAnchorPane" prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #D2EC7E;" styleClass="background" stylesheets="@../../client.styles/QuestionScreenStyles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuestionCtrl">
    <children>
       <ImageView fx:id="mainImage" fitHeight="386.0" fitWidth="683.0" focusTraversable="true" layoutX="65.0" layoutY="296.0" pickOnBounds="true">
          <image>
@@ -36,23 +37,24 @@
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
-      <ImageView fx:id="emojiOne" fitHeight="72.0" fitWidth="72.0" layoutX="14.0" layoutY="703.0" onMouseClicked="#showEmojiOne" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="emojiOne" fitHeight="72.0" fitWidth="72.0" layoutX="14.0" layoutY="703.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/emojiOne.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="emojiTwo" fitHeight="72.0" fitWidth="72.0" layoutX="100.0" layoutY="703.0" onMouseClicked="#showEmojiTwo" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="emojiTwo" fitHeight="72.0" fitWidth="72.0" layoutX="100.0" layoutY="703.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/emojiTwo.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="emojiThree" fitHeight="72.0" fitWidth="72.0" layoutX="186.0" layoutY="703.0" onMouseClicked="#showEmojiThree" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="emojiThree" fitHeight="72.0" fitWidth="72.0" layoutX="186.0" layoutY="703.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/emojiThree.png" />
          </image>
       </ImageView>
       <Text fx:id="round" layoutX="1182.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text fx:id="secondsLeft" layoutX="792.0" layoutY="751.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="319.9999999999999" />
+      <Text fx:id="singlePlayerSecondsLeft" layoutX="792.0" layoutY="751.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="319.9999999999999" />
+      <Text fx:id="multiPlayerSecondsLeft" layoutX="792.0" layoutY="731.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="319.9999999999999" />
       <ImageView fitHeight="124.0" fitWidth="100.0" layoutX="65.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/earthLogo.png" />
@@ -68,7 +70,7 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="threeActivitiesAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" visible="false">
+      <AnchorPane fx:id="threeActivitiesAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0">
          <children>
             <Pane fx:id="answerOnePane" maxHeight="107.0" maxWidth="400.0" minHeight="107.0" minWidth="400.0" onMouseClicked="#answerOneGiven" prefHeight="107.0" prefWidth="400.0" style="    -fx-background-color: #F6FFD3;    -fx-font-size: 30;    -fx-background-radius: 20;    -fx-text-alignment: center;" styleClass="answer_1">
                <children>
@@ -108,7 +110,7 @@
             </Pane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="oneActivityAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" style="-fx-background-color: #F6FFD3; -fx-background-radius: 20;">
+      <AnchorPane fx:id="oneActivityAnchorPane" layoutX="794.0" layoutY="293.0" maxHeight="386.0" maxWidth="400.0" minHeight="386.0" minWidth="400.0" prefHeight="386.0" prefWidth="400.0" style="-fx-background-color: #F6FFD3; -fx-background-radius: 20;" visible="false">
          <children>
             <Label fx:id="answerOne1" alignment="CENTER" maxHeight="80.0" maxWidth="400.0" minHeight="80.0" minWidth="400.0" prefHeight="80.0" prefWidth="400.0" style="-fx-border-color: gray; -fx-border-width: 0 0 2 0;" text="Enter you answer below">
                <font>
@@ -120,7 +122,7 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <TextField fx:id="answerOneInput" layoutX="7.0" layoutY="113.0" maxHeight="80.0" maxWidth="300.0" minHeight="80.0" minWidth="300.0" onInputMethodTextChanged="#validateInput" onKeyTyped="#validateInput" prefHeight="80.0" prefWidth="223.0" promptText="Enter your answer" styleClass="nameTextField">
+            <TextField fx:id="answerOneInput" layoutX="7.0" layoutY="113.0" maxHeight="80.0" maxWidth="300.0" minHeight="80.0" minWidth="300.0" onInputMethodTextChanged="#validateInput" onKeyPressed="#clickEnter" onKeyTyped="#validateInput" prefHeight="80.0" prefWidth="223.0" promptText="Enter your answer" styleClass="nameTextField">
                <font>
                   <Font size="32.0" />
                </font>
@@ -170,5 +172,6 @@
          <font>
             <Font size="19.0" />
          </font></Label>
+      <Arc fx:id="clock" fill="#004d25" layoutX="1164.0" layoutY="739.0" length="360.0" radiusX="30.0" radiusY="30.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
    </children>
 </AnchorPane>

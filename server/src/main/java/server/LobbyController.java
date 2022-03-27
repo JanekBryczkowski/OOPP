@@ -2,6 +2,7 @@ package server;
 
 import commons.Lobby;
 import commons.Question;
+import commons.WebsocketMessage;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import server.api.QuestionController;
@@ -71,7 +72,7 @@ public class LobbyController {
      */
     public void instantiateMultiGame(Lobby lobby) {
         String destination = "/topic/question" + String.valueOf(lobby.lobbyNumber);
-        int currentRound = 1;
+        int currentRound = lobby.roundNumber++;
 
         int[] secondsPassed = {15};
         Timer myTimer = new Timer();
@@ -80,8 +81,16 @@ public class LobbyController {
             @Override
             public void run() {
                 secondsPassed[0]--;
-                if(secondsPassed[0] == 0)
-                    instantiateMultiGame(lobby);
+                if(secondsPassed[0] == 0) {
+                    if(currentRound == 4) {
+                        showLeaderBoard(destination, lobby);
+                    } else if (currentRound == 9) {
+                        myTimer.cancel();
+                        showLeaderBoard(destination, lobby);
+                    } else {
+                        instantiateMultiGame(lobby);
+                    }
+                }
             }
         };
 
@@ -90,12 +99,43 @@ public class LobbyController {
         myTimer.scheduleAtFixedRate(task, 1000,1000);
     }
 
+    /**
+     * This functions sends a websocketmessage to the client
+     * saying that it is time for the leaderboard
+     *
+     * @param destination
+     */
+    public void showLeaderBoard(String destination, Lobby lobby) {
+        WebsocketMessage websocketMessage = new WebsocketMessage("LEADERBOARD");
+        msgs.convertAndSend(destination, websocketMessage);
+
+        if(!(lobby.roundNumber == 9)) {
+            int[] secondsPassed = {15};
+            Timer myTimer = new Timer();
+
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    secondsPassed[0]--;
+                    if (secondsPassed[0] == 0) {
+                        instantiateMultiGame(lobby);
+                    }
+                }
+
+            };
+            myTimer.scheduleAtFixedRate(task, 1000,1000);
+        }
+    }
+
     /*
     In this function a question gets generated and send to the given destination.
      */
     public void generateAndSendQuestion(String destination) {
         Question question = questionController.getActivities();
-        msgs.convertAndSend(destination, question);
+        WebsocketMessage websocketMessage = new WebsocketMessage("QUESTION");
+        websocketMessage.setQuestion(question);
+        System.out.println("SENDING WEBSOCKET MESSAGE to " + destination + " message is " + websocketMessage);
+        msgs.convertAndSend(destination, websocketMessage);
     }
 
 
