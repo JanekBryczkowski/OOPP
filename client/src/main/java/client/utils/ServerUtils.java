@@ -61,6 +61,23 @@ public class ServerUtils {
                 });
     }
 
+    public Activity getByID(String id) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/questions/" + id) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<Activity>() {
+                });
+    }
+
+    public void addActivity(Activity activity) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/questions") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(activity, APPLICATION_JSON), Activity.class);
+    }
+
     public List<Activity> showAll() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/questions/") //
@@ -69,6 +86,7 @@ public class ServerUtils {
                 .get(new GenericType<List<Activity>>() {
                 });
     }
+
 
     public Quote addQuote(Quote quote) {
         return ClientBuilder.newClient(new ClientConfig()) //
@@ -86,6 +104,14 @@ public class ServerUtils {
                             .get(new GenericType<Question>() {
                             });
         }
+
+    public void deleteQuestion(String id) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/questions/"+ id) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .delete();
+    }
 
     public int getCurrentLobby() {
         return ClientBuilder.newClient(new ClientConfig()) //
@@ -105,10 +131,18 @@ public class ServerUtils {
 
     public List<User> getUsersInLobby() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/user") //
+                .target(SERVER).path("api/user/currentLobby") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<User>>() {});
+    }
+
+    public void removeUser(String username) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user/removePlayer/"+ username) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get();
     }
 
     public void startGame() {
@@ -136,22 +170,24 @@ public class ServerUtils {
         throw new IllegalStateException();
     }
 
-    public void registerForMessages(String dest, Consumer<Question> question) {
-        session.subscribe(dest, new StompFrameHandler() {
+    public StompSession.Subscription registerForMessages(String dest, Consumer<WebsocketMessage> websocketMessageConsumer) {
+        StompSession.Subscription subscription = session.subscribe(dest, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
-                return Question.class;
+                return WebsocketMessage.class;
             }
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                question.accept((Question) payload);
+                websocketMessageConsumer.accept((WebsocketMessage) payload);
             }
         });
+        return subscription;
     }
 
-    public void send(String dest, Object o) {
-        session.send(dest, o);
+    public void send(String dest, WebsocketMessage websocketMessage) {
+        System.out.println("SENDING " + websocketMessage);
+        session.send(dest, websocketMessage);
     }
 
     public List<Score> getScores() {

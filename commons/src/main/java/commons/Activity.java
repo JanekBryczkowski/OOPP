@@ -48,12 +48,23 @@ public class Activity {
         this.consumption = consumption;
     }
 
+    public String getId() {return this.id;}
+
     public String getTitle() {
         return this.title;
     }
 
     public int getConsumption() {
         return this.consumption_in_wh;
+    }
+
+    public void setTitle(String title) {this.title = title;}
+
+    //Important notation: We need to get rid of the consumption field, but I added here in order to
+    //avoid the creation of new errors
+    public void setConsumption_in_wh(int consumption_in_wh) {
+        this.consumption_in_wh = consumption_in_wh;
+        this.consumption = consumption_in_wh;
     }
 
     @Override
