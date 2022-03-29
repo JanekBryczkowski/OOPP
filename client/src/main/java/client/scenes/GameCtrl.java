@@ -123,6 +123,14 @@ public class GameCtrl {
     }
 
     /**
+     * Set the mode of the game. If it's single player, it's 0, otherwise 1.
+     *
+     * @param mode
+     */
+
+    public void setMode(int mode) { splashScreenCtrl.mode = mode; }
+
+    /**
      * Setter for username.
      *
      * @param username
@@ -140,8 +148,7 @@ public class GameCtrl {
      * and depending on the number of activities in the question, we call a function tailored to word the new question.
      */
     public void SoloGameRound() throws MalformedURLException {
-        questionCtrl.multiplayer = false;
-        leaderBoardCtrl.multiplayer = false;
+        setMode(0);
         if (round > ROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
@@ -252,8 +259,7 @@ public class GameCtrl {
             primaryStage.setTitle("Question");
 
             checkJokers(questionCtrl);
-            questionCtrl.multiplayer = true;
-            leaderBoardCtrl.multiplayer = true;
+            setMode(1);
             questionCtrl.setUpMultiPlayerQuestion(question);
         }
         round++;

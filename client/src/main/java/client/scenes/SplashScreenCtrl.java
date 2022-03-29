@@ -177,7 +177,6 @@ public class SplashScreenCtrl {
         joinButton.setDisable(false);
         rulesButton.setDisable(false);
         Big.setEffect(null);
-
     }
 
 

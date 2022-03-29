@@ -25,7 +25,6 @@ public class LeaderBoardCtrl {
     private Score first;
     private Score second;
     private Score third;
-    public boolean multiplayer;
 
     @FXML
     private Text firstName;
