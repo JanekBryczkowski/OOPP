@@ -414,7 +414,7 @@ public class QuestionCtrl {
         }
     }
 
-    public void setupJoker() {
+    public void setupEmoji() {
         emojiOne.setOnMouseClicked(event -> {
             WebsocketMessage websocketMessage = new WebsocketMessage("EMOJIONE");
             websocketMessage.setEmojiUsername(gameCtrl.username);
@@ -846,9 +846,10 @@ public class QuestionCtrl {
     public void jokerTwo() {
         if (!gameCtrl.secondJokerUsed) {
             if (oneActivityAnchorPane.isVisible()) {
-                int difference = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
-                int newLowerBoundaryNumber = lowerBoundaryNumber + difference;
-                int newUpperBoundaryNumber = upperBoundaryNumber - difference;
+                int differenceLower = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
+                int differenceUpper = (int) (Math.random() * (upperBoundaryNumber - correctAnswer));
+                int newLowerBoundaryNumber = lowerBoundaryNumber + differenceLower;
+                int newUpperBoundaryNumber = upperBoundaryNumber - differenceUpper;
                 lowerBoundary.setText(formatNumber(newLowerBoundaryNumber));
                 upperBoundary.setText(formatNumber(newUpperBoundaryNumber));
                 jokerTwo.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");

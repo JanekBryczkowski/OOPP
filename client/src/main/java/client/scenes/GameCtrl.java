@@ -237,7 +237,7 @@ public class GameCtrl {
      * @param question
      */
     public void startMultiPlayerQuestion(Question question) {
-        questionCtrl.setupJoker();
+        questionCtrl.setupEmoji();
         System.out.println("MADE IT");
         System.out.println(question.toString());
 
