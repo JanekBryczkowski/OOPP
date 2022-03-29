@@ -98,7 +98,7 @@ public class SplashScreenCtrl {
                 }
             } else {
                 boolean isValidUsername = server.isValidUsername(usernameInput.getText());
-                if (isValidUsername == false)
+                if (!isValidUsername)
                     alert.setText("This username is already taken");
                 else
                     startMultiPlayerGame();
