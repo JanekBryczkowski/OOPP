@@ -82,7 +82,7 @@ public class LeaderBoardCtrl {
     public void storePoints() {
         try {
             Score score = new Score(gameCtrl.username, gameCtrl.points);
-            if (gameCtrl.getMode()==0) server.addScore(score);
+            if (gameCtrl.getMode() == 0) server.addScore(score);
             //server.scores.add(score);
         } catch (WebApplicationException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -102,10 +102,10 @@ public class LeaderBoardCtrl {
     public void setLeaderBoard() {
         scoreList = new ArrayList<>();
         topThreeList = new ArrayList<>();
-        if(gameCtrl.getMode()==0) {
+        if (gameCtrl.getMode() == 0) {
             scores = FXCollections.observableArrayList();
             topThreeList.addAll(server.getTopScores());
-        } else if(gameCtrl.getMode()==1) {
+        } else if (gameCtrl.getMode() == 1) {
             List<User> userList = server.getUsersInLobby();
             topThreeList.addAll(getThreeMultiplayer(userList));
         }
@@ -136,6 +136,7 @@ public class LeaderBoardCtrl {
     /**
      * Creating the list for the top three users in multiplayer mode. Checking the amount
      * of players in the current lobby to check if there is only top two or top three.
+     *
      * @param userList a list of all the users in the current lobby
      * @return a list of the top three scores.
      */
@@ -161,9 +162,9 @@ public class LeaderBoardCtrl {
         ArrayList<Score> topThreeList = new ArrayList<>();
         if (first != null)
             topThreeList.add(new Score(first.username, first.score));
-        if(second != null)
+        if (second != null)
             topThreeList.add(new Score(second.username, second.score));
-        if(third != null)
+        if (third != null)
             topThreeList.add(new Score(third.username, third.score));
         return topThreeList;
     }
@@ -176,9 +177,9 @@ public class LeaderBoardCtrl {
      * then fetch all the scores from the database to create the leader board.
      */
     public void setList() {
-        if (gameCtrl.getMode()==1) {
+        if (gameCtrl.getMode() == 1) {
             List<User> usersInLobby = server.getUsersInLobby();
-            for(User u : usersInLobby) {
+            for (User u : usersInLobby) {
                 scoreList.add(new Score(u.getUsername(), u.getScore()));
             }
         } else {
@@ -290,14 +291,22 @@ public class LeaderBoardCtrl {
      * This function sets the Leaderboard back to the original.
      */
     public void endLeaderBoard() {
-        waitingRoom.setVisible(true);
-        waitingRoom.setManaged(true);
+        backButton.setVisible(false);
+        if (gameCtrl.multiplayer) {
+            leaderBoardScrollPane.setMinHeight(417);
+            leaderBoardScrollPane.setMaxHeight(417);
+            leaderBoardScrollPane.setPrefHeight(417);
+            waitingRoom.setVisible(true);
+            waitingRoom.setManaged(true);
+        } else {
+            leaderBoardScrollPane.setMinHeight(537);
+            leaderBoardScrollPane.setMaxHeight(537);
+            leaderBoardScrollPane.setPrefHeight(537);
+            waitingRoom.setVisible(false);
+            waitingRoom.setManaged(false);
+        }
         splash.setVisible(true);
         splash.setManaged(true);
-        backButton.setVisible(false);
-        leaderBoardScrollPane.setMinHeight(417);
-        leaderBoardScrollPane.setMaxHeight(417);
-        leaderBoardScrollPane.setPrefHeight(417);
     }
 
 
@@ -317,7 +326,7 @@ public class LeaderBoardCtrl {
      * On the solo player Leaderboard screen, the 'back to the Waiting Room' button is not an option anymore.
      */
     public void backToWaitingRoomButton() {
-        if(SplashScreenCtrl.mode == 0) {
+        if (SplashScreenCtrl.mode == 0) {
             waitingRoom.setVisible(false);
             waitingRoom.setManaged(false);
             splash.setTranslateY(94);

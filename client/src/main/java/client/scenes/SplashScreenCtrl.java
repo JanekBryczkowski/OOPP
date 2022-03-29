@@ -62,6 +62,12 @@ public class SplashScreenCtrl {
     private ImageView singlePlayerImageView;
     @FXML
     private ImageView multiPlayerImageView;
+    @FXML
+    private AnchorPane setServerNameAnchorPane;
+    @FXML
+    private TextField serverNameTextField;
+
+    private boolean firstTimeSplashScreen = false;
 
     /**
      * Constructor for the SplashScreenCtrl. We also initialize the gameCtrl and questionCtrl because these
@@ -166,7 +172,6 @@ public class SplashScreenCtrl {
             alert.setText("");
         }
         Big.setEffect(new BoxBlur(1238, 800, 1));
-
     }
 
     /**
@@ -177,21 +182,29 @@ public class SplashScreenCtrl {
         joinButton.setDisable(false);
         rulesButton.setDisable(false);
         Big.setEffect(null);
-
     }
 
+    public void exitServerName() {
+        gameRules.setVisible(false);
+        joinButton.setDisable(false);
+        rulesButton.setDisable(false);
+        setServerNameAnchorPane.setVisible(false);
+        ServerUtils.SERVER = serverNameTextField.getText();
+        Big.setEffect(null);
+    }
 
     /**
      * This function is a setup for the splash screen.
      */
     public void setSplashScreen() {
-        /*if (gameCtrl.username == null || gameCtrl.username.equals("")) {
-            usernameInput.setText("");
-        } else {
-            usernameInput.setText(gameCtrl.username);
-        }*/
-        System.out.println(gameCtrl.username);
         usernameInput.setText(gameCtrl.username);
+        if (!firstTimeSplashScreen) {
+            gameRules.setVisible(true);
+            joinButton.setDisable(true);
+            rulesButton.setDisable(true);
+            Big.setEffect(new BoxBlur(1238, 800, 1));
+            firstTimeSplashScreen = true;
+        }
     }
 
     /**
@@ -242,6 +255,7 @@ public class SplashScreenCtrl {
             transition.play();
         }
     }
+
     public void toAdminScreen() {
         gameCtrl.showAdminScreen();
     }

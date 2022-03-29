@@ -1,14 +1,14 @@
-.joinButton {
+.greenButton {
     -fx-background-radius: 36;
     -fx-background-color: #819E21;
 }
 
-.joinButton:hover {
+.greenButton:hover {
     -fx-background-radius: 36;
     -fx-background-color: #708A1C;
 }
 
-.joinButton:pressed {
+.greenButton:pressed {
     -fx-background-radius: 36;
     -fx-background-color: #617818;
 }
