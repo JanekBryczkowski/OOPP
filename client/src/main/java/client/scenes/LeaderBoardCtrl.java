@@ -305,6 +305,9 @@ public class LeaderBoardCtrl {
      * directed back to the Splash Screen.
      */
     public void backToSplash() {
+        if(SplashScreenCtrl.mode == 1){
+            gameCtrl.subscription.unsubscribe();
+        }
         gameCtrl.points = 0;
         gameCtrl.round = 1;
         gameCtrl.firstJokerUsed = false;
@@ -329,6 +332,7 @@ public class LeaderBoardCtrl {
      * the socket for that client.
      */
     public void backToWaitingRoom() {
+        gameCtrl.subscription.unsubscribe();
         String username = gameCtrl.username;
         User user = new User(username, 0);
         server.addUser(user);
@@ -350,7 +354,6 @@ public class LeaderBoardCtrl {
         gameCtrl.round = 1;
         gameCtrl.firstJokerUsed = false;
         gameCtrl.secondJokerUsed = false;
-        gameCtrl.showWaitingRoomScreen();
     }
 
     /**

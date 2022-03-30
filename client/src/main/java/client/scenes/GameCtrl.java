@@ -289,7 +289,6 @@ public class GameCtrl {
      */
 
     public void showHalfTimeLeaderBoard() {
-        leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         leaderBoardCtrl.setList();
         leaderBoardCtrl.halfTimeLeaderBoard();

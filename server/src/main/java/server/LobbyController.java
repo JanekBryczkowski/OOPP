@@ -68,7 +68,7 @@ public class LobbyController {
 
     /*
     In this function a multiplayer game gets started. The functions cals itself after 15 seconds.
-    These 15 seconds are 10 seconds of answering and 5 seconds to see the corerct answer.
+    These 15 seconds are 10 seconds of answering and 5 seconds to see the correct answer.
      */
     public void instantiateMultiGame(Lobby lobby) {
         String destination = "/topic/question" + String.valueOf(lobby.lobbyNumber);
@@ -100,7 +100,7 @@ public class LobbyController {
     }
 
     /**
-     * This functions sends a websocketmessage to the client
+     * This functions sends a websocket message to the client
      * saying that it is time for the leaderboard
      *
      * @param destination
