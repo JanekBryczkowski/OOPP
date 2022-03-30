@@ -193,12 +193,14 @@ public class QuestionCtrl {
      * else in the game to have answered.
      */
     public void instantiateTimer() {
+        singlePlayerSecondsLeft.setText("");
+        multiPlayerSecondsLeft.setText("");
         secondsPassed[0] = 15;
         myTimer = new Timer();
         task = new TimerTask() {
             @Override
             public void run() {
-                if (!multiplayer) {
+                if (gameCtrl.getMode()==0) {
                     secondsPassed[0]--;
                     clock.setStartAngle(0.0);
                     double proportion = (double) secondsPassed[0] / 15.0;
@@ -208,7 +210,7 @@ public class QuestionCtrl {
                     clock.setFill(colorsForClockSinglePlayer.get(15 - secondsPassed[0]));
                     if (secondsPassed[0] == 1) {
                         singlePlayerSecondsLeft.setText("Time left: " + secondsPassed[0] + " second");
-                    } else if (secondsPassed[0] > 0)
+                    } else if (secondsPassed[0] > 1)
                         singlePlayerSecondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
                     else {
                         if (oneActivityAnchorPane.isVisible()) {
@@ -230,12 +232,12 @@ public class QuestionCtrl {
                         if (!answered)
                             multiPlayerSecondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " second");
                         else
-                            multiPlayerSecondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " second");
-                    } else if (secondsPassed[0] > 5)
+                            multiPlayerSecondsLeft.setText("Time until answer revealed: " + (secondsPassed[0] - 5) + " second");
+                    } else if (secondsPassed[0] > 6)
                         if (!answered)
                             multiPlayerSecondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " seconds");
                         else
-                            multiPlayerSecondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " seconds");
+                            multiPlayerSecondsLeft.setText("Time until answer revealed: " + (secondsPassed[0] - 5) + " seconds");
                     else if (secondsPassed[0] > 0) {
                         multiPlayerSecondsLeft.setText("Answers revealed! Starting next round!");
                         if (oneActivityAnchorPane.isVisible()) {
@@ -822,7 +824,7 @@ public class QuestionCtrl {
     }
 
     /**
-     * Formats numbers so that large numbers do not contain any ','.
+     * Formats numbers so that large numbers do contain ',' every 3 integers from the right.
      *
      * @param number as a String.
      * @return a number.
@@ -898,6 +900,23 @@ public class QuestionCtrl {
             gameCtrl.thirdJokerMultiPlayerUsed = false;
             gameCtrl.showSplashScreen();
         }
+        gainedPoints.setText("");
+        gameCtrl.points = 0;
+        gameCtrl.round = 1;
+        gameCtrl.username = "";
+        gameCtrl.firstJokerUsed = false;
+        gameCtrl.secondJokerUsed = false;
+        jokerOne.setStyle("-fx-border-width: 0");
+        jokerTwo.setStyle("-fx-border-width: 0");
+        jokerOne.setDisable(false);
+        jokerTwo.setDisable(false);
+        answerOnePane.setStyle("-fx-border-width: 0;");
+        answerTwoPane.setStyle("-fx-border-width: 0;");
+        answerThreePane.setStyle("-fx-border-width: 0;");
+        myTimer.cancel();
+        points.setText("0 points");
+        gameCtrl.showSplashScreen();
+        myTimer.cancel();
     }
 
     /**
