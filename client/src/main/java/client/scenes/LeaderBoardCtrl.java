@@ -102,10 +102,10 @@ public class LeaderBoardCtrl {
     public void setLeaderBoard() {
         scoreList = new ArrayList<>();
         topThreeList = new ArrayList<>();
-        if (gameCtrl.getMode()==0) {
+        if (gameCtrl.getMode() == 0) {
             scores = FXCollections.observableArrayList();
             topThreeList.addAll(server.getTopScores());
-        } else if (gameCtrl.getMode()==1) {
+        } else if (gameCtrl.getMode() == 1) {
             List<User> userList = server.getUsersInLobby();
             topThreeList.addAll(getThreeMultiplayer(userList));
         }
@@ -136,6 +136,7 @@ public class LeaderBoardCtrl {
     /**
      * Creating the list for the top three users in multiplayer mode. Checking the amount
      * of players in the current lobby to check if there is only top two or top three.
+     *
      * @param userList a list of all the users in the current lobby
      * @return a list of the top three scores.
      */
@@ -176,9 +177,9 @@ public class LeaderBoardCtrl {
      * then fetch all the scores from the database to create the leader board.
      */
     public void setList() {
-        if (gameCtrl.getMode()==1) {
+        if (gameCtrl.getMode() == 1) {
             List<User> usersInLobby = server.getUsersInLobby();
-            for(User u : usersInLobby) {
+            for (User u : usersInLobby) {
                 scoreList.add(new Score(u.getUsername(), u.getScore()));
             }
         } else {
@@ -378,8 +379,11 @@ public class LeaderBoardCtrl {
         }
         gameCtrl.points = 0;
         gameCtrl.round = 1;
-        gameCtrl.firstJokerUsed = false;
-        gameCtrl.secondJokerUsed = false;
+        gameCtrl.firstJokerSinglePlayerUsed = false;
+        gameCtrl.secondJokerSinglePlayerUsed = false;
+        gameCtrl.firstJokerMultiPlayerUsed = false;
+        gameCtrl.secondJokerMultiPlayerUsed = false;
+        gameCtrl.thirdJokerMultiPlayerUsed = false;
         gameCtrl.showSplashScreen();
     }
 
@@ -435,8 +439,9 @@ public class LeaderBoardCtrl {
         gameCtrl.joinCurrentLobby();
         gameCtrl.points = 0;
         gameCtrl.round = 1;
-        gameCtrl.firstJokerUsed = false;
-        gameCtrl.secondJokerUsed = false;
+        gameCtrl.firstJokerSinglePlayerUsed = false;
+        gameCtrl.secondJokerSinglePlayerUsed = false;
+        gameCtrl.showWaitingRoomScreen();
     }
 
     /**

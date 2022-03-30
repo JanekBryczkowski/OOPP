@@ -9,19 +9,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #d2ec7e;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomCtrl">
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #d2ec7e;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomCtrl">
    <children>
-      <ImageView fitHeight="258.0" fitWidth="260.0" layoutX="760.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="258.0" fitWidth="260.0" layoutX="780.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/earthLogo.png" />
          </image>
       </ImageView>
-      <Button fx:id="backButton" layoutX="766.0" layoutY="27.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#backButton" prefHeight="59.0" prefWidth="150.0" styleClass="joinButton" text="BACK" textFill="WHITE" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="27.0">
+      <Button fx:id="backButton" layoutX="766.0" layoutY="27.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#backButton" prefHeight="59.0" prefWidth="150.0" styleClass="greenButton" text="BACK" textFill="WHITE" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="27.0">
          <font>
             <Font size="35.0" />
          </font>
       </Button>
-      <Button layoutX="730.0" layoutY="479.0" mnemonicParsing="false" onAction="#play" prefHeight="90.0" prefWidth="327.0" styleClass="joinButton" text="Play" textFill="WHITE" textOverrun="CLIP">
+      <Button layoutX="751.0" layoutY="499.0" mnemonicParsing="false" onAction="#play" prefHeight="90.0" prefWidth="327.0" styleClass="greenButton" text="Play" textFill="WHITE" textOverrun="CLIP">
          <font>
             <Font size="75.0" />
          </font>
@@ -36,12 +36,12 @@
             <Text fx:id="playersInRoom" layoutX="6.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="819.13671875" />
          </children></AnchorPane>
       <ScrollPane fx:id="waitingScroll" hbarPolicy="NEVER" layoutX="105.0" layoutY="150.0" prefHeight="530.0" prefWidth="472.0" styleClass="scrollPaneWR" vbarPolicy="ALWAYS" />
-      <Label alignment="CENTER" layoutX="103.0" layoutY="73.0" prefHeight="79.0" prefWidth="473.0" style="-fx-background-color: #819E21; -fx-background-radius: 20;" text="Players waiting" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="103.0" layoutY="73.0" prefHeight="79.0" prefWidth="473.0" style="-fx-background-color: #819E21; -fx-background-radius: 20 20 0 0;" text="Players waiting" textFill="WHITE">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <Text fx:id="numberOf" fill="#5f5f5f" layoutX="103.0" layoutY="733.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="489.0062255859375">
+      <Text fx:id="numberOf" fill="#5f5f5f" layoutX="95.0" layoutY="733.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="489.0062255859375">
          <font>
             <Font size="36.0" />
          </font>

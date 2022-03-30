@@ -1,14 +1,14 @@
-.inspectButton {
+.greenButton {
     -fx-background-radius: 36;
     -fx-background-color: #819E21;
 }
 
-.inspectButton:hover {
+.greenButton:hover {
     -fx-background-radius: 36;
     -fx-background-color: #708A1C;
 }
 
-.inspectButton:pressed {
+.greenButton:pressed {
     -fx-background-radius: 36;
     -fx-background-color: #617818;
 }
@@ -88,4 +88,14 @@
     -fx-background-color: #373B27;
     -fx-background-radius: 6;
     -fx-visible-amount: 100;
+}
+
+.enterInformationTextField {
+    -fx-background-color: #ADC364;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #8D8888;
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #D1D1D1;
+    -fx-accent: #87994D;
 }
