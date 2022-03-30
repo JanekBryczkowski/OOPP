@@ -129,6 +129,23 @@ public class GameCtrl {
     }
 
     /**
+     * Set the mode of the game. If it's single player, it's 0, otherwise 1.
+     *
+     * @param mode
+     */
+
+    public void setMode(int mode) { splashScreenCtrl.mode = mode; }
+
+    /**
+     * Setter for username.
+     *
+     * @param username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
      * This function is for showing the Game Screen.
      * The number of rounds are checked. If this variable is larger than the set number of rounds,
      * then the points for the user are reset as the current game is over and the function for showing the
@@ -137,9 +154,7 @@ public class GameCtrl {
      * and depending on the number of activities in the question, we call a function tailored to word the new question.
      */
     public void SoloGameRound() throws MalformedURLException {
-        multiplayer = false;
-        questionCtrl.multiplayer = false;
-        leaderBoardCtrl.multiplayer = false;
+        setMode(0);
         if (round > ROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
@@ -235,8 +250,8 @@ public class GameCtrl {
      * @param question
      */
     public void startMultiPlayerQuestion(Question question) {
-        multiplayer = true;
-        questionCtrl.setupJoker();
+        questionCtrl.setupEmoji();
+        setMode(1);
         System.out.println("MADE IT");
         System.out.println(question.toString());
 
@@ -251,8 +266,7 @@ public class GameCtrl {
             primaryStage.setTitle("Question");
 
             checkJokers(questionCtrl);
-            questionCtrl.multiplayer = true;
-            leaderBoardCtrl.multiplayer = true;
+            setMode(1);
             questionCtrl.setUpMultiPlayerQuestion(question);
         }
         round++;
@@ -282,7 +296,6 @@ public class GameCtrl {
      */
 
     public void showHalfTimeLeaderBoard() {
-        leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         leaderBoardCtrl.setList();
         leaderBoardCtrl.halfTimeLeaderBoard();

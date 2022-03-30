@@ -38,7 +38,6 @@ public class QuestionCtrl {
     private final GameCtrl gameCtrl;
     public Stage primaryStage;
 
-    public boolean multiplayer;
     public boolean answered;
     public int answer;
 
@@ -271,7 +270,7 @@ public class QuestionCtrl {
      * @param question is the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
-        if (!multiplayer) {
+        if (gameCtrl.getMode() == 0) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
             singlePlayerSecondsLeft.setVisible(true);
@@ -321,14 +320,14 @@ public class QuestionCtrl {
 
         enableButtons();
 
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             hideSoloPlayerElements();
 
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         jokerTwoSinglePlayer.setText("Eliminate one wrong answer");
         jokerTwoMultiPlayer.setText("Eliminate one wrong answer");
-        if (multiplayer) {
+        if (gameCtrl.getMode() == 1) {
             if (gameCtrl.round > 11) {
                 int current = gameCtrl.round - 1;
                 answersGiven.setText(current + " / 20 rounds");
@@ -349,7 +348,7 @@ public class QuestionCtrl {
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
-        if (!multiplayer) {
+        if (gameCtrl.getMode() == 0) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
             singlePlayerSecondsLeft.setVisible(true);
@@ -408,12 +407,12 @@ public class QuestionCtrl {
             answerThree.setText(finalAnswerString);
         }
 
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             hideSoloPlayerElements();
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
-        if (multiplayer) {
+        if(gameCtrl.getMode() == 1) {
             if (gameCtrl.round > 11) {
                 int current = gameCtrl.round - 1;
                 answersGiven.setText(current + " / 20 rounds");
@@ -462,7 +461,7 @@ public class QuestionCtrl {
         }
     }
 
-    public void setupJoker() {
+    public void setupEmoji() {
         emojiOne.setOnMouseClicked(event -> {
             WebsocketMessage websocketMessage = new WebsocketMessage("EMOJIONE");
             websocketMessage.setEmojiUsername(gameCtrl.username);
@@ -489,7 +488,7 @@ public class QuestionCtrl {
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
-        if (!multiplayer) {
+        if (gameCtrl.getMode() == 0) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
             singlePlayerSecondsLeft.setVisible(true);
@@ -518,7 +517,7 @@ public class QuestionCtrl {
         this.correctAnswer = question.correctAnswer;
         round.setText(String.valueOf(correctAnswer));
 
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             hideSoloPlayerElements();
 
         instantiateTimer();
@@ -528,7 +527,7 @@ public class QuestionCtrl {
         jokerTwoMultiPlayer.setText("Narrow down the boundaries");
         setUpTheBoundaries();
 
-        if (multiplayer) {
+        if(gameCtrl.getMode() == 1) {
             if (gameCtrl.round > 11) {
                 int current = gameCtrl.round - 1;
                 answersGiven.setText(current + " / 20 rounds");
@@ -625,7 +624,7 @@ public class QuestionCtrl {
      * UNUSED.
      */
     public void answerNumberGiven() {
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             revealAnswersOneActivities();
         disableButtons();
     }
@@ -634,7 +633,7 @@ public class QuestionCtrl {
      * Function for when the player answers one.
      */
     public void answerOneGiven() {
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             revealAnswersThreeActivities(answerOnePane, 1);
         else {
             answered = true;
@@ -647,7 +646,7 @@ public class QuestionCtrl {
      * Function for when the player answers two.
      */
     public void answerTwoGiven() {
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             revealAnswersThreeActivities(answerTwoPane, 2);
         else {
             answered = true;
@@ -660,7 +659,7 @@ public class QuestionCtrl {
      * Function for when the player answers three.
      */
     public void answerThreeGiven() {
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             revealAnswersThreeActivities(answerThreePane, 3);
         else {
             answered = true;
@@ -735,7 +734,7 @@ public class QuestionCtrl {
             gameCtrl.points += pointsGainedInRound;
         }
         points.setText(gameCtrl.points + " points");
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             newQuestion();
         else {
             answer = 0;
@@ -819,7 +818,7 @@ public class QuestionCtrl {
             answerOneInput.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         }
         points.setText(gameCtrl.points + " points");
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             newQuestion();
     }
 
@@ -987,9 +986,10 @@ public class QuestionCtrl {
     public void jokerTwoMultiPlayer() {
         if (!gameCtrl.secondJokerMultiPlayerUsed) {
             if (oneActivityAnchorPane.isVisible()) {
-                int difference = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
-                int newLowerBoundaryNumber = lowerBoundaryNumber + difference;
-                int newUpperBoundaryNumber = upperBoundaryNumber - difference;
+                int differenceLower = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
+                int differenceUpper = (int) (Math.random() * (upperBoundaryNumber - correctAnswer));
+                int newLowerBoundaryNumber = lowerBoundaryNumber + differenceLower;
+                int newUpperBoundaryNumber = upperBoundaryNumber - differenceUpper;
                 lowerBoundary.setText(formatNumber(newLowerBoundaryNumber));
                 upperBoundary.setText(formatNumber(newUpperBoundaryNumber));
                 jokerTwoMultiPlayer.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");

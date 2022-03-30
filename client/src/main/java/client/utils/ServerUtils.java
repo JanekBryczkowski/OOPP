@@ -124,7 +124,7 @@ public class ServerUtils {
                 .target(SERVER).path("api/user/removePlayer/"+ username) //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get();
+                .delete();
     }
 
     public void startGame() {
