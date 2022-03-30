@@ -347,6 +347,7 @@ public class LeaderBoardCtrl {
      * This function sets the Leaderboard back to the original.
      */
     public void endLeaderBoard() {
+        setMultiLeaderboard(WaitingRoomCtrl.userList);
         waitingRoom.setVisible(true);
         waitingRoom.setManaged(true);
         splash.setVisible(true);
