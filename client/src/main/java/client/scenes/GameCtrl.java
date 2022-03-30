@@ -20,6 +20,7 @@ import commons.Question;
 import commons.Score;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -38,9 +39,6 @@ public class GameCtrl {
     private QuestionCtrl questionCtrl;
     private Scene questionScreen;
 
-    private AddQuoteCtrl addCtrl;
-    private Scene add;
-
     private LeaderBoardCtrl leaderBoardCtrl;
     private Scene leaderBoardScreen;
 
@@ -54,21 +52,27 @@ public class GameCtrl {
 
     public int points = 0;
     public int round = 1;
-    public String username;
+    public String username = "";
     public int joinedLobby;
 
-    public boolean firstJokerUsed = false;
-    public boolean secondJokerUsed = false;
-    private final int ROUNDS = 20;
+    public boolean firstJokerSinglePlayerUsed = false;
+    public boolean secondJokerSinglePlayerUsed = false;
+
+    public boolean firstJokerMultiPlayerUsed = false;
+    public boolean secondJokerMultiPlayerUsed = false;
+    public boolean thirdJokerMultiPlayerUsed = false;
+
+    private final int ROUNDS = 2;
 
     public StompSession.Subscription subscription = null;
     public List<Score> multiplayerUsers = new ArrayList<>();
+    public boolean multiplayer;
 
     /**
      * This is for the multiplayer game, since there is a half-time Leaderboard set in the 11th round,
      * we need 21 rounds all together.
      */
-    public final int MULTIROUNDS = 21;
+    public final int MULTIROUNDS = 5;
 
     /**
      * Initializes all the controllers and all the scenes that are used throughout the game.
@@ -99,6 +103,8 @@ public class GameCtrl {
         this.adminCtrl = adminCtrl.getKey();
         this.admin = new Scene(adminCtrl.getValue());
 
+        primaryStage.getIcons().add(new Image("client.images/environmentLogo.png"));
+
         showSplashScreen();
         primaryStage.show();
     }
@@ -123,15 +129,6 @@ public class GameCtrl {
     }
 
     /**
-     * Setter for username.
-     *
-     * @param username
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
      * This function is for showing the Game Screen.
      * The number of rounds are checked. If this variable is larger than the set number of rounds,
      * then the points for the user are reset as the current game is over and the function for showing the
@@ -140,6 +137,7 @@ public class GameCtrl {
      * and depending on the number of activities in the question, we call a function tailored to word the new question.
      */
     public void SoloGameRound() throws MalformedURLException {
+        multiplayer = false;
         questionCtrl.multiplayer = false;
         leaderBoardCtrl.multiplayer = false;
         if (round > ROUNDS) {
@@ -237,6 +235,7 @@ public class GameCtrl {
      * @param question
      */
     public void startMultiPlayerQuestion(Question question) {
+        multiplayer = true;
         questionCtrl.setupJoker();
         System.out.println("MADE IT");
         System.out.println(question.toString());
@@ -244,7 +243,7 @@ public class GameCtrl {
         if (round > MULTIROUNDS) {
             questionCtrl.resetPoints();
             showLeaderBoard();
-        } else if (round == 11) {
+        } else if (round == MULTIROUNDS / 2 + 1) {
             showHalfTimeLeaderBoard();
         } else {
             questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
@@ -299,8 +298,8 @@ public class GameCtrl {
      * @param questionCtrl
      */
     public void checkJokers(QuestionCtrl questionCtrl) {
-        if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
-        if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);
+        if (firstJokerSinglePlayerUsed) questionCtrl.jokerOneSinglePlayer.setDisable(true);
+        if (secondJokerSinglePlayerUsed) questionCtrl.jokerTwoSinglePlayer.setDisable(true);
     }
 
     public void showEmoji(int emojiNumber, String username) {
