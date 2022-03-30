@@ -133,6 +133,8 @@ public class QuestionCtrl {
 
     @FXML
     public Button jokerThreeMultiPlayer;
+    @FXML
+    private Text nameText;
 
     @FXML
     private Arc clock;
@@ -200,7 +202,7 @@ public class QuestionCtrl {
         task = new TimerTask() {
             @Override
             public void run() {
-                if (gameCtrl.getMode()==0) {
+                if (gameCtrl.getMode() == 0) {
                     secondsPassed[0]--;
                     clock.setStartAngle(0.0);
                     double proportion = (double) secondsPassed[0] / 15.0;
@@ -271,6 +273,7 @@ public class QuestionCtrl {
      * @param question is the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
+        nameText.setText("Name: " + gameCtrl.username);
         if (!multiplayer) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
@@ -349,6 +352,7 @@ public class QuestionCtrl {
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
+        nameText.setText("Name: " + gameCtrl.username);
         if (!multiplayer) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
@@ -489,6 +493,7 @@ public class QuestionCtrl {
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
+        nameText.setText("Name: " + gameCtrl.username);
         if (!multiplayer) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
