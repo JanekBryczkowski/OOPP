@@ -900,23 +900,6 @@ public class QuestionCtrl {
             gameCtrl.thirdJokerMultiPlayerUsed = false;
             gameCtrl.showSplashScreen();
         }
-        gainedPoints.setText("");
-        gameCtrl.points = 0;
-        gameCtrl.round = 1;
-        gameCtrl.username = "";
-        gameCtrl.firstJokerUsed = false;
-        gameCtrl.secondJokerUsed = false;
-        jokerOne.setStyle("-fx-border-width: 0");
-        jokerTwo.setStyle("-fx-border-width: 0");
-        jokerOne.setDisable(false);
-        jokerTwo.setDisable(false);
-        answerOnePane.setStyle("-fx-border-width: 0;");
-        answerTwoPane.setStyle("-fx-border-width: 0;");
-        answerThreePane.setStyle("-fx-border-width: 0;");
-        myTimer.cancel();
-        points.setText("0 points");
-        gameCtrl.showSplashScreen();
-        myTimer.cancel();
     }
 
     /**
