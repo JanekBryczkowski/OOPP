@@ -317,8 +317,11 @@ public class LeaderBoardCtrl {
     public void backToSplash() {
         gameCtrl.points = 0;
         gameCtrl.round = 1;
-        gameCtrl.firstJokerUsed = false;
-        gameCtrl.secondJokerUsed = false;
+        gameCtrl.firstJokerSinglePlayerUsed = false;
+        gameCtrl.secondJokerSinglePlayerUsed = false;
+        gameCtrl.firstJokerMultiPlayerUsed = false;
+        gameCtrl.secondJokerMultiPlayerUsed = false;
+        gameCtrl.thirdJokerMultiPlayerUsed = false;
         gameCtrl.showSplashScreen();
     }
 
@@ -358,8 +361,8 @@ public class LeaderBoardCtrl {
         gameCtrl.joinCurrentLobby();
         gameCtrl.points = 0;
         gameCtrl.round = 1;
-        gameCtrl.firstJokerUsed = false;
-        gameCtrl.secondJokerUsed = false;
+        gameCtrl.firstJokerSinglePlayerUsed = false;
+        gameCtrl.secondJokerSinglePlayerUsed = false;
         gameCtrl.showWaitingRoomScreen();
     }
 

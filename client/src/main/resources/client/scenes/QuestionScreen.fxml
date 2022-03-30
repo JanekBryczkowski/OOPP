@@ -28,15 +28,6 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Button>
-      <Label layoutX="65.0" layoutY="199.0" maxHeight="65.0" maxWidth="250.0" minHeight="65.0" minWidth="250.0" prefHeight="65.0" prefWidth="250.0" text="Use a Joker!">
-         <font>
-            <Font name="System Bold" size="43.0" />
-         </font>
-      </Label>
-      <Button fx:id="jokerTwo" layoutX="792.0" layoutY="199.0" maxHeight="65.0" maxWidth="400.0" minHeight="65.0" minWidth="400.0" mnemonicParsing="false" onAction="#jokerTwo" prefHeight="65.0" prefWidth="400.0" styleClass="joker_button" text="Eliminate one wrong answer" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="21.0" />
-         </font></Button>
       <ImageView fx:id="emojiOne" fitHeight="72.0" fitWidth="72.0" layoutX="14.0" layoutY="703.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/emojiOne.png" />
@@ -60,11 +51,6 @@
             <Image url="@/client.images/earthLogo.png" />
          </image>
       </ImageView>
-      <Button fx:id="jokerOne" layoutX="348.0" layoutY="199.0" maxHeight="65.0" maxWidth="400.0" minHeight="65.0" minWidth="400.0" mnemonicParsing="false" onAction="#jokerOne" prefHeight="65.0" prefWidth="400.0" styleClass="joker_button" text="Double Points" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="21.0" />
-         </font>
-      </Button>
       <Label fx:id="answersGiven" alignment="CENTER" layoutX="318.0" layoutY="712.0" maxHeight="58.0" maxWidth="429.0" minHeight="58.0" minWidth="429.0" prefHeight="58.0" prefWidth="429.0" text="2 / 6 answers">
          <font>
             <Font size="35.0" />
@@ -173,5 +159,48 @@
             <Font size="19.0" />
          </font></Label>
       <Arc fx:id="clock" fill="#004d25" layoutX="1164.0" layoutY="739.0" length="360.0" radiusX="30.0" radiusY="30.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+      <AnchorPane fx:id="jokersForSinglePlayer" layoutY="199.0" prefHeight="65.0" prefWidth="1238.0" visible="false">
+         <children>
+            <Label layoutX="61.0" maxHeight="65.0" maxWidth="250.0" minHeight="65.0" minWidth="250.0" prefHeight="65.0" prefWidth="250.0" text="Use a Joker!">
+               <font>
+                  <Font name="System Bold" size="43.0" />
+               </font>
+            </Label>
+            <Button fx:id="jokerOneSinglePlayer" layoutX="348.0" maxHeight="65.0" maxWidth="400.0" minHeight="65.0" minWidth="400.0" mnemonicParsing="false" onAction="#jokerOneSinglePlayer" prefHeight="65.0" prefWidth="400.0" styleClass="joker_button" text="Double Points" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="jokerTwoSinglePlayer" layoutX="792.0" maxHeight="65.0" maxWidth="400.0" minHeight="65.0" minWidth="400.0" mnemonicParsing="false" onAction="#jokerTwoSinglePlayer" prefHeight="65.0" prefWidth="400.0" styleClass="joker_button" text="Eliminate one wrong answer" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="jokersForMultiPlayer" layoutY="199.0" prefHeight="65.0" prefWidth="1238.0">
+         <children>
+            <Label layoutX="14.0" maxHeight="65.0" maxWidth="250.0" minHeight="65.0" minWidth="194.0" prefHeight="65.0" prefWidth="194.0" text="Use a Joker!">
+               <font>
+                  <Font name="System Bold" size="33.0" />
+               </font>
+            </Label>
+            <Button fx:id="jokerOneMultiPlayer" layoutX="219.0" maxHeight="65.0" maxWidth="400.0" minHeight="65.0" minWidth="267.0" mnemonicParsing="false" onAction="#jokerOneMultiPlayer" prefHeight="65.0" prefWidth="267.0" styleClass="joker_button" text="Double Points" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="jokerTwoMultiPlayer" layoutX="509.0" maxHeight="65.0" maxWidth="400.0" minHeight="65.0" minWidth="340.0" mnemonicParsing="false" onAction="#jokerTwoMultiPlayer" prefHeight="65.0" prefWidth="340.0" styleClass="joker_button" text="Eliminate one wrong answer" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="jokerThreeMultiPlayer" layoutX="873.0" maxHeight="65.0" maxWidth="400.0" minHeight="65.0" minWidth="267.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="340.0" styleClass="joker_button" text="Remove time for other players" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

@@ -41,7 +41,7 @@ public class SplashScreenCtrl {
     @FXML
     private Button joinButton;
     @FXML
-    private TextField usernameInput;
+    public TextField usernameInput;
     @FXML
     private Label logoLabel;
     //    @FXML
@@ -96,7 +96,7 @@ public class SplashScreenCtrl {
         } else {
             alert.setText("");
             if (mode == 0) {
-                gameCtrl.setUsername(usernameInput.getText());
+                gameCtrl.username = usernameInput.getText();
                 try {
                     gameCtrl.SoloGameRound();
                 } catch (MalformedURLException e) {
@@ -104,10 +104,14 @@ public class SplashScreenCtrl {
                 }
             } else {
                 boolean isValidUsername = server.isValidUsername(usernameInput.getText());
-                if (isValidUsername == false)
+                if (!isValidUsername)
                     alert.setText("This username is already taken");
-                else
+                else {
+                    gameCtrl.username = usernameInput.getText();
+                    System.out.println("444444" + usernameInput.getText());
+                    System.out.println("333333333333" + gameCtrl.username);
                     startMultiPlayerGame();
+                }
             }
         }
     }
@@ -123,9 +127,7 @@ public class SplashScreenCtrl {
      * function, the client side will set up the given question.
      */
     public void startMultiPlayerGame() {
-        String username = usernameInput.getText();
-        gameCtrl.username = usernameInput.getText();
-        User user = new User(username, 0);
+        User user = new User(gameCtrl.username, 0);
         server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
         gameCtrl.joinedLobby = currentOpenLobby;
@@ -185,6 +187,7 @@ public class SplashScreenCtrl {
     }
 
     public void exitServerName() {
+        usernameInput.setText(gameCtrl.username);
         gameRules.setVisible(false);
         joinButton.setDisable(false);
         rulesButton.setDisable(false);

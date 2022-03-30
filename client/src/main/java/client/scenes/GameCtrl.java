@@ -52,11 +52,16 @@ public class GameCtrl {
 
     public int points = 0;
     public int round = 1;
-    public String username;
+    public String username = "";
     public int joinedLobby;
 
-    public boolean firstJokerUsed = false;
-    public boolean secondJokerUsed = false;
+    public boolean firstJokerSinglePlayerUsed = false;
+    public boolean secondJokerSinglePlayerUsed = false;
+
+    public boolean firstJokerMultiPlayerUsed = false;
+    public boolean secondJokerMultiPlayerUsed = false;
+    public boolean thirdJokerMultiPlayerUsed = false;
+
     private final int ROUNDS = 2;
 
     public StompSession.Subscription subscription = null;
@@ -121,15 +126,6 @@ public class GameCtrl {
      */
     public int getMode() {
         return splashScreenCtrl.mode;
-    }
-
-    /**
-     * Setter for username.
-     *
-     * @param username
-     */
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     /**
@@ -302,8 +298,8 @@ public class GameCtrl {
      * @param questionCtrl
      */
     public void checkJokers(QuestionCtrl questionCtrl) {
-        if (firstJokerUsed) questionCtrl.jokerOne.setDisable(true);
-        if (secondJokerUsed) questionCtrl.jokerTwo.setDisable(true);
+        if (firstJokerSinglePlayerUsed) questionCtrl.jokerOneSinglePlayer.setDisable(true);
+        if (secondJokerSinglePlayerUsed) questionCtrl.jokerTwoSinglePlayer.setDisable(true);
     }
 
     public void showEmoji(int emojiNumber, String username) {

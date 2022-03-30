@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 
 public class MainCtrlTest {
 
-    private MainCtrl sut;
+   /* private MainCtrl sut;
 
     @BeforeEach
     public void setup() {
@@ -31,5 +31,5 @@ public class MainCtrlTest {
     public void writeSomeTests() {
         // TODO create replacement objects and write some tests
         // sut.initialize(null, null, null);
-    }
+    }*/
 }
