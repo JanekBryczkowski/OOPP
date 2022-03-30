@@ -253,6 +253,63 @@ public class LeaderBoardCtrl {
         leaderBoardScrollPane.setContent(vbox);
     }
 
+    private void setMultiLeaderboard(List<User> userList) {
+        VBox vbox = new VBox();
+        for (User user : userList) {
+            AnchorPane anchorPane = new AnchorPane();
+            anchorPane.setMaxHeight(50);
+            anchorPane.setMinHeight(50);
+            anchorPane.setMinHeight(50);
+            anchorPane.setMaxWidth(347);
+            anchorPane.setMinWidth(347);
+            anchorPane.setPrefWidth(347);
+            Label usernameLabel = new Label(user.getUsername());
+            usernameLabel.setMaxHeight(30);
+            usernameLabel.setMinHeight(30);
+            usernameLabel.setPrefHeight(30);
+            usernameLabel.setMaxWidth(200);
+            usernameLabel.setMinWidth(200);
+            usernameLabel.setPrefWidth(200);
+            usernameLabel.setLayoutX(0);
+            usernameLabel.setLayoutY(0);
+            usernameLabel.setStyle("-fx-font-size: 16;");
+            usernameLabel.setAlignment(Pos.CENTER);
+            Label scoreLabel = new Label(String.valueOf(user.getScore()));
+            scoreLabel.setMaxHeight(30);
+            scoreLabel.setMinHeight(30);
+            scoreLabel.setPrefHeight(30);
+            scoreLabel.setMaxWidth(147);
+            scoreLabel.setMinWidth(147);
+            scoreLabel.setPrefWidth(147);
+            scoreLabel.setLayoutX(200);
+            scoreLabel.setLayoutY(0);
+            scoreLabel.setStyle("-fx-font-size: 16;");
+            scoreLabel.setAlignment(Pos.CENTER);
+            if (gameCtrl.username.equals(user.getUsername()) && gameCtrl.points == user.getScore()) {
+                usernameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: transparent;");
+                scoreLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: transparent;");
+                anchorPane.setStyle("-fx-background-color: #D5DEB6");
+            }
+            AnchorPane bar = new AnchorPane();
+            bar.setMinHeight(6);
+            bar.setMaxHeight(6);
+            bar.setPrefWidth(6);
+            double ratio = (double) user.getScore() / 2000;
+            double finalWidth = ratio * 317;
+            bar.setPrefWidth(finalWidth);
+            bar.setMinWidth(finalWidth);
+            bar.setMaxWidth(finalWidth);
+            bar.setLayoutX(15);
+            bar.setLayoutY(26.5);
+            bar.setStyle("-fx-background-color: " + getRandomColor() + "; -fx-background-radius: 4;");
+            anchorPane.getChildren().add(usernameLabel);
+            anchorPane.getChildren().add(scoreLabel);
+            anchorPane.getChildren().add(bar);
+            vbox.getChildren().add(anchorPane);
+        }
+        leaderBoardScrollPane.setContent(vbox);
+    }
+
     private int findHighestScore(List<Score> scoreList) {
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < scoreList.size(); i++) {
@@ -275,6 +332,7 @@ public class LeaderBoardCtrl {
      * they achieved so far.
      */
     public void halfTimeLeaderBoard() {
+        setMultiLeaderboard(WaitingRoomCtrl.userList);
         waitingRoom.setVisible(false);
         waitingRoom.setManaged(false);
         splash.setVisible(false);
@@ -294,9 +352,15 @@ public class LeaderBoardCtrl {
         splash.setVisible(true);
         splash.setManaged(true);
         backButton.setVisible(false);
-        leaderBoardScrollPane.setMinHeight(417);
-        leaderBoardScrollPane.setMaxHeight(417);
-        leaderBoardScrollPane.setPrefHeight(417);
+        if(SplashScreenCtrl.mode == 0){
+            leaderBoardScrollPane.setMinHeight(535);
+            leaderBoardScrollPane.setMaxHeight(535);
+            leaderBoardScrollPane.setPrefHeight(535);
+        } else {
+            leaderBoardScrollPane.setMinHeight(417);
+            leaderBoardScrollPane.setMaxHeight(417);
+            leaderBoardScrollPane.setPrefHeight(417);
+        }
     }
 
 

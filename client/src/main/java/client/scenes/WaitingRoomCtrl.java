@@ -20,7 +20,7 @@ public class WaitingRoomCtrl {
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
 
-    private List<User> userList = new ArrayList<>();
+    public static List<User> userList = new ArrayList<>();
     @FXML
     private Text numberOf;
 
