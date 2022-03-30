@@ -270,7 +270,7 @@ public class QuestionCtrl {
      * @param question is the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
-        if (!multiplayer) {
+        if (gameCtrl.getMode() == 0) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
             singlePlayerSecondsLeft.setVisible(true);
@@ -348,7 +348,7 @@ public class QuestionCtrl {
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
-        if (!multiplayer) {
+        if (gameCtrl.getMode() == 0) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
             singlePlayerSecondsLeft.setVisible(true);
@@ -488,7 +488,7 @@ public class QuestionCtrl {
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
-        if (!multiplayer) {
+        if (gameCtrl.getMode() == 0) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
             singlePlayerSecondsLeft.setVisible(true);
