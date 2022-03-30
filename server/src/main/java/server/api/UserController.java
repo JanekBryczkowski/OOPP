@@ -16,11 +16,22 @@ public class UserController {
 
     private final LobbyController lobbyController;
 
+    /**
+     * Constructor for lobbyController.
+     *
+     * @param lobbyController to be instantiated
+     */
     public UserController(LobbyController lobbyController) {
         this.lobbyController = lobbyController;
     }
 
-
+    /**
+     * Mapping to check that the username input by the user is not already taken by another
+     * user in the same lobby as them.
+     *
+     * @param username Username to be checked against
+     * @return Boolean representing if the username is taken
+     */
     @GetMapping("/isValidUsername/{username}")
     public boolean isValidUsername(@PathVariable("username") String username) {
         List<User> userList = lobbyController.openLobby.getUserList();
@@ -30,13 +41,33 @@ public class UserController {
         return true;
     }
 
-
+    /**
+     * Post mapping to add a User to the User List of the open lobby.
+     *
+     * @param user to add to the open lobby User List
+     * @return user
+     */
     @PostMapping(path = { "", "/" })
     public User postUserToOpenLobby(@RequestBody User user) {
 //            listeners.forEach((k,l) -> l.accept(user));
             return lobbyController.getOpenLobby().addUser(user);
     }
 
+    @PostMapping("/updateScore")
+    public void updateScore(@RequestBody User user) {
+        for(User u : lobbyController.getOpenLobby().getUserList()) {
+            if(u.getUsername().equals(user.getUsername())) {
+                u.setScore(user.getScore());
+            }
+        }
+    }
+
+    /**
+     * Get mapping to remove a User from the current open lobby User List when
+     * they unsubscribe from the web socket question channel.
+     *
+     * @param username used to identify User that should be removed
+     */
     @DeleteMapping("/removePlayer/{username}")
     public void removeUser(@PathVariable("username") String username) {
         List<User> userList = lobbyController.getOpenLobby().getUserList();
@@ -47,11 +78,21 @@ public class UserController {
         }
     }
 
+    /**
+     * Get mapping that returns a List of al the Users in the currently open lobby.
+     *
+     * @return List of User
+     */
     @GetMapping("/currentLobby")
     public List<User> getUsersOfOpenLobby() {
         return (List<User>) lobbyController.getOpenLobby().getUserList();
     }
 
+    /**
+     * Get mapping used to fetch all the lobbies that have been created.
+     *
+     * @return List of Lobby containing all lobbies
+     */
     @GetMapping("/allLobies")
     public List<Lobby> getAllLobbies() {
         return (List<Lobby>) lobbyController.getAllLobbies();
@@ -63,9 +104,6 @@ public class UserController {
         //postUserToOpenLobby(user);
         return user;
     }
-
-
-
 
 //    private Map<Object, Consumer<User>> listeners = new HashMap<>();
 //
@@ -87,37 +125,4 @@ public class UserController {
 //        return res;
 //    }
 
-
-//    @GetMapping("/")
-//    public List<Question> getQuestions() {
-//        return repo.findAll();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Question> getById(@PathVariable("id") long id) {
-//        if (id < 0 || !repo.existsById(id)) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//        return ResponseEntity.ok(repo.getById(id));
-//    }
-//
-//    private static boolean isNullOrEmpty(String s) {
-//        return s == null || s.isEmpty();
-//    }
-//
-//    @PostMapping(path = { "", "/" })
-//    public ResponseEntity<Question> add(@RequestBody Question question) {
-//
-//        if (question==null || isNullOrEmpty(question.title)) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//
-//        Question saved = repo.save(question);
-//        return ResponseEntity.ok(saved);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    void deleteQuestion(@PathVariable long id) {
-//        repo.deleteById(id);
-//    }
 }

@@ -18,6 +18,12 @@ public class QuestionController {
     private final QuestionRepository repo;
     private SimpMessagingTemplate msgs;
 
+    /**
+     * Constructor for QuestionController.
+     *
+     * @param repo The Activity database
+     * @param msgs The web socket message
+     */
     public QuestionController(Main mainGame, QuestionRepository repo, SimpMessagingTemplate msgs) {
         this.repo = repo;
         this.msgs = msgs;
@@ -28,8 +34,8 @@ public class QuestionController {
      * This function gets called at the start of running
      * the server to store every activity from the json file.
      *
-     * @param   activities a list of activities to store in the database.
-     * @return  A iterable list of all activities in the database.
+     * @param activities A list of activities to store in the database.
+     * @return An iterable list of all activities in the database.
      */
     public Iterable<Activity> save(List<Activity> activities) {
         return repo.saveAll(activities);
@@ -39,7 +45,7 @@ public class QuestionController {
      * This functions gets called to see all the activities
      * that are present in the database.
      *
-     * @return  A list of all activities in the database.
+     * @return A list of all activities in the database.
      */
     @GetMapping("/")
     public List<Activity> getAllActivities() {
@@ -50,7 +56,7 @@ public class QuestionController {
      * This functions gets called whenever a client needs a question
      * in a solo player game.
      *
-     * @return  A random question with 1,2 or 3 activities
+     * @return A random question with 1,2 or 3 activities
      */
     @GetMapping("/getQuestion")
     public Question getActivities() {
@@ -92,8 +98,8 @@ public class QuestionController {
      * The function does not get called by the client but can be used
      * for debugging through the localhost.
      *
-     * @param id    The id of the question.
-     * @return      The requested question.
+     * @param id The id of the question.
+     * @return The requested question.
      */
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getById(@PathVariable("id") long id) {
@@ -103,10 +109,23 @@ public class QuestionController {
         return ResponseEntity.ok(repo.getById(id));
     }
 
+    /**
+     * Checks if the String input as parameter is null or empty.
+     *
+     * @param s String to be checked.
+     * @return boolean indicating the condition of s
+     */
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
     }
 
+    /**
+     * Posts an Activity to the database. Checks if this Activity object actually
+     * contains a body.
+     *
+     * @param activity Activity to be saved in the repository
+     * @return Entity Activity
+     */
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Activity> add(@RequestBody Activity activity) {
 
@@ -118,17 +137,16 @@ public class QuestionController {
         return ResponseEntity.ok(saved);
     }
 
+    /**
+     * Delete mapping can be used to remove an Activity from the repository.
+     *
+     * @param id Is the unique id representing that specific Activity
+     */
     @DeleteMapping("/{id}")
     public void deleteQuestion(@PathVariable("id") long id) {
         repo.deleteById(id);
     }
 
-//    @MessageMapping("/question{path}")
-//    @SendTo("/topic/question0")
-//    public WebsocketMessage sendQuestion(WebsocketMessage websocketMessage, @PathVariable String path) {
-//        System.out.println("RECEIVED A WEBSOCKETMESSAGE ON question"+path);
-//        System.out.println("SENDING QUESTION " + websocketMessage.toString());
-//        return websocketMessage;
-//    }
+
 
 }
