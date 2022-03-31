@@ -5,14 +5,14 @@ import com.google.inject.Inject;
 import com.google.inject.Stage;
 import commons.Question;
 import commons.WebsocketMessage;
-import javafx.animation.PauseTransition;
-import javafx.animation.ScaleTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,8 +20,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -45,7 +43,7 @@ public class QuestionCtrl {
     public int correctAnswer;
     public int jokerOneActive = 1; //double points
     int[] secondsPassed = {15};
-    Timer myTimer;
+    Timer myTimer = new Timer();
     TimerTask task;
 
     private final int ROUNDS = 2;
@@ -137,12 +135,14 @@ public class QuestionCtrl {
     private Text nameText;
 
     @FXML
-    private Arc clock;
+    private ProgressBar nope;
 
     double randomLower;
     double randomUpper;
     int lowerBoundaryNumber;
     int upperBoundaryNumber;
+
+    Timeline bar;
 
     List<Color> colorsForClockSinglePlayer = Arrays.asList(new Color(0, 0.3, 0.15, 1),
             new Color(0.07, 0.51, 0.23, 1),
@@ -166,7 +166,6 @@ public class QuestionCtrl {
             new Color(0.57, 0.94, 0.53, 1),
             new Color(1, 0.95, 0.14, 1),
             new Color(1, 0.74, 0.5, 1),
-            new Color(1, 0.62, 0.27, 1),
             new Color(0.97, 0.43, 0.07, 1),
             new Color(0.91, 0.23, 0.08, 1),
             new Color(0.54, 0.06, 0.05, 1),
@@ -195,8 +194,13 @@ public class QuestionCtrl {
      * else in the game to have answered.
      */
     public void instantiateTimer() {
-        singlePlayerSecondsLeft.setText("");
-        multiPlayerSecondsLeft.setText("");
+        if (!multiplayer) {
+            singlePlayerSecondsLeft.setText("Time left: 15 seconds");
+            multiPlayerSecondsLeft.setText("");
+        } else {
+            singlePlayerSecondsLeft.setText("");
+            multiPlayerSecondsLeft.setText("Time left to answer: 10 seconds");
+        }
         secondsPassed[0] = 15;
         myTimer = new Timer();
         task = new TimerTask() {
@@ -204,17 +208,11 @@ public class QuestionCtrl {
             public void run() {
                 if (gameCtrl.getMode() == 0) {
                     secondsPassed[0]--;
-                    clock.setStartAngle(0.0);
-                    double proportion = (double) secondsPassed[0] / 15.0;
-                    double finalNumber = proportion * 360;
-                    clock.setLength(finalNumber);
-                    clock.setType(ArcType.ROUND);
-                    clock.setFill(colorsForClockSinglePlayer.get(15 - secondsPassed[0]));
                     if (secondsPassed[0] == 1) {
                         singlePlayerSecondsLeft.setText("Time left: " + secondsPassed[0] + " second");
-                    } else if (secondsPassed[0] > 1)
+                    } else if (secondsPassed[0] > 1) {
                         singlePlayerSecondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
-                    else {
+                    } else {
                         if (oneActivityAnchorPane.isVisible()) {
                             revealAnswersOneActivities();
                         }
@@ -224,12 +222,12 @@ public class QuestionCtrl {
                     }
                 } else {
                     secondsPassed[0]--;
-                    clock.setStartAngle(0.0);
+                    /*clock.setStartAngle(0.0);
                     double proportion = (double) (secondsPassed[0] - 5) / 10.0;
                     double finalNumber = proportion * 360;
                     clock.setLength(finalNumber);
                     clock.setType(ArcType.ROUND);
-                    clock.setFill(colorsForClockMultiPlayer.get(15 - secondsPassed[0]));
+                    clock.setFill(colorsForClockMultiPlayer.get(15 - secondsPassed[0]));*/
                     if (secondsPassed[0] == 6) {
                         if (!answered)
                             multiPlayerSecondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " second");
@@ -264,6 +262,115 @@ public class QuestionCtrl {
         };
     }
 
+    private void playTimerSinglePlayer() {
+        nope.setStyle("-fx-accent: black;");
+        double[] timer = {1};
+        bar = new Timeline(new KeyFrame(Duration.millis(15), ev -> {
+            timer[0] = timer[0] - 0.001;
+            nope.setProgress(timer[0]);
+            nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(0)));
+            if (timer[0] < 0.94) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(1)));
+            }
+            if (timer[0] < 0.88) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(2)));
+            }
+            if (timer[0] < 0.82) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(3)));
+            }
+            if (timer[0] < 0.76) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(4)));
+            }
+            if (timer[0] < 0.7) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(5)));
+            }
+            if (timer[0] < 0.64) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(6)));
+            }
+            if (timer[0] < 0.58) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(7)));
+            }
+            if (timer[0] < 0.52) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(8)));
+            }
+            if (timer[0] < 0.46) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(9)));
+            }
+            if (timer[0] < 0.4) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(10)));
+            }
+            if (timer[0] < 0.34) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(11)));
+            }
+            if (timer[0] < 0.28) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(12)));
+            }
+            if (timer[0] < 0.22) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(13)));
+            }
+            if (timer[0] < 0.16) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(14)));
+            }
+            if (timer[0] <= 0.1) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockSinglePlayer.get(15)));
+            }
+            if (timer[0] == 0.001) {
+                bar.stop();
+            }
+        }));
+        bar.setCycleCount(1000);
+        bar.play();
+    }
+
+    private void playTimerMultiPlayer() {
+        nope.setStyle("-fx-accent: black;");
+        double[] timer = {1};
+        bar = new Timeline(new KeyFrame(Duration.millis(10), ev -> {
+            timer[0] = timer[0] - 0.001;
+            nope.setProgress(timer[0]);
+            nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(0)));
+            if (timer[0] < 0.9) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(1)));
+            }
+            if (timer[0] < 0.8) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(2)));
+            }
+            if (timer[0] < 0.7) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(3)));
+            }
+            if (timer[0] < 0.6) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(4)));
+            }
+            if (timer[0] < 0.5) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(5)));
+            }
+            if (timer[0] < 0.4) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(6)));
+            }
+            if (timer[0] < 0.3) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(7)));
+            }
+            if (timer[0] < 0.2) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(8)));
+            }
+            if (timer[0] < 0.1) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(9)));
+            }
+            if (timer[0] == 0.001) {
+                bar.stop();
+            }
+        }));
+        bar.setCycleCount(1000);
+        bar.play();
+    }
+
+    public String translateColor(Color color) {
+        return String.format("#%02X%02X%02X",
+                (int) (color.getRed() * 255),
+                (int) (color.getGreen() * 255),
+                (int) (color.getBlue() * 255));
+    }
+
     /**
      * This function is a setup for the GameScreen when there is a three activity question.
      * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
@@ -273,6 +380,11 @@ public class QuestionCtrl {
      * @param question is the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
+        if (!multiplayer) {
+            playTimerSinglePlayer();
+        } else {
+            playTimerMultiPlayer();
+        }
         nameText.setText("Name: " + gameCtrl.username);
         if (!multiplayer) {
             jokersForSinglePlayer.setVisible(true);
@@ -352,7 +464,11 @@ public class QuestionCtrl {
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
-        nameText.setText("Name: " + gameCtrl.username);
+        if (!multiplayer) {
+            playTimerSinglePlayer();
+        } else {
+            playTimerMultiPlayer();
+        }        nameText.setText("Name: " + gameCtrl.username);
         if (!multiplayer) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
@@ -493,7 +609,11 @@ public class QuestionCtrl {
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
-        nameText.setText("Name: " + gameCtrl.username);
+        if (!multiplayer) {
+            playTimerSinglePlayer();
+        } else {
+            playTimerMultiPlayer();
+        }        nameText.setText("Name: " + gameCtrl.username);
         if (!multiplayer) {
             jokersForSinglePlayer.setVisible(true);
             jokersForMultiPlayer.setVisible(false);
@@ -896,6 +1016,7 @@ public class QuestionCtrl {
             points.setText("0 points");
             gameCtrl.showSplashScreen();
         } else if (gameCtrl.getMode() == 0) {
+            myTimer.cancel();
             gameCtrl.points = 0;
             gameCtrl.round = 1;
             gameCtrl.firstJokerSinglePlayerUsed = false;
