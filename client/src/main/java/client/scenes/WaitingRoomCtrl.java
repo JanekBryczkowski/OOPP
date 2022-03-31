@@ -68,6 +68,12 @@ public class WaitingRoomCtrl {
         showInWaitingRoomTable();
     }
 
+    public void refreshTable() {
+            userList.clear();
+            setWaitingRoomTable();
+
+    }
+
     public void showInWaitingRoomTable() {
         VBox vbox = new VBox();
         for (User user : userList) {
