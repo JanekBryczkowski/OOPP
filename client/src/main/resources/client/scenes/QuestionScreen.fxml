@@ -132,11 +132,6 @@
       </AnchorPane>
       <AnchorPane layoutX="992.0" layoutY="16.0" maxHeight="164.0" maxWidth="229.0" minHeight="135.0" minWidth="229.0" prefHeight="164.0" prefWidth="229.0" styleClass="pointsLabel">
          <children>
-            <Text fx:id="gainedPoints" layoutX="9.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #e7f0c5;" textAlignment="CENTER" visible="false" wrappingWidth="210.66670735677076">
-               <font>
-                  <Font size="27.0" />
-               </font>
-            </Text>
             <Text fx:id="points" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pointsLabel" text="0 points" textAlignment="CENTER" wrappingWidth="229.33333333333326">
                <font>
                   <Font name="System Bold" size="40.0" />
@@ -145,6 +140,12 @@
             <Text fx:id="nameText" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: faldfaewaf" textAlignment="CENTER" wrappingWidth="229.33333333333326">
                <font>
                   <Font size="22.0" />
+               </font>
+            </Text>
+            <AnchorPane fx:id="gainedPointsAnchorPane" layoutX="10.0" layoutY="87.0" prefHeight="37.0" prefWidth="210.0" style="-fx-background-color: lightgray; -fx-background-radius: 13;" visible="false" />
+            <Text fx:id="gainedPoints" layoutX="9.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="210.66670735677076">
+               <font>
+                  <Font size="27.0" />
                </font>
             </Text>
          </children>

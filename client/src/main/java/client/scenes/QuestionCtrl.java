@@ -137,6 +137,9 @@ public class QuestionCtrl {
     @FXML
     private ProgressBar nope;
 
+    @FXML
+    private AnchorPane gainedPointsAnchorPane;
+
     double randomLower;
     double randomUpper;
     int lowerBoundaryNumber;
@@ -405,7 +408,7 @@ public class QuestionCtrl {
             e.printStackTrace();
         }
 
-        if (question.activityList.get(0).title.length() > 28) {
+        if (question.activityList.get(0).title.length() > 56) {
             answerOne.setText(question.activityList.get(0).title);
             answerOne.setStyle("-fx-font-size: 15;");
         } else {
@@ -413,7 +416,7 @@ public class QuestionCtrl {
             answerOne.setStyle("-fx-font-size: 25;");
         }
 
-        if (question.activityList.get(1).title.length() > 28) {
+        if (question.activityList.get(1).title.length() > 56) {
             answerTwo.setText(question.activityList.get(1).title);
             answerTwo.setStyle("-fx-font-size: 15;");
         } else {
@@ -421,7 +424,7 @@ public class QuestionCtrl {
             answerTwo.setStyle("-fx-font-size: 25;");
         }
 
-        if (question.activityList.get(2).title.length() > 28) {
+        if (question.activityList.get(2).title.length() > 56) {
             answerThree.setText(question.activityList.get(2).title);
             answerThree.setStyle("-fx-font-size: 15;");
         } else {
@@ -848,12 +851,14 @@ public class QuestionCtrl {
             gainedPoints.setText("+ " + pointsGainedInRound + " points");
 
             gainedPoints.setVisible(true);
+            gainedPointsAnchorPane.setVisible(true);
             Timer myTimers = new Timer();
             myTimers.schedule(new TimerTask() {
 
                 @Override
                 public void run() {
                     gainedPoints.setVisible(false);
+                    gainedPointsAnchorPane.setVisible(false);
                 }
             }, 2000);
 
@@ -900,12 +905,14 @@ public class QuestionCtrl {
             gainedPoints.setText("+ " + pointsGainedInRound + " points");
 
             gainedPoints.setVisible(true);
+            gainedPointsAnchorPane.setVisible(true);
             Timer myTimers = new Timer();
             myTimers.schedule(new TimerTask() {
 
                 @Override
                 public void run() {
                     gainedPoints.setVisible(false);
+                    gainedPointsAnchorPane.setVisible(false);
                 }
             }, 2000);
 
@@ -916,12 +923,14 @@ public class QuestionCtrl {
             gainedPoints.setText("+ " + pointsGainedInRound + " points");
 
             gainedPoints.setVisible(true);
+            gainedPointsAnchorPane.setVisible(true);
             Timer myTimers = new Timer();
             myTimers.schedule(new TimerTask() {
 
                 @Override
                 public void run() {
                     gainedPoints.setVisible(false);
+                    gainedPointsAnchorPane.setVisible(false);
                 }
             }, 2000);
 

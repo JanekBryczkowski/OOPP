@@ -5,6 +5,8 @@ import com.google.inject.Inject;
 import commons.Score;
 import commons.User;
 import jakarta.ws.rs.WebApplicationException;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,8 +15,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
+import javafx.util.Duration;
 
 import java.util.*;
 
@@ -56,6 +60,23 @@ public class LeaderBoardCtrl {
 
     @FXML
     private Button backButton;
+
+    @FXML
+    private ProgressBar nope;
+
+    Timeline bar;
+
+    List<Color> colorsForClockMultiPlayer = Arrays.asList(new Color(0, 0.3, 0.15, 1),
+            new Color(0.28, 0.75, 0.33, 1),
+            new Color(0.57, 0.94, 0.53, 1),
+            new Color(1, 0.95, 0.14, 1),
+            new Color(1, 0.74, 0.5, 1),
+            new Color(0.97, 0.43, 0.07, 1),
+            new Color(0.91, 0.23, 0.08, 1),
+            new Color(0.54, 0.06, 0.05, 1),
+            new Color(0.39, 0.02, 0.02, 1),
+            new Color(0, 0, 0, 1),
+            new Color(0, 0, 0, 1));
 
     List<Score> topThreeList;
     List<Score> scoreList;
@@ -285,12 +306,64 @@ public class LeaderBoardCtrl {
         leaderBoardScrollPane.setMinHeight(629);
         leaderBoardScrollPane.setMaxHeight(629);
         leaderBoardScrollPane.setPrefHeight(629);
+        nope.setVisible(true);
+        playTimerMultiPlayer();
+    }
+
+    private void playTimerMultiPlayer() {
+        nope.setStyle("-fx-accent: black;");
+        double[] timer = {1};
+        bar = new Timeline(new KeyFrame(Duration.millis(10), ev -> {
+            timer[0] = timer[0] - 0.001;
+            nope.setProgress(timer[0]);
+            nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(0)));
+            if (timer[0] < 0.9) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(1)));
+            }
+            if (timer[0] < 0.8) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(2)));
+            }
+            if (timer[0] < 0.7) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(3)));
+            }
+            if (timer[0] < 0.6) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(4)));
+            }
+            if (timer[0] < 0.5) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(5)));
+            }
+            if (timer[0] < 0.4) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(6)));
+            }
+            if (timer[0] < 0.3) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(7)));
+            }
+            if (timer[0] < 0.2) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(8)));
+            }
+            if (timer[0] < 0.1) {
+                nope.setStyle("-fx-accent: " + translateColor(colorsForClockMultiPlayer.get(9)));
+            }
+            if (timer[0] == 0.001) {
+                bar.stop();
+            }
+        }));
+        bar.setCycleCount(1000);
+        bar.play();
+    }
+
+    public String translateColor(Color color) {
+        return String.format("#%02X%02X%02X",
+                (int) (color.getRed() * 255),
+                (int) (color.getGreen() * 255),
+                (int) (color.getBlue() * 255));
     }
 
     /**
      * This function sets the Leaderboard back to the original.
      */
     public void endLeaderBoard() {
+        nope.setVisible(false);
         backButton.setVisible(false);
         if (gameCtrl.multiplayer) {
             leaderBoardScrollPane.setMinHeight(417);
@@ -333,6 +406,10 @@ public class LeaderBoardCtrl {
             waitingRoom.setVisible(false);
             waitingRoom.setManaged(false);
             splash.setTranslateY(94);
+        } else {
+            waitingRoom.setVisible(true);
+            waitingRoom.setManaged(true);
+            //splash.setTranslateY(-94);
         }
     }
 
