@@ -38,7 +38,6 @@ public class QuestionCtrl {
     private final GameCtrl gameCtrl;
     public Stage primaryStage;
 
-    public boolean multiplayer;
     public boolean answered;
     public int answer;
 
@@ -48,7 +47,7 @@ public class QuestionCtrl {
     Timer myTimer;
     TimerTask task;
 
-    private final int ROUNDS = 20;
+    private final int ROUNDS = 2;
 
     private boolean emojiOneCurrentlyBeingChanged = false;
     private boolean emojiTwoCurrentlyBeingChanged = false;
@@ -73,9 +72,9 @@ public class QuestionCtrl {
     @FXML
     private Text round;
     @FXML
-    public Button jokerOne;
+    public Button jokerOneSinglePlayer;
     @FXML
-    public Button jokerTwo;
+    public Button jokerTwoSinglePlayer;
     @FXML
     private Button jokerThree;
     @FXML
@@ -118,6 +117,21 @@ public class QuestionCtrl {
 
     @FXML
     private AnchorPane mainAnchorPane;
+
+    @FXML
+    private AnchorPane jokersForSinglePlayer;
+
+    @FXML
+    private AnchorPane jokersForMultiPlayer;
+
+    @FXML
+    public Button jokerOneMultiPlayer;
+
+    @FXML
+    public Button jokerTwoMultiPlayer;
+
+    @FXML
+    public Button jokerThreeMultiPlayer;
 
     @FXML
     private Arc clock;
@@ -178,12 +192,14 @@ public class QuestionCtrl {
      * else in the game to have answered.
      */
     public void instantiateTimer() {
+        singlePlayerSecondsLeft.setText("");
+        multiPlayerSecondsLeft.setText("");
         secondsPassed[0] = 15;
         myTimer = new Timer();
         task = new TimerTask() {
             @Override
             public void run() {
-                if (!multiplayer) {
+                if (gameCtrl.getMode()==0) {
                     secondsPassed[0]--;
                     clock.setStartAngle(0.0);
                     double proportion = (double) secondsPassed[0] / 15.0;
@@ -193,7 +209,7 @@ public class QuestionCtrl {
                     clock.setFill(colorsForClockSinglePlayer.get(15 - secondsPassed[0]));
                     if (secondsPassed[0] == 1) {
                         singlePlayerSecondsLeft.setText("Time left: " + secondsPassed[0] + " second");
-                    } else if (secondsPassed[0] > 0)
+                    } else if (secondsPassed[0] > 1)
                         singlePlayerSecondsLeft.setText("Time left: " + secondsPassed[0] + " seconds");
                     else {
                         if (oneActivityAnchorPane.isVisible()) {
@@ -215,12 +231,12 @@ public class QuestionCtrl {
                         if (!answered)
                             multiPlayerSecondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " second");
                         else
-                            multiPlayerSecondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " second");
-                    } else if (secondsPassed[0] > 5)
+                            multiPlayerSecondsLeft.setText("Time until answer revealed: " + (secondsPassed[0] - 5) + " second");
+                    } else if (secondsPassed[0] > 6)
                         if (!answered)
                             multiPlayerSecondsLeft.setText("Time left to answer: " + (secondsPassed[0] - 5) + " seconds");
                         else
-                            multiPlayerSecondsLeft.setText("Time till answers revealed: " + (secondsPassed[0] - 5) + " seconds");
+                            multiPlayerSecondsLeft.setText("Time until answer revealed: " + (secondsPassed[0] - 5) + " seconds");
                     else if (secondsPassed[0] > 0) {
                         multiPlayerSecondsLeft.setText("Answers revealed! Starting next round!");
                         if (oneActivityAnchorPane.isVisible()) {
@@ -254,6 +270,17 @@ public class QuestionCtrl {
      * @param question is the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
+        if (gameCtrl.getMode() == 0) {
+            jokersForSinglePlayer.setVisible(true);
+            jokersForMultiPlayer.setVisible(false);
+            singlePlayerSecondsLeft.setVisible(true);
+            multiPlayerSecondsLeft.setVisible(false);
+        } else {
+            jokersForSinglePlayer.setVisible(false);
+            jokersForMultiPlayer.setVisible(true);
+            singlePlayerSecondsLeft.setVisible(false);
+            multiPlayerSecondsLeft.setVisible(true);
+        }
         Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
         System.out.println(imageFile);
         try {
@@ -262,7 +289,7 @@ public class QuestionCtrl {
             e.printStackTrace();
         }
 
-        if (question.activityList.get(0).title.length() > 22) {
+        if (question.activityList.get(0).title.length() > 28) {
             answerOne.setText(question.activityList.get(0).title);
             answerOne.setStyle("-fx-font-size: 15;");
         } else {
@@ -270,7 +297,7 @@ public class QuestionCtrl {
             answerOne.setStyle("-fx-font-size: 25;");
         }
 
-        if (question.activityList.get(1).title.length() > 22) {
+        if (question.activityList.get(1).title.length() > 28) {
             answerTwo.setText(question.activityList.get(1).title);
             answerTwo.setStyle("-fx-font-size: 15;");
         } else {
@@ -278,7 +305,7 @@ public class QuestionCtrl {
             answerTwo.setStyle("-fx-font-size: 25;");
         }
 
-        if (question.activityList.get(2).title.length() > 22) {
+        if (question.activityList.get(2).title.length() > 28) {
             answerThree.setText(question.activityList.get(2).title);
             answerThree.setStyle("-fx-font-size: 15;");
         } else {
@@ -293,13 +320,14 @@ public class QuestionCtrl {
 
         enableButtons();
 
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             hideSoloPlayerElements();
 
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
-        jokerTwo.setText("Eliminate one wrong answer");
-        if(multiplayer) {
+        jokerTwoSinglePlayer.setText("Eliminate one wrong answer");
+        jokerTwoMultiPlayer.setText("Eliminate one wrong answer");
+        if (gameCtrl.getMode() == 1) {
             if (gameCtrl.round > 11) {
                 int current = gameCtrl.round - 1;
                 answersGiven.setText(current + " / 20 rounds");
@@ -316,9 +344,21 @@ public class QuestionCtrl {
      * This function is a setup for the GameScreen when there is a one activity question.
      * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
      * showing the half-time Leaderboard.
+     *
      * @param question : A question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
+        if (gameCtrl.getMode() == 0) {
+            jokersForSinglePlayer.setVisible(true);
+            jokersForMultiPlayer.setVisible(false);
+            singlePlayerSecondsLeft.setVisible(true);
+            multiPlayerSecondsLeft.setVisible(false);
+        } else {
+            jokersForSinglePlayer.setVisible(false);
+            jokersForMultiPlayer.setVisible(true);
+            singlePlayerSecondsLeft.setVisible(false);
+            multiPlayerSecondsLeft.setVisible(true);
+        }
         Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
         System.out.println(imageFile);
         try {
@@ -331,6 +371,9 @@ public class QuestionCtrl {
         int secondActivityConsumption = question.activityList.get(1).consumption;
         question.setCorrectAnswer();
         this.correctAnswer = question.correctAnswer;
+        answerOne.setStyle("-fx-font-size: 25;");
+        answerTwo.setStyle("-fx-font-size: 25;");
+        answerThree.setStyle("-fx-font-size: 25;");
 
         String finalAnswerString;
         int finalAnswerInteger;
@@ -347,7 +390,8 @@ public class QuestionCtrl {
         }
         finalAnswerString = String.valueOf(finalAnswerInteger);
 
-        jokerTwo.setText("Eliminate one wrong answer");
+        jokerTwoSinglePlayer.setText("Eliminate one wrong answer");
+        jokerTwoMultiPlayer.setText("Eliminate one wrong answer");
 
         if (correctAnswer == 1) {
             answerOne.setText(finalAnswerString);
@@ -363,12 +407,12 @@ public class QuestionCtrl {
             answerThree.setText(finalAnswerString);
         }
 
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             hideSoloPlayerElements();
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
-        if(multiplayer) {
+        if(gameCtrl.getMode() == 1) {
             if (gameCtrl.round > 11) {
                 int current = gameCtrl.round - 1;
                 answersGiven.setText(current + " / 20 rounds");
@@ -390,6 +434,11 @@ public class QuestionCtrl {
     public void setUpMultiPlayerQuestion(Question question) {
         System.out.println("MP question size" + question.activityList.size());
         removeBorders();
+        jokersForSinglePlayer.setVisible(false);
+        jokersForMultiPlayer.setVisible(true);
+        if (!gameCtrl.firstJokerMultiPlayerUsed) jokerOneMultiPlayer.setDisable(false);
+        if (!gameCtrl.secondJokerMultiPlayerUsed) jokerTwoMultiPlayer.setDisable(false);
+        if (!gameCtrl.thirdJokerMultiPlayerUsed) jokerThreeMultiPlayer.setDisable(false);
         switch (question.activityList.size()) {
             case (1): {
                 startOneActivityQuestion(question);
@@ -412,7 +461,7 @@ public class QuestionCtrl {
         }
     }
 
-    public void setupJoker() {
+    public void setupEmoji() {
         emojiOne.setOnMouseClicked(event -> {
             WebsocketMessage websocketMessage = new WebsocketMessage("EMOJIONE");
             websocketMessage.setEmojiUsername(gameCtrl.username);
@@ -435,9 +484,21 @@ public class QuestionCtrl {
      * A question is given as input and this question is displayed on the screen.
      * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
      * showing the half-time Leaderboard.
+     *
      * @param question given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
+        if (gameCtrl.getMode() == 0) {
+            jokersForSinglePlayer.setVisible(true);
+            jokersForMultiPlayer.setVisible(false);
+            singlePlayerSecondsLeft.setVisible(true);
+            multiPlayerSecondsLeft.setVisible(false);
+        } else {
+            jokersForSinglePlayer.setVisible(false);
+            jokersForMultiPlayer.setVisible(true);
+            singlePlayerSecondsLeft.setVisible(false);
+            multiPlayerSecondsLeft.setVisible(true);
+        }
         Path imageFile = Paths.get("client/src/main/resources/client.activityBank/" + question.activityList.get(0).image_path);
         System.out.println(imageFile);
         try {
@@ -456,16 +517,17 @@ public class QuestionCtrl {
         this.correctAnswer = question.correctAnswer;
         round.setText(String.valueOf(correctAnswer));
 
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             hideSoloPlayerElements();
 
         instantiateTimer();
         startTimer();
 
-        jokerTwo.setText("Narrow down the boundaries");
+        jokerTwoSinglePlayer.setText("Narrow down the boundaries");
+        jokerTwoMultiPlayer.setText("Narrow down the boundaries");
         setUpTheBoundaries();
 
-        if(multiplayer) {
+        if(gameCtrl.getMode() == 1) {
             if (gameCtrl.round > 11) {
                 int current = gameCtrl.round - 1;
                 answersGiven.setText(current + " / 20 rounds");
@@ -562,7 +624,7 @@ public class QuestionCtrl {
      * UNUSED.
      */
     public void answerNumberGiven() {
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             revealAnswersOneActivities();
         disableButtons();
     }
@@ -571,7 +633,7 @@ public class QuestionCtrl {
      * Function for when the player answers one.
      */
     public void answerOneGiven() {
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             revealAnswersThreeActivities(answerOnePane, 1);
         else {
             answered = true;
@@ -584,7 +646,7 @@ public class QuestionCtrl {
      * Function for when the player answers two.
      */
     public void answerTwoGiven() {
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             revealAnswersThreeActivities(answerTwoPane, 2);
         else {
             answered = true;
@@ -597,7 +659,7 @@ public class QuestionCtrl {
      * Function for when the player answers three.
      */
     public void answerThreeGiven() {
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             revealAnswersThreeActivities(answerThreePane, 3);
         else {
             answered = true;
@@ -616,11 +678,14 @@ public class QuestionCtrl {
         //answerOnePane.setBorder(null);
         //answerTwoPane.setBorder(null);
         //answerThreePane.setBorder(null);
-        jokerOne.setDisable(false);
-        jokerTwo.setDisable(false);
+        jokerOneSinglePlayer.setDisable(false);
+        jokerTwoSinglePlayer.setDisable(false);
         //jokerThree.setDisable(false);
-        jokerOne.setBorder(null);
-        jokerTwo.setBorder(null);
+        jokerOneSinglePlayer.setBorder(null);
+        jokerTwoSinglePlayer.setBorder(null);
+        jokerOneMultiPlayer.setBorder(null);
+        jokerTwoMultiPlayer.setBorder(null);
+        jokerThreeMultiPlayer.setBorder(null);
         jokerOneActive = 1;
     }
 
@@ -631,8 +696,8 @@ public class QuestionCtrl {
     public void revealAnswersThreeActivities(Pane clicked, int click) {
         myTimer.cancel();
 
-        jokerOne.setDisable(true);
-        jokerTwo.setDisable(true);
+        jokerOneSinglePlayer.setDisable(true);
+        jokerTwoSinglePlayer.setDisable(true);
         switch (correctAnswer) {
             case (1):
                 answerOnePane.setStyle("-fx-border-color: green; -fx-border-width: 5; -fx-border-radius: 20;");
@@ -669,7 +734,7 @@ public class QuestionCtrl {
             gameCtrl.points += pointsGainedInRound;
         }
         points.setText(gameCtrl.points + " points");
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             newQuestion();
         else {
             answer = 0;
@@ -690,8 +755,8 @@ public class QuestionCtrl {
     public void revealAnswersOneActivities() {
         myTimer.cancel();
 
-        jokerOne.setDisable(true);
-        jokerTwo.setDisable(true);
+        jokerOneSinglePlayer.setDisable(true);
+        jokerTwoSinglePlayer.setDisable(true);
         int answerGiven;
         String input = answerOneInput.getText();
         if (input.equals("") || input == null) {
@@ -753,12 +818,12 @@ public class QuestionCtrl {
             answerOneInput.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(40), new BorderWidths(2))));
         }
         points.setText(gameCtrl.points + " points");
-        if (!multiplayer)
+        if (gameCtrl.getMode() == 0)
             newQuestion();
     }
 
     /**
-     * Formats numbers so that large numbers do not contain any ','.
+     * Formats numbers so that large numbers do contain ',' every 3 integers from the right.
      *
      * @param number as a String.
      * @return a number.
@@ -774,6 +839,10 @@ public class QuestionCtrl {
      */
     public void newQuestion() {
         Timer myTimers = new Timer();
+        jokersForSinglePlayer.setVisible(true);
+        jokersForMultiPlayer.setVisible(false);
+        singlePlayerSecondsLeft.setVisible(true);
+        multiPlayerSecondsLeft.setVisible(false);
         myTimers.schedule(new TimerTask() {
 
             @Override
@@ -799,30 +868,35 @@ public class QuestionCtrl {
      * This function returns to the splash screen (for when a user clicks 'BACK') from any round in the question page.
      */
     public void backToSplash() {
-        if(gameCtrl.getMode()==1) {
+        if (gameCtrl.getMode() == 1) {
             gameCtrl.subscription.unsubscribe();
             gainedPoints.setText("");
             gameCtrl.points = 0;
             gameCtrl.round = 1;
             gameCtrl.username = "";
-            gameCtrl.firstJokerUsed = false;
-            gameCtrl.secondJokerUsed = false;
-            jokerOne.setStyle("-fx-border-width: 0");
-            jokerTwo.setStyle("-fx-border-width: 0");
-            jokerOne.setDisable(false);
-            jokerTwo.setDisable(false);
+            gameCtrl.firstJokerSinglePlayerUsed = false;
+            gameCtrl.secondJokerSinglePlayerUsed = false;
+            gameCtrl.firstJokerMultiPlayerUsed = false;
+            gameCtrl.secondJokerMultiPlayerUsed = false;
+            gameCtrl.thirdJokerMultiPlayerUsed = false;
+            jokerOneSinglePlayer.setStyle("-fx-border-width: 0");
+            jokerTwoSinglePlayer.setStyle("-fx-border-width: 0");
+            jokerOneSinglePlayer.setDisable(false);
+            jokerTwoSinglePlayer.setDisable(false);
             answerOnePane.setStyle("-fx-border-width: 0;");
             answerTwoPane.setStyle("-fx-border-width: 0;");
             answerThreePane.setStyle("-fx-border-width: 0;");
             myTimer.cancel();
             points.setText("0 points");
             gameCtrl.showSplashScreen();
-            myTimer.cancel();
-        } else if(gameCtrl.getMode()==0) {
+        } else if (gameCtrl.getMode() == 0) {
             gameCtrl.points = 0;
             gameCtrl.round = 1;
-            gameCtrl.firstJokerUsed = false;
-            gameCtrl.secondJokerUsed = false;
+            gameCtrl.firstJokerSinglePlayerUsed = false;
+            gameCtrl.secondJokerSinglePlayerUsed = false;
+            gameCtrl.firstJokerMultiPlayerUsed = false;
+            gameCtrl.secondJokerMultiPlayerUsed = false;
+            gameCtrl.thirdJokerMultiPlayerUsed = false;
             gameCtrl.showSplashScreen();
         }
     }
@@ -830,37 +904,48 @@ public class QuestionCtrl {
     /**
      * Function for when joker one is pressed. Jokers are disabled for the remainder of the round.
      */
-    public void jokerOne() {
-        if (!gameCtrl.firstJokerUsed) {
+    public void jokerOneSinglePlayer() {
+        if (!gameCtrl.firstJokerSinglePlayerUsed) {
             this.jokerOneActive = 2;
-            jokerOne.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
-            //jokerOne.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
-            jokerOne.setDisable(true);
-            jokerTwo.setDisable(true);
-            //jokerThree.setDisable(true);
-            gameCtrl.firstJokerUsed = true;
+            jokerOneSinglePlayer.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
+            jokerOneSinglePlayer.setDisable(true);
+            jokerTwoSinglePlayer.setDisable(true);
+            gameCtrl.firstJokerSinglePlayerUsed = true;
         } else {
-            jokerOne.setDisable(true);
+            jokerOneSinglePlayer.setDisable(true);
+        }
+    }
+
+    public void jokerOneMultiPlayer() {
+        if (!gameCtrl.firstJokerMultiPlayerUsed) {
+            this.jokerOneActive = 2;
+            jokerOneMultiPlayer.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
+            jokerOneMultiPlayer.setDisable(true);
+            jokerTwoMultiPlayer.setDisable(true);
+            jokerThreeMultiPlayer.setDisable(true);
+            gameCtrl.firstJokerMultiPlayerUsed = true;
+        } else {
+            jokerOneMultiPlayer.setDisable(true);
         }
     }
 
     /**
      * Function for joker two (Eliminating wrong answer).
      */
-    public void jokerTwo() {
-        if (!gameCtrl.secondJokerUsed) {
+    public void jokerTwoSinglePlayer() {
+        if (!gameCtrl.secondJokerSinglePlayerUsed) {
             if (oneActivityAnchorPane.isVisible()) {
                 int difference = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
                 int newLowerBoundaryNumber = lowerBoundaryNumber + difference;
                 int newUpperBoundaryNumber = upperBoundaryNumber - difference;
                 lowerBoundary.setText(formatNumber(newLowerBoundaryNumber));
                 upperBoundary.setText(formatNumber(newUpperBoundaryNumber));
-                jokerTwo.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
+                jokerTwoSinglePlayer.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
                 //jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
-                jokerOne.setDisable(true);
-                jokerTwo.setDisable(true);
+                jokerOneSinglePlayer.setDisable(true);
+                jokerTwoSinglePlayer.setDisable(true);
                 //jokerThree.setDisable(true);
-                gameCtrl.secondJokerUsed = true;
+                gameCtrl.secondJokerSinglePlayerUsed = true;
             } else if (threeActivitiesAnchorPane.isVisible()) {
                 int random = correctAnswer;
                 while (random == correctAnswer) {
@@ -886,15 +971,69 @@ public class QuestionCtrl {
                     default:
                         break;
                 }
-                jokerTwo.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
+                jokerTwoSinglePlayer.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
                 //jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
-                jokerOne.setDisable(true);
-                jokerTwo.setDisable(true);
+                jokerOneSinglePlayer.setDisable(true);
+                jokerTwoSinglePlayer.setDisable(true);
                 //jokerThree.setDisable(true);
-                gameCtrl.secondJokerUsed = true;
+                gameCtrl.secondJokerSinglePlayerUsed = true;
             }
         } else {
-            jokerTwo.setDisable(true);
+            jokerTwoSinglePlayer.setDisable(true);
+        }
+    }
+
+    public void jokerTwoMultiPlayer() {
+        if (!gameCtrl.secondJokerMultiPlayerUsed) {
+            if (oneActivityAnchorPane.isVisible()) {
+                int differenceLower = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
+                int differenceUpper = (int) (Math.random() * (upperBoundaryNumber - correctAnswer));
+                int newLowerBoundaryNumber = lowerBoundaryNumber + differenceLower;
+                int newUpperBoundaryNumber = upperBoundaryNumber - differenceUpper;
+                lowerBoundary.setText(formatNumber(newLowerBoundaryNumber));
+                upperBoundary.setText(formatNumber(newUpperBoundaryNumber));
+                jokerTwoMultiPlayer.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
+                //jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+                jokerOneMultiPlayer.setDisable(true);
+                jokerTwoMultiPlayer.setDisable(true);
+                jokerThreeMultiPlayer.setDisable(true);
+                //jokerThree.setDisable(true);
+                gameCtrl.secondJokerMultiPlayerUsed = true;
+            } else if (threeActivitiesAnchorPane.isVisible()) {
+                int random = correctAnswer;
+                while (random == correctAnswer) {
+                    random = (int) (Math.random() * 3 + 1);
+                }
+
+                switch (random) {
+                    case (1):
+                        answerOnePane.setDisable(true);
+                        answerOnePane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
+                        //answerOnePane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+                        break;
+                    case (2):
+                        answerTwoPane.setDisable(true);
+                        answerTwoPane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
+                        //answerTwoPane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+                        break;
+                    case (3):
+                        answerThreePane.setDisable(true);
+                        answerThreePane.setStyle("-fx-border-color: grey; -fx-border-width: 5; -fx-border-radius: 20;");
+                        //answerThreePane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+                        break;
+                    default:
+                        break;
+                }
+                jokerTwoMultiPlayer.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
+                //jokerTwo.setBorder(new Border(new BorderStroke(Color.DARKGREEN, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2))));
+                jokerOneMultiPlayer.setDisable(true);
+                jokerTwoMultiPlayer.setDisable(true);
+                jokerThreeMultiPlayer.setDisable(true);
+                //jokerThree.setDisable(true);
+                gameCtrl.secondJokerMultiPlayerUsed = true;
+            }
+        } else {
+            jokerTwoMultiPlayer.setDisable(true);
         }
     }
 
@@ -948,8 +1087,8 @@ public class QuestionCtrl {
      * Resets the borders of the jokers in the next round after they are used.
      */
     public void resetJokers() {
-        jokerOne.setStyle("-fx-border-width: 0");
-        jokerTwo.setStyle("-fx-border-width: 0");
+        jokerOneSinglePlayer.setStyle("-fx-border-width: 0");
+        jokerTwoSinglePlayer.setStyle("-fx-border-width: 0");
     }
 
     /**

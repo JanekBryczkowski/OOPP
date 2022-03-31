@@ -41,7 +41,7 @@ public class SplashScreenCtrl {
     @FXML
     private Button joinButton;
     @FXML
-    private TextField usernameInput;
+    public TextField usernameInput;
     @FXML
     private Label logoLabel;
     //    @FXML
@@ -62,6 +62,12 @@ public class SplashScreenCtrl {
     private ImageView singlePlayerImageView;
     @FXML
     private ImageView multiPlayerImageView;
+    @FXML
+    private AnchorPane setServerNameAnchorPane;
+    @FXML
+    private TextField serverNameTextField;
+
+    private boolean firstTimeSplashScreen = false;
 
     /**
      * Constructor for the SplashScreenCtrl. We also initialize the gameCtrl and questionCtrl because these
@@ -90,7 +96,7 @@ public class SplashScreenCtrl {
         } else {
             alert.setText("");
             if (mode == 0) {
-                gameCtrl.setUsername(usernameInput.getText());
+                gameCtrl.username = usernameInput.getText();
                 try {
                     gameCtrl.SoloGameRound();
                 } catch (MalformedURLException e) {
@@ -98,10 +104,14 @@ public class SplashScreenCtrl {
                 }
             } else {
                 boolean isValidUsername = server.isValidUsername(usernameInput.getText());
-                if (isValidUsername == false)
+                if (!isValidUsername)
                     alert.setText("This username is already taken");
-                else
+                else {
+                    gameCtrl.username = usernameInput.getText();
+                    System.out.println("444444" + usernameInput.getText());
+                    System.out.println("333333333333" + gameCtrl.username);
                     startMultiPlayerGame();
+                }
             }
         }
     }
@@ -117,9 +127,7 @@ public class SplashScreenCtrl {
      * function, the client side will set up the given question.
      */
     public void startMultiPlayerGame() {
-        String username = usernameInput.getText();
-        gameCtrl.username = usernameInput.getText();
-        User user = new User(username, 0);
+        User user = new User(gameCtrl.username, 0);
         server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
         gameCtrl.joinedLobby = currentOpenLobby;
@@ -166,7 +174,6 @@ public class SplashScreenCtrl {
             alert.setText("");
         }
         Big.setEffect(new BoxBlur(1238, 800, 1));
-
     }
 
     /**
@@ -177,21 +184,30 @@ public class SplashScreenCtrl {
         joinButton.setDisable(false);
         rulesButton.setDisable(false);
         Big.setEffect(null);
-
     }
 
+    public void exitServerName() {
+        usernameInput.setText(gameCtrl.username);
+        gameRules.setVisible(false);
+        joinButton.setDisable(false);
+        rulesButton.setDisable(false);
+        setServerNameAnchorPane.setVisible(false);
+        ServerUtils.SERVER = serverNameTextField.getText();
+        Big.setEffect(null);
+    }
 
     /**
      * This function is a setup for the splash screen.
      */
     public void setSplashScreen() {
-        /*if (gameCtrl.username == null || gameCtrl.username.equals("")) {
-            usernameInput.setText("");
-        } else {
-            usernameInput.setText(gameCtrl.username);
-        }*/
-        System.out.println(gameCtrl.username);
         usernameInput.setText(gameCtrl.username);
+        if (!firstTimeSplashScreen) {
+            gameRules.setVisible(true);
+            joinButton.setDisable(true);
+            rulesButton.setDisable(true);
+            Big.setEffect(new BoxBlur(1238, 800, 1));
+            firstTimeSplashScreen = true;
+        }
     }
 
     /**
@@ -242,6 +258,7 @@ public class SplashScreenCtrl {
             transition.play();
         }
     }
+
     public void toAdminScreen() {
         gameCtrl.showAdminScreen();
     }

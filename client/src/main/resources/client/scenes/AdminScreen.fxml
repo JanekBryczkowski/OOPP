@@ -12,16 +12,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: C9E277;" stylesheets="@../../client.styles/AdminScreenStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AdminCtrl">
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: C9E277;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AdminCtrl">
    <children>
-      <Text layoutX="-18.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Screen" textAlignment="CENTER" wrappingWidth="283.69183349609375">
+      <AnchorPane layoutX="808.0" layoutY="233.0" prefHeight="514.0" prefWidth="320.0" style="-fx-background-color: #F5FFD3; -fx-background-radius: 25;">
+         <children>
+            <Text fx:id="alert" fill="RED" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="320.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
+      <Text layoutX="33.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Screen" textAlignment="CENTER" wrappingWidth="213.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
-      <Text layoutX="132.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inspect all activities" textAlignment="CENTER">
+      <Text layoutX="191.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inspect all activities">
          <font>
-            <Font name="System Bold" size="48.0" />
+            <Font name="System Bold" size="40.0" />
          </font>
       </Text>
       <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="24.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
@@ -29,19 +37,19 @@
             <Image url="@/client.images/adminIcon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="91.0" fitWidth="460.0" layoutX="378.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="127.0" fitWidth="717.0" layoutX="300.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/energyGameLogo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="67.0" fitWidth="76.0" layoutX="1128.0" layoutY="700.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="67.0" fitWidth="76.0" layoutX="1145.0" layoutY="714.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/client.images/earthLogo.png" />
          </image>
       </ImageView>
-      <Button fx:id="inspectButton" alignment="CENTER" graphicTextGap="0.0" layoutX="245.0" layoutY="197.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#setTable" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Refresh" textFill="WHITE">
+      <Button fx:id="inspectButton" alignment="CENTER" graphicTextGap="0.0" layoutX="298.0" layoutY="233.0" maxHeight="108.0" maxWidth="247.0" minHeight="53.0" minWidth="160.0" mnemonicParsing="false" onAction="#setTable" prefHeight="53.0" prefWidth="160.0" styleClass="greenButton" text="Refresh" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="48.0" />
+            <Font name="System Bold" size="31.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -50,7 +58,7 @@
             <Insets bottom="1.0" />
          </padding>
       </Button>
-      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="64.0" layoutY="347.0" maxHeight="336.0" maxWidth="640.0" minHeight="336.0" minWidth="450.0" prefHeight="336.0" prefWidth="628.0" styleClass="scrollPane" vbarPolicy="ALWAYS" />
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="64.0" layoutY="347.0" maxHeight="400.0" maxWidth="640.0" minHeight="336.0" minWidth="450.0" prefHeight="400.0" prefWidth="628.0" styleClass="scrollPane" vbarPolicy="ALWAYS" />
       <Label alignment="CENTER" layoutX="180.0" layoutY="307.0" maxHeight="40.0" maxWidth="390.0" minHeight="40.0" minWidth="235.0" prefHeight="40.0" prefWidth="390.0" style="-fx-background-color: #dee8be; -fx-border-color: gray; -fx-border-width: 0 0 2 0; -fx-background-radius: 18 0 0 0;" text="Activities">
          <font>
             <Font name="System Bold" size="21.0" />
@@ -66,27 +74,27 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <Text layoutX="700.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add/Edit an activity" textAlignment="CENTER">
+      <Text layoutX="746.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit/Delete an activity">
          <font>
-            <Font name="System Bold" size="48.0" />
+            <Font name="System Bold" size="40.0" />
          </font>
       </Text>
-      <TextField fx:id="idText" layoutX="825.0" layoutY="240.0" prefHeight="53.0" prefWidth="225.0" promptText="ID of activity..." style="-fx-background-color: transparent; -fx-border-color: #6a6a6a;">
+      <TextField fx:id="idText" layoutX="833.0" layoutY="267.0" prefHeight="53.0" prefWidth="270.0" promptText="ID of the activity" styleClass="enterInformationTextField">
          <font>
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextField fx:id="consumptionText" layoutX="825.0" layoutY="400.0" prefHeight="53.0" prefWidth="225.0" promptText="Consumption..." style="-fx-background-color: transparent; -fx-border-color: #6a6a6a;">
+      <TextField fx:id="consumptionText" layoutX="833.0" layoutY="427.0" prefHeight="53.0" prefWidth="270.0" promptText="Activity consumption" styleClass="enterInformationTextField">
          <font>
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextField fx:id="activityText" layoutX="825.0" layoutY="320.0" prefHeight="53.0" prefWidth="225.0" promptText="Activity..." style="-fx-background-color: transparent; -fx-border-color: #6a6a6a;">
+      <TextField fx:id="activityText" layoutX="833.0" layoutY="347.0" prefHeight="53.0" prefWidth="270.0" promptText="Activity title" styleClass="enterInformationTextField">
          <font>
             <Font size="24.0" />
          </font>
       </TextField>
-      <Button fx:id="editButton" alignment="CENTER" graphicTextGap="0.0" layoutX="827.0" layoutY="607.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Edit" textFill="WHITE">
+      <Button fx:id="editButton" alignment="CENTER" graphicTextGap="0.0" layoutX="861.0" layoutY="652.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="75.0" prefWidth="213.0" styleClass="greenButton" text="Edit" textFill="WHITE">
          <font>
             <Font name="System Bold" size="48.0" />
          </font>
@@ -97,7 +105,7 @@
             <Insets bottom="1.0" />
          </padding>
       </Button>
-      <Text fx:id="alert" fill="RED" layoutX="710.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="488.99993896484375">
+      <Button alignment="CENTER" graphicTextGap="0.0" layoutX="1116.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToSplash" prefHeight="48.0" prefWidth="108.0" styleClass="greenButton" text="Back" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

@@ -40,7 +40,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080/";
+    public static String SERVER = "";
 
     public void getQuotesTheHardWay() throws IOException {
         var url = new URL("http://localhost:8080/api/quotes");
@@ -50,15 +50,6 @@ public class ServerUtils {
         while ((line = br.readLine()) != null) {
             System.out.println(line);
         }
-    }
-
-    public List<Quote> getQuotes() {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/quotes") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .get(new GenericType<List<Quote>>() {
-                });
     }
 
     public Activity getByID(String id) {
@@ -85,15 +76,6 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<Activity>>() {
                 });
-    }
-
-
-    public Quote addQuote(Quote quote) {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/quotes") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
     }
 
     public Question getQuestion() {
@@ -142,7 +124,7 @@ public class ServerUtils {
                 .target(SERVER).path("api/user/removePlayer/"+ username) //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get();
+                .delete();
     }
 
     public void startGame() {

@@ -36,13 +36,13 @@ public class UserController {
 //            listeners.forEach((k,l) -> l.accept(user));
             return lobbyController.getOpenLobby().addUser(user);
     }
-    @GetMapping("/removePlayer/{username}")
+
+    @DeleteMapping("/removePlayer/{username}")
     public void removeUser(@PathVariable("username") String username) {
-        List<User> userList = lobbyController.openLobby.getUserList();
+        List<User> userList = lobbyController.getOpenLobby().getUserList();
         for (User user : userList) {
             if (user.getUsername().equals(username)) {
                 userList.remove(user);
-                return;
             }
         }
     }
@@ -60,7 +60,7 @@ public class UserController {
     @MessageMapping("/users")
     @SendTo("/topic/users")
     public User addUser(User user) {
-//        postUserToOpenLobby(user);
+        //postUserToOpenLobby(user);
         return user;
     }
 
