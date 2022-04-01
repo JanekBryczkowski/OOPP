@@ -1,7 +1,3 @@
-.rootPane {
-    -fx-background-color: blue;
-}
-
 .dialog-pane {
     -fx-border-color: #526316;
     -fx-border-width: 4;
