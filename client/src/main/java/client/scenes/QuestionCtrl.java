@@ -196,7 +196,7 @@ public class QuestionCtrl {
      * else in the game to have answered.
      */
     public void instantiateTimer() {
-        if (!multiplayer) {
+        if (gameCtrl.getMode() == 0) {
             singlePlayerSecondsLeft.setText("Time left: 15 seconds");
             multiPlayerSecondsLeft.setText("");
         } else {
