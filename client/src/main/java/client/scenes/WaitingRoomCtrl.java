@@ -99,11 +99,11 @@ public class WaitingRoomCtrl {
         waitingScroll.setContent(vbox);
     }
 
-    /*@FXML
+    @FXML
     void keyPressed(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
             System.out.println("Chicken");
             play();
         }
-    }*/
+    }
 }
