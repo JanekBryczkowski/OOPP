@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -100,5 +102,13 @@ public class WaitingRoomCtrl {
             vbox.getChildren().add(anchorPane);
         }
         waitingScroll.setContent(vbox);
+    }
+
+    @FXML
+    void keyPressed(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+            System.out.println("Chicken");
+            play();
+        }
     }
 }
