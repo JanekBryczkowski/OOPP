@@ -109,6 +109,11 @@
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
+      </Button>
+      <Button alignment="CENTER" graphicTextGap="0.0" layoutX="1116.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToSplash" prefHeight="48.0" prefWidth="108.0" styleClass="inspectButton" text="Back" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -116,7 +121,7 @@
             <Insets bottom="1.0" />
          </padding>
       </Button>
-      <Button fx:id="addButton" alignment="CENTER" graphicTextGap="0.0" layoutX="861.0" layoutY="551.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#addActivity" prefHeight="75.0" prefWidth="213.0" styleClass="greenButton" text="Add" textFill="WHITE">
+      <Button fx:id="addButton" alignment="CENTER" graphicTextGap="0.0" layoutX="827.0" layoutY="500.0" maxHeight="108.0" maxWidth="247.0" minHeight="75.0" minWidth="213.0" mnemonicParsing="false" onAction="#addActivity" prefHeight="75.0" prefWidth="213.0" styleClass="inspectButton" text="Add" textFill="WHITE">
          <font>
             <Font name="System Bold" size="48.0" />
          </font>

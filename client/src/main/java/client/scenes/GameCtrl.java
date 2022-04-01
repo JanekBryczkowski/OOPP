@@ -20,18 +20,22 @@ import commons.Question;
 import commons.Score;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.springframework.messaging.simp.stomp.StompSession;
 
+import java.awt.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GameCtrl {
 
-    private Stage primaryStage;
+    public Stage primaryStage;
 
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splashScreenScene;
@@ -107,6 +111,28 @@ public class GameCtrl {
 
         showSplashScreen();
         primaryStage.show();
+        primaryStage.setResizable(false);
+
+        //Alert box appearing if trying to close the application
+        primaryStage.setOnHiding(event -> {
+            System.out.println("hidding");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "exit_confirmation");
+            Toolkit.getDefaultToolkit().beep();
+            Optional<ButtonType> result = alert.showAndWait();
+            if (this.primaryStage.getTitle().equals("Waiting Room") ||
+                    this.primaryStage.getTitle().equals("Game screen - 3 activities question - Multiplayer") ||
+                    this.primaryStage.getTitle().equals("Game screen - 2 activity question - Multiplayer") ||
+                    this.primaryStage.getTitle().equals("Game screen - 1 activity question - Multiplayer") ||
+                    this.primaryStage.getTitle().equals("Question") ||
+                    this.primaryStage.getTitle().equals("LeaderBoard Screen - Multiplayer")) {
+                this.waitingRoomCtrl.backButton();
+            }
+
+            if (result.isPresent() && result.get() != ButtonType.OK) {
+                return;
+                //don't close stage
+            }
+        });
     }
 
     /**
@@ -186,6 +212,8 @@ public class GameCtrl {
     public void oneActivityQuestion(Question question) {
         questionCtrl.startOneActivityQuestion(question);
         primaryStage.setTitle("Game screen - 1 activity question");
+        if (getMode() == 1) primaryStage.setTitle("Game screen - 1 activities question - Multiplayer");
+        else primaryStage.setTitle("Game screen - 1 activities question - Single player");
         primaryStage.setScene(questionScreen);
         questionCtrl.setOneActivity();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
@@ -200,7 +228,8 @@ public class GameCtrl {
      */
     public void twoActivityQuestion(Question question) {
         questionCtrl.startTwoActivityQuestion(question);
-        primaryStage.setTitle("Game screen - 2 activities question");
+        if (getMode() == 1) primaryStage.setTitle("Game screen - 2 activities question - Multiplayer");
+        else primaryStage.setTitle("Game screen - 2 activities question - Single player");
         primaryStage.setScene(questionScreen);
         questionCtrl.setTwoActivities();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
@@ -215,7 +244,8 @@ public class GameCtrl {
      */
     public void threeActivityQuestion(Question question) throws MalformedURLException {
         questionCtrl.startThreeActivityQuestion(question);
-        primaryStage.setTitle("Game screen - 3 activities question");
+        if (getMode() == 1) primaryStage.setTitle("Game screen - 3 activities question - Multiplayer");
+        else primaryStage.setTitle("Game screen - 3 activities question - Single player");
         primaryStage.setScene(questionScreen);
         questionCtrl.setThreeActivities();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
@@ -289,6 +319,8 @@ public class GameCtrl {
         leaderBoardCtrl.backToWaitingRoomButton();
         leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
         primaryStage.setScene(leaderBoardScreen);
+        if (getMode() == 1) primaryStage.setTitle("LeaderBoard Screen - Multiplayer");
+        else primaryStage.setTitle("LeaderBoard Screen - Single player");
     }
 
     /**
