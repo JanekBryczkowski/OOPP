@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.util.Duration;
+import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.util.*;
 
@@ -29,7 +30,6 @@ public class LeaderBoardCtrl {
     private Score first;
     private Score second;
     private Score third;
-    public boolean multiplayer;
 
     @FXML
     private Text firstName;
@@ -276,6 +276,63 @@ public class LeaderBoardCtrl {
         leaderBoardScrollPane.setContent(vbox);
     }
 
+    private void setMultiLeaderboard(List<User> userList) {
+        VBox vbox = new VBox();
+        for (User user : userList) {
+            AnchorPane anchorPane = new AnchorPane();
+            anchorPane.setMaxHeight(50);
+            anchorPane.setMinHeight(50);
+            anchorPane.setMinHeight(50);
+            anchorPane.setMaxWidth(347);
+            anchorPane.setMinWidth(347);
+            anchorPane.setPrefWidth(347);
+            Label usernameLabel = new Label(user.getUsername());
+            usernameLabel.setMaxHeight(30);
+            usernameLabel.setMinHeight(30);
+            usernameLabel.setPrefHeight(30);
+            usernameLabel.setMaxWidth(200);
+            usernameLabel.setMinWidth(200);
+            usernameLabel.setPrefWidth(200);
+            usernameLabel.setLayoutX(0);
+            usernameLabel.setLayoutY(0);
+            usernameLabel.setStyle("-fx-font-size: 16;");
+            usernameLabel.setAlignment(Pos.CENTER);
+            Label scoreLabel = new Label(String.valueOf(user.getScore()));
+            scoreLabel.setMaxHeight(30);
+            scoreLabel.setMinHeight(30);
+            scoreLabel.setPrefHeight(30);
+            scoreLabel.setMaxWidth(147);
+            scoreLabel.setMinWidth(147);
+            scoreLabel.setPrefWidth(147);
+            scoreLabel.setLayoutX(200);
+            scoreLabel.setLayoutY(0);
+            scoreLabel.setStyle("-fx-font-size: 16;");
+            scoreLabel.setAlignment(Pos.CENTER);
+            if (gameCtrl.username.equals(user.getUsername()) && gameCtrl.points == user.getScore()) {
+                usernameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: transparent;");
+                scoreLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: transparent;");
+                anchorPane.setStyle("-fx-background-color: #D5DEB6");
+            }
+            AnchorPane bar = new AnchorPane();
+            bar.setMinHeight(6);
+            bar.setMaxHeight(6);
+            bar.setPrefWidth(6);
+            double ratio = (double) user.getScore() / 2000;
+            double finalWidth = ratio * 317;
+            bar.setPrefWidth(finalWidth);
+            bar.setMinWidth(finalWidth);
+            bar.setMaxWidth(finalWidth);
+            bar.setLayoutX(15);
+            bar.setLayoutY(26.5);
+            bar.setStyle("-fx-background-color: " + getRandomColor() + "; -fx-background-radius: 4;");
+            anchorPane.getChildren().add(usernameLabel);
+            anchorPane.getChildren().add(scoreLabel);
+            anchorPane.getChildren().add(bar);
+            vbox.getChildren().add(anchorPane);
+        }
+        leaderBoardScrollPane.setContent(vbox);
+    }
+
     private int findHighestScore(List<Score> scoreList) {
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < scoreList.size(); i++) {
@@ -298,6 +355,7 @@ public class LeaderBoardCtrl {
      * they achieved so far.
      */
     public void halfTimeLeaderBoard() {
+        setMultiLeaderboard(WaitingRoomCtrl.userList);
         waitingRoom.setVisible(false);
         waitingRoom.setManaged(false);
         splash.setVisible(false);
@@ -364,22 +422,23 @@ public class LeaderBoardCtrl {
      */
     public void endLeaderBoard() {
         nope.setVisible(false);
+        splash.setVisible(true);
+        splash.setManaged(true);
         backButton.setVisible(false);
-        if (gameCtrl.multiplayer) {
+        if (SplashScreenCtrl.mode == 0){
+            leaderBoardScrollPane.setMinHeight(535);
+            leaderBoardScrollPane.setMaxHeight(535);
+            leaderBoardScrollPane.setPrefHeight(535);
+            waitingRoom.setVisible(false);
+            waitingRoom.setManaged(false);
+        } else {
             leaderBoardScrollPane.setMinHeight(417);
             leaderBoardScrollPane.setMaxHeight(417);
             leaderBoardScrollPane.setPrefHeight(417);
             waitingRoom.setVisible(true);
             waitingRoom.setManaged(true);
-        } else {
-            leaderBoardScrollPane.setMinHeight(537);
-            leaderBoardScrollPane.setMaxHeight(537);
-            leaderBoardScrollPane.setPrefHeight(537);
-            waitingRoom.setVisible(false);
-            waitingRoom.setManaged(false);
+            setMultiLeaderboard(WaitingRoomCtrl.userList);
         }
-        splash.setVisible(true);
-        splash.setManaged(true);
     }
 
 
@@ -388,6 +447,9 @@ public class LeaderBoardCtrl {
      * directed back to the Splash Screen.
      */
     public void backToSplash() {
+        if (SplashScreenCtrl.mode == 1){
+            gameCtrl.subscription.unsubscribe();
+        }
         gameCtrl.points = 0;
         gameCtrl.round = 1;
         gameCtrl.firstJokerSinglePlayerUsed = false;
@@ -419,22 +481,38 @@ public class LeaderBoardCtrl {
      * the socket for that client.
      */
     public void backToWaitingRoom() {
+        gameCtrl.subscription.unsubscribe();
         String username = gameCtrl.username;
         User user = new User(username, 0);
         server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
+        gameCtrl.joinedLobby = currentOpenLobby;
         String destination = "/topic/question" + String.valueOf(currentOpenLobby);
-        server.registerForMessages(destination, q -> {
+        System.out.println("Subscribing for " + destination);
+        StompSession.Subscription subscription = server.registerForMessages(destination, q -> {
 
-            System.out.println("RECEIVED A QUESTION FROM /topic/question");
             Platform.runLater(() -> {
-//                gameCtrl.startMultiPlayerQuestion(q);
-                System.out.println(q.typeOfMessage);
-                System.out.println(q.question.toString());
+                if (q.typeOfMessage.equals("QUESTION")) {
+                    System.out.println("CLIENT RECEIVED QUESTION OVER WEBSOCKET");
+                    gameCtrl.startMultiPlayerQuestion(q.question);
+                } else if (q.typeOfMessage.equals("EMOJIONE")) {
+                    System.out.println("CLIENT RECEIVED EMOJIONE OVER WEBSOCKET");
+                    gameCtrl.showEmoji(1, q.emojiUsername);
+                } else if (q.typeOfMessage.equals("EMOJITWO")) {
+                    System.out.println("CLIENT RECEIVED EMOJITWO OVER WEBSOCKET");
+                    gameCtrl.showEmoji(2, q.emojiUsername);
+                } else if (q.typeOfMessage.equals("EMOJITHREE")) {
+                    System.out.println("CLIENT RECEIVED EMOJITHREE OVER WEBSOCKET");
+                    gameCtrl.showEmoji(3, q.emojiUsername);
+                } else if (q.typeOfMessage.equals("LEADERBOARD")) {
+                    System.out.println("TIME FOR LEADERBOARD!");
+                    //function for showing the leaderboard
+                }
+
             });
 
         });
-
+        gameCtrl.subscription = subscription;
         gameCtrl.joinCurrentLobby();
         gameCtrl.points = 0;
         gameCtrl.round = 1;

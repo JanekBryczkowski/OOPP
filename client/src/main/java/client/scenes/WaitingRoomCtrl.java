@@ -22,7 +22,7 @@ public class WaitingRoomCtrl {
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
 
-    private List<User> userList = new ArrayList<>();
+    public static List<User> userList = new ArrayList<>();
     @FXML
     private Text numberOf;
 
@@ -38,10 +38,10 @@ public class WaitingRoomCtrl {
 
     }
 
-    /*
-    This functions gets called when a user presses PLAY. The server will send a GET request
-    to start the game on the server side
-     */
+    /**
+     * This functions gets called when a user presses PLAY. The server will send a GET request
+     * to start the game on the server side
+     **/
     public void play() {
         System.out.println("USER PRESSED PLAY");
         server.startGame();
@@ -53,14 +53,13 @@ public class WaitingRoomCtrl {
     //from the table when pressing the back button
 
     public void backButton() {
-        System.out.println("Chicken vol2");
+        server.removeUser(mainCtrl.username);
         mainCtrl.showSplashScreen();
         mainCtrl.subscription.unsubscribe();
-        server.removeUser(mainCtrl.username);
-        setWaitingRoomTable();
     }
 
     public void setWaitingRoomTable() {
+        userList.removeAll(server.getUsersInLobby());
         userList.addAll(server.getUsersInLobby());
         numberOf.setText("");
         if (userList.size() == 1) {
@@ -69,6 +68,12 @@ public class WaitingRoomCtrl {
             numberOf.setText(userList.size() + " players in the waiting room");
         }
         showInWaitingRoomTable();
+    }
+
+    public void refreshTable() {
+            userList.clear();
+            setWaitingRoomTable();
+
     }
 
     public void showInWaitingRoomTable() {
