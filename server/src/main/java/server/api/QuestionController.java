@@ -107,6 +107,13 @@ public class QuestionController {
         return s == null || s.isEmpty();
     }
 
+
+    /**
+     * This mapping is for adding an activity to the activitybank
+     *
+     * @param activity  The activity that needs to be added to the database
+     * @return          The activity that is added to the database
+     */
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Activity> add(@RequestBody Activity activity) {
 
@@ -118,17 +125,14 @@ public class QuestionController {
         return ResponseEntity.ok(saved);
     }
 
+    /**
+     * This mapping is for deleting an activity from the database
+     *
+     * @param id    The id of the activity that needs to be deleted
+     */
     @DeleteMapping("/{id}")
     public void deleteQuestion(@PathVariable("id") long id) {
         repo.deleteById(id);
     }
-
-//    @MessageMapping("/question{path}")
-//    @SendTo("/topic/question0")
-//    public WebsocketMessage sendQuestion(WebsocketMessage websocketMessage, @PathVariable String path) {
-//        System.out.println("RECEIVED A WEBSOCKETMESSAGE ON question"+path);
-//        System.out.println("SENDING QUESTION " + websocketMessage.toString());
-//        return websocketMessage;
-//    }
 
 }

@@ -127,7 +127,7 @@ public class LobbyController {
         }
     }
 
-    /*
+    /**
     In this function a question gets generated and send to the given destination.
      */
     public void generateAndSendQuestion(String destination) {
