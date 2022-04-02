@@ -16,7 +16,6 @@
 package client.scenes;
 
 import commons.Question;
-import commons.Score;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,8 +34,6 @@ import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.awt.*;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class GameCtrl {
