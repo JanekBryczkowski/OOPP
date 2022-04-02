@@ -231,6 +231,10 @@ public class GameCtrl {
         checkJokers(questionCtrl);
     }
 
+    public void refreshPlayers() {
+        waitingRoomCtrl.refreshTable();
+    }
+
     /**
      * Setup for a question with three activities
      * The setTwoActivities function is called.

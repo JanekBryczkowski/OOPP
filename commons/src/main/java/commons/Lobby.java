@@ -23,5 +23,4 @@ public class Lobby {
         return this.userList;
     }
 
-
 }

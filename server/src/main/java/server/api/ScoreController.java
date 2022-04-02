@@ -38,6 +38,7 @@ public class ScoreController {
         exit(0);
     }
 
+
     @PostMapping(path = {"/", " "})
     public ResponseEntity<Score> add(@RequestBody Score score) {
 
@@ -50,7 +51,7 @@ public class ScoreController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteQuestion(@PathVariable("id") long id) {
+    public void deleteScore(@PathVariable("id") long id) {
         repository.deleteById(id);
     }
 }

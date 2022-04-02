@@ -73,7 +73,6 @@ public class WaitingRoomCtrl {
     public void refreshTable() {
             userList.clear();
             setWaitingRoomTable();
-
     }
 
     public void showInWaitingRoomTable() {

@@ -107,6 +107,8 @@ public class QuestionController {
         return s == null || s.isEmpty();
     }
 
+
+
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Activity> add(@RequestBody Activity activity) {
 
@@ -122,13 +124,5 @@ public class QuestionController {
     public void deleteQuestion(@PathVariable("id") long id) {
         repo.deleteById(id);
     }
-
-//    @MessageMapping("/question{path}")
-//    @SendTo("/topic/question0")
-//    public WebsocketMessage sendQuestion(WebsocketMessage websocketMessage, @PathVariable String path) {
-//        System.out.println("RECEIVED A WEBSOCKETMESSAGE ON question"+path);
-//        System.out.println("SENDING QUESTION " + websocketMessage.toString());
-//        return websocketMessage;
-//    }
 
 }
