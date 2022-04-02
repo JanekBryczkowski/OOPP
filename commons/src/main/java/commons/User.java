@@ -35,15 +35,17 @@ public class User {
 
     public String username;
     public int score;
+    public int lobbyNumber;
 
     @SuppressWarnings("unused")
     private User() {
         // for object mappers
     }
 
-    public User(String username, int score) {
+    public User(String username, int score, int lobbyNumber) {
         this.username = username;
         this.score = score;
+        this.lobbyNumber = lobbyNumber;
     }
 
     public String getUsername() {
@@ -52,6 +54,14 @@ public class User {
 
     public int getScore() {
         return this.score;
+    }
+
+    public int getLobbyNumber() {
+        return this.lobbyNumber;
+    }
+
+    public void setScore(int score) {
+        this.score = this.score + score;
     }
 
     @Override

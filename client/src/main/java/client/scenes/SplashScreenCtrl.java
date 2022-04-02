@@ -108,8 +108,6 @@ public class SplashScreenCtrl {
                     alert.setText("This username is already taken");
                 else {
                     gameCtrl.username = usernameInput.getText();
-                    System.out.println("444444" + usernameInput.getText());
-                    System.out.println("333333333333" + gameCtrl.username);
                     startMultiPlayerGame();
                 }
             }
@@ -127,9 +125,9 @@ public class SplashScreenCtrl {
      * function, the client side will set up the given question.
      */
     public void startMultiPlayerGame() {
-        User user = new User(gameCtrl.username, 0);
-        server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
+        User user = new User(gameCtrl.username, 0, currentOpenLobby);
+        server.addUser(user);
         gameCtrl.joinedLobby = currentOpenLobby;
         String destination = "/topic/question" + String.valueOf(currentOpenLobby);
         System.out.println("Subscribing for " + destination);
@@ -150,7 +148,7 @@ public class SplashScreenCtrl {
                     gameCtrl.showEmoji(3, q.emojiUsername);
                 } else if (q.typeOfMessage.equals("LEADERBOARD")) {
                     System.out.println("TIME FOR LEADERBOARD!");
-                    //function for showing the leaderboard
+                    gameCtrl.showLeaderBoard();
                 } else if (q.typeOfMessage.equals("NEWPLAYER")) {
                     gameCtrl.refreshPlayers();
                 }

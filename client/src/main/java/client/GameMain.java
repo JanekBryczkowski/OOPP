@@ -40,12 +40,6 @@ public class GameMain extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-
-//        var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
-//        var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
-//        FXMLLoader loader = new FXMLLoader(new URL("C:\\TU Delft\\OOPP\\repository-template\\client\\src\\main\\resources\\client\\scenes\\QuestionScreen.fxml"));
-//        loader.setController(new GameCtrl());
-//        Pane mainPane = loader.load();
         var splash = FXML.load(SplashScreenCtrl.class, "client", "scenes", "SplashScreen.fxml");
         var gameThreeScreen = FXML.load(QuestionCtrl.class, "client", "scenes", "QuestionScreen.fxml");
         var leaderBoard = FXML.load(LeaderBoardCtrl.class, "client", "scenes", "LeaderBoardScreen.fxml");
@@ -53,35 +47,8 @@ public class GameMain extends Application {
         var admin = FXML.load(AdminCtrl.class, "client", "scenes", "AdminScreen.fxml");
 
 
-//        var gameScreen = FXML.load(getClass().getResource("SplashScreen.fxml"))
-
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("QuestionScreen.fxml"));
-//        Parent root = loader.load();
-//        loader.getController().setPrimaryStage(primaryStage);
-
-
-//        FXMLLoader loader = new FXMLLoader(QuestionThreeCtrl.class, "client", "scenes", "QuestionScreen.fxml");
-//        loader.setCharset(new MainController(path));
-//        Pane mainPane = loader.load();
-//
-//        MainController mainController = new MainController(path);
-//        Pane mainPane = FXMLLoader.load(getClass().getResource("main.fxml"));
-//
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-//        loader.setController(new MainController(path));
-//        Pane mainPane = loader.load();
-//
-//        Window.setMainController(mainController);
-//        Window.swap(path+"content.fxml");
-
-
         var gameCtrl = INJECTOR.getInstance(GameCtrl.class);
         gameCtrl.initialize(primaryStage, splash, gameThreeScreen, leaderBoard, waitingRoom, admin);
-
-//        primaryStage.setOnCloseRequest(e -> {
-//            waitingRoom.getKey().stop();
-//        });
 
     }
 }

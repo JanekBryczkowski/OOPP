@@ -22,13 +22,21 @@ public class gameController {
         this.lobbyController = lobbyController;
     }
 
-
+    /**
+     * This mapping is for starting the game. If someone presses the join button in the Waiting Room,
+     * this mapping gets called.
+     */
     @GetMapping("/start")
     public void startGame() {
         System.out.println("SERVER RECEIVED GET ON /api/questions/start");
         lobbyController.startGame();
     }
 
+    /**
+     * When a player joins the lobby from the Splash Screen, they need to be added to question web socket
+     * of that lobby. For this, the player needs the current lobby number which they get from this request.
+     * @return the lobby number associated to the current open lobby.
+     */
     @GetMapping("/currentOpenLobby")
     public int currentOpenLobby() {
         return lobbyController.currentLobbyNumber;
