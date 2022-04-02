@@ -42,7 +42,7 @@ public class ServerUtils {
 
     public static String SERVER = "";
     public static String WEBSOCKETSERVER = "";
-    private StompSession session;
+    public static StompSession session;
 
     public void getQuotesTheHardWay() throws IOException {
         var url = new URL("http://localhost:8080/api/quotes");
@@ -154,11 +154,8 @@ public class ServerUtils {
                 .get();
     }
 
-    public void connectingToWebsocket() {
-        session = connect(WEBSOCKETSERVER);
-    }
 
-    private StompSession connect(String url) {
+    public StompSession connect(String url) {
         var client = new StandardWebSocketClient();
         var stomp = new WebSocketStompClient(client);
         stomp.setMessageConverter(new MappingJackson2MessageConverter());

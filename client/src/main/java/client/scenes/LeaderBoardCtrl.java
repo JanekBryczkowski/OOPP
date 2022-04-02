@@ -425,36 +425,6 @@ public class LeaderBoardCtrl {
      */
     public void backToWaitingRoom() {
         gameCtrl.subscription.unsubscribe();
-        int currentOpenLobby = server.getCurrentLobby();
-        server.addUser(new User(gameCtrl.username, 0, currentOpenLobby));
-        gameCtrl.joinedLobby = currentOpenLobby;
-        String destination = "/topic/question" + String.valueOf(currentOpenLobby);
-        System.out.println("Subscribing for " + destination);
-        StompSession.Subscription subscription = server.registerForMessages(destination, q -> {
-
-            Platform.runLater(() -> {
-                if (q.typeOfMessage.equals("QUESTION")) {
-                    System.out.println("CLIENT RECEIVED QUESTION OVER WEBSOCKET");
-                    gameCtrl.startMultiPlayerQuestion(q.question);
-                } else if (q.typeOfMessage.equals("EMOJIONE")) {
-                    System.out.println("CLIENT RECEIVED EMOJIONE OVER WEBSOCKET");
-                    gameCtrl.showEmoji(1, q.emojiUsername);
-                } else if (q.typeOfMessage.equals("EMOJITWO")) {
-                    System.out.println("CLIENT RECEIVED EMOJITWO OVER WEBSOCKET");
-                    gameCtrl.showEmoji(2, q.emojiUsername);
-                } else if (q.typeOfMessage.equals("EMOJITHREE")) {
-                    System.out.println("CLIENT RECEIVED EMOJITHREE OVER WEBSOCKET");
-                    gameCtrl.showEmoji(3, q.emojiUsername);
-                } else if (q.typeOfMessage.equals("LEADERBOARD")) {
-                    System.out.println("TIME FOR LEADERBOARD!");
-                    gameCtrl.showLeaderBoard();
-                }
-
-            });
-
-        });
-        gameCtrl.subscription = subscription;
-        gameCtrl.joinCurrentLobby();
         gameCtrl.points = 0;
         gameCtrl.round = 1;
         gameCtrl.firstJokerSinglePlayerUsed = false;

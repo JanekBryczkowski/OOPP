@@ -151,6 +151,10 @@ public class SplashScreenCtrl {
                     gameCtrl.showLeaderBoard();
                 } else if (q.typeOfMessage.equals("NEWPLAYER")) {
                     gameCtrl.refreshPlayers();
+                } else if(q.typeOfMessage.equals("JOKERTHREE")) {
+                    gameCtrl.jokerThree();
+                } else if(q.typeOfMessage.equals("JOKERUSED")) {
+                    gameCtrl.jokerUsed(q.emojiUsername, q.jokerUsed);
                 }
 
             });
@@ -193,8 +197,7 @@ public class SplashScreenCtrl {
         rulesButton.setDisable(false);
         setServerNameAnchorPane.setVisible(false);
         server.SERVER = "http://" + serverNameTextField.getText() + "/";
-        server.WEBSOCKETSERVER = "ws://" + serverNameTextField.getText() + "/websocket";
-        server.connectingToWebsocket();
+        server.session = server.connect("ws://" + serverNameTextField.getText() + "/websocket");
         Big.setEffect(null);
     }
 
