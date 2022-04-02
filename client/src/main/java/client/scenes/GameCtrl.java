@@ -15,10 +15,7 @@
  */
 package client.scenes;
 
-import client.utils.ServerUtils;
 import commons.Question;
-import commons.Score;
-import commons.User;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -27,8 +24,6 @@ import javafx.util.Pair;
 import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameCtrl {
 
