@@ -1,7 +1,6 @@
 package server.api;
 
 import commons.User;
-import commons.WebsocketMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import server.LobbyController;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
