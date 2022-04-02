@@ -18,12 +18,19 @@ package client.scenes;
 import client.utils.ServerUtils;
 import commons.Question;
 import commons.Score;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 import org.springframework.messaging.simp.stomp.StompSession;
 
@@ -72,6 +79,8 @@ public class GameCtrl {
     public List<Score> multiplayerUsers = new ArrayList<>();
     public boolean multiplayer;
 
+    private DialogPane dialogPane;
+
     /**
      * This is for the multiplayer game, since there is a half-time Leaderboard set in the 11th round,
      * we need 21 rounds all together.
@@ -113,24 +122,26 @@ public class GameCtrl {
         primaryStage.show();
         primaryStage.setResizable(false);
 
-        //Alert box appearing if trying to close the application
-        primaryStage.setOnHiding(event -> {
-            System.out.println("hidding");
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "exit_confirmation");
-            Toolkit.getDefaultToolkit().beep();
-            Optional<ButtonType> result = alert.showAndWait();
-            if (this.primaryStage.getTitle().equals("Waiting Room") ||
-                    this.primaryStage.getTitle().equals("Game screen - 3 activities question - Multiplayer") ||
-                    this.primaryStage.getTitle().equals("Game screen - 2 activity question - Multiplayer") ||
-                    this.primaryStage.getTitle().equals("Game screen - 1 activity question - Multiplayer") ||
-                    this.primaryStage.getTitle().equals("Question") ||
-                    this.primaryStage.getTitle().equals("LeaderBoard Screen - Multiplayer")) {
-                this.waitingRoomCtrl.backButton();
-            }
-
-            if (result.isPresent() && result.get() != ButtonType.OK) {
-                return;
-                //don't close stage
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to exit the application?");
+                Toolkit.getDefaultToolkit().beep();
+                primaryStage.getScene().getRoot().setEffect(new GaussianBlur(200));
+                dialogPane = alert.getDialogPane();
+                dialogPane.getScene().setFill(Color.TRANSPARENT);
+                alert.initStyle(StageStyle.TRANSPARENT);
+                alert.initStyle(StageStyle.UNDECORATED);
+                ImageView imageView = new ImageView("client.images/earthLogo.png");
+                imageView.setFitWidth(72);
+                imageView.setFitHeight(74);
+                alert.setGraphic(imageView);
+                dialogPane.getStylesheets().add("client.styles/AlertBox.css");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() != ButtonType.OK) {
+                    event.consume();
+                    primaryStage.getScene().getRoot().setEffect(null);
+                }
             }
         });
     }
