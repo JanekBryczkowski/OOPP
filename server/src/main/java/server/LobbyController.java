@@ -32,7 +32,6 @@ public class LobbyController {
         this.msgs = msgs;
     }
 
-
     public void addLobby(Lobby lobby) {
         this.lobbyList.add(lobby);
     }
@@ -82,9 +81,9 @@ public class LobbyController {
             public void run() {
                 secondsPassed[0]--;
                 if(secondsPassed[0] == 0) {
-                    if(currentRound == 4) {
+                    if(currentRound == 3) {
                         showLeaderBoard(destination, lobby);
-                    } else if (currentRound == 9) {
+                    } else if (currentRound == 6) {
                         myTimer.cancel();
                         showLeaderBoard(destination, lobby);
                     } else {
@@ -109,7 +108,7 @@ public class LobbyController {
         WebsocketMessage websocketMessage = new WebsocketMessage("LEADERBOARD");
         msgs.convertAndSend(destination, websocketMessage);
 
-        if(!(lobby.roundNumber == 9)) {
+        if(!(lobby.roundNumber == 6)) {
             int[] secondsPassed = {15};
             Timer myTimer = new Timer();
 

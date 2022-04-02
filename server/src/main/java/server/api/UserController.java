@@ -1,6 +1,7 @@
 package server.api;
 
 import commons.User;
+import commons.WebsocketMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import server.LobbyController;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -49,8 +51,7 @@ public class UserController {
      */
     @PostMapping(path = { "", "/" })
     public User postUserToOpenLobby(@RequestBody User user) {
-//            listeners.forEach((k,l) -> l.accept(user));
-            return lobbyController.getOpenLobby().addUser(user);
+        return lobbyController.getOpenLobby().addUser(user);
     }
 
     @PostMapping("/updateScore")
@@ -68,14 +69,11 @@ public class UserController {
      *
      * @param username used to identify User that should be removed
      */
-    @DeleteMapping("/removePlayer/{username}")
-    public void removeUser(@PathVariable("username") String username) {
-        List<User> userList = lobbyController.getOpenLobby().getUserList();
-        for (User user : userList) {
-            if (user.getUsername().equals(username)) {
-                userList.remove(user);
-            }
-        }
+    @DeleteMapping("/removePlayer/{username}/{lobbyNumber}")
+    public void removeUser(@PathVariable("username") String username, @PathVariable int lobbyNumber) {
+        Lobby lobby = (Lobby) lobbyController.getAllLobbies().
+                stream().filter(x -> x.lobbyNumber==lobbyNumber);
+        lobby.getUserList().removeIf(user -> user.getUsername().equals(username));
     }
 
     /**
@@ -88,6 +86,20 @@ public class UserController {
         return (List<User>) lobbyController.getOpenLobby().getUserList();
     }
 
+    /**
+     * Gets the list of users associated to this lobby number.
+     * @param lobbyNumber The Lobby we are looking for
+     * @return The list of users playing in this lobby
+     */
+    @GetMapping("/lobby/{lobbyNumber}")
+    public List<User> getUsersOfLobby(@PathVariable int lobbyNumber) {
+        for(Lobby lobby : lobbyController.getAllLobbies()) {
+            if(lobby.lobbyNumber == lobbyNumber) {
+                return lobby.getUserList();
+            }
+        }
+        return null;
+    }
     /**
      * Get mapping used to fetch all the lobbies that have been created.
      *

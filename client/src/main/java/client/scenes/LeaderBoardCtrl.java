@@ -81,9 +81,14 @@ public class LeaderBoardCtrl {
      */
     public void storePoints() {
         try {
-            Score score = new Score(gameCtrl.username, gameCtrl.points);
-            if (gameCtrl.getMode() == 0) server.addScore(score);
-            //server.scores.add(score);
+            if (gameCtrl.getMode() == 0) server.addScore(new Score(gameCtrl.username, gameCtrl.points));
+            else {
+                for(User user : WaitingRoomCtrl.userList) {
+                    if(user.getUsername().equals(gameCtrl.username)) {
+                        user.setScore(gameCtrl.points);
+                    }
+                }
+            }
         } catch (WebApplicationException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
@@ -105,10 +110,10 @@ public class LeaderBoardCtrl {
         if (gameCtrl.getMode() == 0) {
             scores = FXCollections.observableArrayList();
             topThreeList.addAll(server.getTopScores());
-        } else if (gameCtrl.getMode() == 1) {
-            List<User> userList = server.getUsersInLobby();
-            topThreeList.addAll(getThreeMultiplayer(userList));
+        } else {
+            topThreeList.addAll(getThreeMultiplayer(WaitingRoomCtrl.userList));
         }
+
         if (topThreeList.size() == 1) {
             firstName.setText(topThreeList.get(0).getUsername());
             firstScore.setText(String.valueOf(topThreeList.get(0).getScore()));
@@ -141,27 +146,25 @@ public class LeaderBoardCtrl {
      * @return a list of the top three scores.
      */
     public ArrayList<Score> getThreeMultiplayer(List<User> userList) {
-        User first = null;
+        User first = userList.get(0);
         User second = null;
         User third = null;
         if (userList.size() > 2) {
-            first = userList.get(0);
             second = userList.get(1);
             third = userList.get(2);
 
             for (User user : userList) {
                 if (user.getScore() > first.getScore()) {
                     first = user;
-                } else if (user.getScore() > second.getScore() && user.getScore() < first.getScore()) {
+                } else if (user.getScore() > second.getScore() && user.getScore() <= first.getScore()) {
                     second = user;
-                } else if (user.getScore() > third.getScore() && user.getScore() < second.getScore()) {
+                } else if (user.getScore() > third.getScore() && user.getScore() <= second.getScore()) {
                     third = user;
                 }
             }
         }
         ArrayList<Score> topThreeList = new ArrayList<>();
-        if (first != null)
-            topThreeList.add(new Score(first.username, first.score));
+        topThreeList.add(new Score(first.username, first.score));
         if (second != null)
             topThreeList.add(new Score(second.username, second.score));
         if (third != null)
@@ -178,8 +181,7 @@ public class LeaderBoardCtrl {
      */
     public void setList() {
         if (gameCtrl.getMode() == 1) {
-            List<User> usersInLobby = server.getUsersInLobby();
-            for (User u : usersInLobby) {
+            for (User u : WaitingRoomCtrl.userList) {
                 scoreList.add(new Score(u.getUsername(), u.getScore()));
             }
         } else {
@@ -240,63 +242,8 @@ public class LeaderBoardCtrl {
             bar.setMaxHeight(6);
             bar.setPrefWidth(6);
             double ratio = (double) score.score / highestScore;
-            double finalWidth = ratio * 317;
-            bar.setPrefWidth(finalWidth);
-            bar.setMinWidth(finalWidth);
-            bar.setMaxWidth(finalWidth);
-            bar.setLayoutX(15);
-            bar.setLayoutY(26.5);
-            bar.setStyle("-fx-background-color: " + getRandomColor() + "; -fx-background-radius: 4;");
-            anchorPane.getChildren().add(usernameLabel);
-            anchorPane.getChildren().add(scoreLabel);
-            anchorPane.getChildren().add(bar);
-            vbox.getChildren().add(anchorPane);
-        }
-        leaderBoardScrollPane.setContent(vbox);
-    }
-
-    private void setMultiLeaderboard(List<User> userList) {
-        VBox vbox = new VBox();
-        for (User user : userList) {
-            AnchorPane anchorPane = new AnchorPane();
-            anchorPane.setMaxHeight(50);
-            anchorPane.setMinHeight(50);
-            anchorPane.setMinHeight(50);
-            anchorPane.setMaxWidth(347);
-            anchorPane.setMinWidth(347);
-            anchorPane.setPrefWidth(347);
-            Label usernameLabel = new Label(user.getUsername());
-            usernameLabel.setMaxHeight(30);
-            usernameLabel.setMinHeight(30);
-            usernameLabel.setPrefHeight(30);
-            usernameLabel.setMaxWidth(200);
-            usernameLabel.setMinWidth(200);
-            usernameLabel.setPrefWidth(200);
-            usernameLabel.setLayoutX(0);
-            usernameLabel.setLayoutY(0);
-            usernameLabel.setStyle("-fx-font-size: 16;");
-            usernameLabel.setAlignment(Pos.CENTER);
-            Label scoreLabel = new Label(String.valueOf(user.getScore()));
-            scoreLabel.setMaxHeight(30);
-            scoreLabel.setMinHeight(30);
-            scoreLabel.setPrefHeight(30);
-            scoreLabel.setMaxWidth(147);
-            scoreLabel.setMinWidth(147);
-            scoreLabel.setPrefWidth(147);
-            scoreLabel.setLayoutX(200);
-            scoreLabel.setLayoutY(0);
-            scoreLabel.setStyle("-fx-font-size: 16;");
-            scoreLabel.setAlignment(Pos.CENTER);
-            if (gameCtrl.username.equals(user.getUsername()) && gameCtrl.points == user.getScore()) {
-                usernameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: transparent;");
-                scoreLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16; -fx-background-color: transparent;");
-                anchorPane.setStyle("-fx-background-color: #D5DEB6");
-            }
-            AnchorPane bar = new AnchorPane();
-            bar.setMinHeight(6);
-            bar.setMaxHeight(6);
-            bar.setPrefWidth(6);
-            double ratio = (double) user.getScore() / 2000;
+            if(gameCtrl.round< 5)
+                ratio = (double) score.score / 2000;
             double finalWidth = ratio * 317;
             bar.setPrefWidth(finalWidth);
             bar.setMinWidth(finalWidth);
@@ -313,28 +260,25 @@ public class LeaderBoardCtrl {
     }
 
     private int findHighestScore(List<Score> scoreList) {
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < scoreList.size(); i++) {
-            if (max < scoreList.get(i).score) {
-                max = scoreList.get(i).score;
-            }
-        }
+        int max = scoreList.stream().mapToInt(score -> score.score).max().orElse(Integer.MIN_VALUE);
         return max;
     }
-
 
     public String getRandomColor() {
         int random = (int) (Math.random() * colors.size() - 1);
         return colors.get(random);
     }
 
-
     /**
      * In Multiplayer the Half-time Leaderboard shows up after 10 questions, users will see their score, which
      * they achieved so far.
      */
     public void halfTimeLeaderBoard() {
-        setMultiLeaderboard(WaitingRoomCtrl.userList);
+        List<Score> scores = new ArrayList<>();
+        for(User u : WaitingRoomCtrl.userList) {
+            scores.add(new Score(u.getUsername(), u.getScore()));
+        }
+        uploadScoresIntoTheRanking(scores);
         waitingRoom.setVisible(false);
         waitingRoom.setManaged(false);
         splash.setVisible(false);
@@ -364,7 +308,6 @@ public class LeaderBoardCtrl {
             leaderBoardScrollPane.setPrefHeight(417);
             waitingRoom.setVisible(true);
             waitingRoom.setManaged(true);
-            setMultiLeaderboard(WaitingRoomCtrl.userList);
         }
     }
 
@@ -405,10 +348,8 @@ public class LeaderBoardCtrl {
      */
     public void backToWaitingRoom() {
         gameCtrl.subscription.unsubscribe();
-        String username = gameCtrl.username;
-        User user = new User(username, 0);
-        server.addUser(user);
         int currentOpenLobby = server.getCurrentLobby();
+        server.addUser(new User(gameCtrl.username, 0, currentOpenLobby));
         gameCtrl.joinedLobby = currentOpenLobby;
         String destination = "/topic/question" + String.valueOf(currentOpenLobby);
         System.out.println("Subscribing for " + destination);
@@ -429,7 +370,7 @@ public class LeaderBoardCtrl {
                     gameCtrl.showEmoji(3, q.emojiUsername);
                 } else if (q.typeOfMessage.equals("LEADERBOARD")) {
                     System.out.println("TIME FOR LEADERBOARD!");
-                    //function for showing the leaderboard
+                    gameCtrl.showLeaderBoard();
                 }
 
             });
@@ -441,6 +382,9 @@ public class LeaderBoardCtrl {
         gameCtrl.round = 1;
         gameCtrl.firstJokerSinglePlayerUsed = false;
         gameCtrl.secondJokerSinglePlayerUsed = false;
+        gameCtrl.firstJokerMultiPlayerUsed = false;
+        gameCtrl.secondJokerMultiPlayerUsed = false;
+        gameCtrl.thirdJokerMultiPlayerUsed = false;
         gameCtrl.showWaitingRoomScreen();
     }
 

@@ -111,6 +111,14 @@ public class ServerUtils {
                 .post(Entity.entity(user, APPLICATION_JSON), User.class);
     }
 
+    public void updateScore(User user) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user/updateScore") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(user, APPLICATION_JSON), User.class);
+    }
+
     public List<User> getUsersInLobby() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/user/currentLobby") //
@@ -119,9 +127,17 @@ public class ServerUtils {
                 .get(new GenericType<List<User>>() {});
     }
 
-    public void removeUser(String username) {
+    public List<User> getUserLobbyNumber(int lobbyNumber) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user/lobby/"+ lobbyNumber) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<List<User>>() {});
+    }
+
+    public void removeUser(String username, int lobbyNumber) {
         ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/user/removePlayer/"+ username) //
+                .target(SERVER).path("api/user/removePlayer/"+ username + "/" + lobbyNumber) //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .delete();

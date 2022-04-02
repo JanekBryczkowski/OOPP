@@ -9,53 +9,53 @@ public class UserTest {
 
     @Test
     public void constructorTest() {
-        User user = new User("abc", 123);
+        User user = new User("abc", 123, 0);
         assertNotNull(user);
     }
 
     @Test
     public void usernameTest() {
-        User user = new User("abc", 123);
+        User user = new User("abc", 123, 0);
         assertEquals("abc", user.username);
     }
 
     @Test
     public void scoreTest() {
-        User user = new User("abc", 123);
+        User user = new User("abc", 123, 0);
         assertEquals(123, user.score);
     }
 
     @Test
     public void getUsernameTest() {
-        User user = new User("abc", 123);
+        User user = new User("abc", 123, 0);
         assertEquals("abc", user.getUsername());
     }
 
     @Test
     public void getScoreTest() {
-        User user = new User("abc", 123);
+        User user = new User("abc", 123, 0);
         assertEquals(123, user.getScore());
     }
 
     @Test
     public void equalsHashCode() {
-        User a = new User("abc", 123);
-        User b = new User("abc", 123);
+        User a = new User("abc", 123, 0);
+        User b = new User("abc", 123, 0);
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());
     }
 
     @Test
     public void notEqualsHashCode() {
-        User a = new User("abc", 123);
-        User b = new User("def", 123);
+        User a = new User("abc", 123, 0);
+        User b = new User("def", 123, 0);
         assertNotEquals(a, b);
         assertNotEquals(a.hashCode(), b.hashCode());
     }
 
     @Test
     public void hasToString() {
-        String actual = new User("a", 2).toString();
+        String actual = new User("a", 2, 0).toString();
         assertTrue(actual.contains(User.class.getSimpleName()));
         assertTrue(actual.contains("a"));
         assertTrue(actual.contains("2"));

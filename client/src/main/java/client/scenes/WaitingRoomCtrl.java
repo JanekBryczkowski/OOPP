@@ -20,6 +20,9 @@ public class WaitingRoomCtrl {
     private final ServerUtils server;
     private final GameCtrl mainCtrl;
 
+    /**
+     * This List of users will store the users playing throughout the game.
+     */
     public static List<User> userList = new ArrayList<>();
     @FXML
     private Text numberOf;
@@ -51,13 +54,13 @@ public class WaitingRoomCtrl {
     //from the table when pressing the back button
 
     public void backButton() {
-        server.removeUser(mainCtrl.username);
+        server.removeUser(mainCtrl.username, server.getCurrentLobby());
         mainCtrl.showSplashScreen();
         mainCtrl.subscription.unsubscribe();
     }
 
     public void setWaitingRoomTable() {
-        userList.removeAll(server.getUsersInLobby());
+        userList = new ArrayList<>();
         userList.addAll(server.getUsersInLobby());
         numberOf.setText("");
         if (userList.size() == 1) {
