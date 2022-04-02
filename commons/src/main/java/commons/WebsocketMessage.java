@@ -1,5 +1,7 @@
 package commons;
 
+import java.util.List;
+
 public class WebsocketMessage {
 
     /**
@@ -13,6 +15,7 @@ public class WebsocketMessage {
     public String typeOfMessage;
     public Question question;
     public String emojiUsername;
+    public List<User> userList;
 
     public WebsocketMessage() {
 
@@ -28,6 +31,10 @@ public class WebsocketMessage {
 
     public void setEmojiUsername(String emojiUsername) {
         this.emojiUsername = emojiUsername;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
 }

@@ -18,7 +18,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import org.apache.catalina.Server;
 import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.net.MalformedURLException;

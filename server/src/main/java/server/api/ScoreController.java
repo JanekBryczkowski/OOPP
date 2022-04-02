@@ -19,21 +19,11 @@ public class ScoreController {
         this.repository = repository;
     }
 
-    /**
-     * Getting all the score from the database
-     *
-     * @return  A list with all the scores from the database
-     */
     @GetMapping
     public List<Score> getScores() {
         return  repository.findAll();
     }
 
-    /**
-     * Getting the top three scores from the database
-     *
-     * @return  A list with the top three scores from the database
-     */
     @GetMapping("/top")
     public List<Score> getTopScores(){
         return repository.getTopThree();
@@ -43,20 +33,12 @@ public class ScoreController {
         return s == null || s.isEmpty();
     }
 
-    /**
-     * A mapping for restarting the server
-     */
     @GetMapping("/restart")
     public static void restartServer() {
         exit(0);
     }
 
-    /**
-     * A mapping for adding a score to the database
-     *
-     * @param score The score that needs to be added to the database
-     * @return      The score that is added to the database
-     */
+
     @PostMapping(path = {"/", " "})
     public ResponseEntity<Score> add(@RequestBody Score score) {
 
@@ -68,11 +50,6 @@ public class ScoreController {
         return ResponseEntity.ok(saved);
     }
 
-    /**
-     * Mapping for deleting a score from the database
-     *
-     * @param id id of Score that needs to be deleted
-     */
     @DeleteMapping("/{id}")
     public void deleteScore(@PathVariable("id") long id) {
         repository.deleteById(id);
