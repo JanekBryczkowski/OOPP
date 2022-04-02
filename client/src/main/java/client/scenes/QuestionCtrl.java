@@ -41,7 +41,7 @@ public class QuestionCtrl {
 
     public int correctAnswer;
     public int jokerOneActive = 1; //double points
-    int[] secondsPassed = {15};
+    public int[] secondsPassed = {15};
     Timer myTimer = new Timer();
     TimerTask task;
 
@@ -138,6 +138,8 @@ public class QuestionCtrl {
 
     @FXML
     private AnchorPane gainedPointsAnchorPane;
+    @FXML
+    private Label jokerUsed;
 
     double randomLower;
     double randomUpper;
@@ -577,6 +579,16 @@ public class QuestionCtrl {
                 break;
             }
         }
+    }
+
+    public void sendJokerThree() {
+        WebsocketMessage websocketMessage = new WebsocketMessage("JOKERUSED");
+        websocketMessage.emojiUsername = gameCtrl.username;
+        websocketMessage.jokerUsed = 3;
+        server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
+        secondsPassed[0] += 5;
+        WebsocketMessage websocketMessagee = new WebsocketMessage("JOKERTHREE");
+        server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessagee);
     }
 
     public void setupEmoji() {
@@ -1046,6 +1058,10 @@ public class QuestionCtrl {
 
     public void jokerOneMultiPlayer() {
         if (!gameCtrl.firstJokerMultiPlayerUsed) {
+            WebsocketMessage websocketMessage = new WebsocketMessage("JOKERUSED");
+            websocketMessage.emojiUsername = gameCtrl.username;
+            websocketMessage.jokerUsed = 1;
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
             this.jokerOneActive = 2;
             jokerOneMultiPlayer.setStyle("-fx-border-color: darkgreen; -fx-border-width: 5; -fx-border-radius: 30;");
             jokerOneMultiPlayer.setDisable(true);
@@ -1114,6 +1130,10 @@ public class QuestionCtrl {
     public void jokerTwoMultiPlayer() {
         if (!gameCtrl.secondJokerMultiPlayerUsed) {
             if (oneActivityAnchorPane.isVisible()) {
+                WebsocketMessage websocketMessage = new WebsocketMessage("JOKERUSED");
+                websocketMessage.emojiUsername = gameCtrl.username;
+                websocketMessage.jokerUsed = 2;
+                server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
                 int differenceLower = (int) (Math.random() * (correctAnswer - lowerBoundaryNumber));
                 int differenceUpper = (int) (Math.random() * (upperBoundaryNumber - correctAnswer));
                 int newLowerBoundaryNumber = lowerBoundaryNumber + differenceLower;
@@ -1316,11 +1336,30 @@ public class QuestionCtrl {
         }
     }
 
+    /**
+     * This function gets called whenever another player uses joker three
+     */
+    public void jokerThree() {
+        secondsPassed[0] -= 5;
+    }
+
     @FXML
     void clickEnter(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
             revealAnswersOneActivities();
         }
     }
+
+    public void showUsedJoker(String username, int joker) {
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2.2));
+        jokerUsed.setText(username + " has used joker " + joker);
+        jokerUsed.setVisible(true);
+        pauseTransition.play();
+        pauseTransition.setOnFinished(e -> {
+            jokerUsed.setVisible(false);
+        });
+    }
+
+
 
 }

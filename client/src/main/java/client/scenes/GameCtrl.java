@@ -290,13 +290,7 @@ public class GameCtrl {
     public void startMultiPlayerQuestion(Question question) {
         questionCtrl.setupEmoji();
         setMode(1);
-//        System.out.println("MADE IT");
-//        System.out.println(question.toString());
 
-//        if (round > MULTIROUNDS) {
-//            questionCtrl.resetPoints();
-//            showLeaderBoard();
-//        } else
         if (round == MULTIROUNDS / 2 + 1) {
             showHalfTimeLeaderBoard();
         } else {
@@ -349,6 +343,12 @@ public class GameCtrl {
         primaryStage.setScene(leaderBoardScreen);
     }
 
+    /**
+     * This function gets called whenever another player has clicked on joker three.
+     */
+    public void jokerThree() {
+        questionCtrl.jokerThree();
+    }
 
     /**
      * This function will check if the jokers have been used by the user playing.
@@ -384,4 +384,10 @@ public class GameCtrl {
         primaryStage.setScene(admin);
         adminCtrl.setTable();
     }
+
+    public void jokerUsed(String username, int joker) {
+        questionCtrl.showUsedJoker(username, joker);
+    }
+
+
 }
