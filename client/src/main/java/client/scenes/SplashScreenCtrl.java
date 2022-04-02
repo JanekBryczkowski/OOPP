@@ -149,6 +149,8 @@ public class SplashScreenCtrl {
                 } else if (q.typeOfMessage.equals("LEADERBOARD")) {
                     System.out.println("TIME FOR LEADERBOARD!");
                     gameCtrl.showLeaderBoard();
+                } else if (q.typeOfMessage.equals("NEWPLAYER")) {
+                    gameCtrl.refreshPlayers();
                 }
 
             });
@@ -190,7 +192,9 @@ public class SplashScreenCtrl {
         joinButton.setDisable(false);
         rulesButton.setDisable(false);
         setServerNameAnchorPane.setVisible(false);
-        ServerUtils.SERVER = serverNameTextField.getText();
+        server.SERVER = "http://" + serverNameTextField.getText() + "/";
+        server.WEBSOCKETSERVER = "ws://" + serverNameTextField.getText() + "/websocket";
+        server.connectingToWebsocket();
         Big.setEffect(null);
     }
 

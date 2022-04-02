@@ -78,4 +78,9 @@ public class ScoreController {
         Score saved = repository.save(score);
         return ResponseEntity.ok(saved);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteScore(@PathVariable("id") long id) {
+        repository.deleteById(id);
+    }
 }

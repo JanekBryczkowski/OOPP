@@ -1,8 +1,8 @@
 package server.api;
 
 import commons.User;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import commons.WebsocketMessage;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import commons.Lobby;
 import server.LobbyController;
@@ -15,14 +15,16 @@ import java.util.Locale;
 public class UserController {
 
     private final LobbyController lobbyController;
+    private final SimpMessagingTemplate msgs;
 
     /**
      * Constructor for lobbyController.
      *
      * @param lobbyController to be instantiated
      */
-    public UserController(LobbyController lobbyController) {
+    public UserController(LobbyController lobbyController, SimpMessagingTemplate msgs) {
         this.lobbyController = lobbyController;
+        this.msgs = msgs;
     }
 
     /**
@@ -49,7 +51,11 @@ public class UserController {
      */
     @PostMapping(path = { "", "/" })
     public User postUserToOpenLobby(@RequestBody User user) {
-        return lobbyController.getOpenLobby().addUser(user);
+            lobbyController.getOpenLobby().addUser(user);
+            String destination = "/topic/question" + String.valueOf(lobbyController.currentLobbyNumber);
+            WebsocketMessage websocketMessage = new WebsocketMessage("NEWPLAYER");
+            msgs.convertAndSend(destination, websocketMessage);
+            return user;
     }
 
     @PostMapping("/updateScore")
@@ -107,32 +113,5 @@ public class UserController {
     public List<Lobby> getAllLobbies() {
         return (List<Lobby>) lobbyController.getAllLobbies();
     }
-
-    @MessageMapping("/users")
-    @SendTo("/topic/users")
-    public User addUser(User user) {
-        //postUserToOpenLobby(user);
-        return user;
-    }
-
-//    private Map<Object, Consumer<User>> listeners = new HashMap<>();
-//
-//    @GetMapping("/updates")
-//    public DeferredResult<ResponseEntity<User>> getUpdates() {
-//        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//        var res = new DeferredResult<ResponseEntity<User>>(5000L, noContent);
-//
-//        var key = new Object();
-//        listeners.put(key, q -> {
-//            res.setResult(ResponseEntity.ok(q));
-//        });
-//
-//        res.onCompletion(() -> {
-//            listeners.remove(key);
-//        });
-//        listeners.forEach((k,l) -> System.out.println(l.toString()));
-//
-//        return res;
-//    }
 
 }

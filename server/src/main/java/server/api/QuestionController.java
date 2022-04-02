@@ -147,6 +147,4 @@ public class QuestionController {
         repo.deleteById(id);
     }
 
-
-
 }

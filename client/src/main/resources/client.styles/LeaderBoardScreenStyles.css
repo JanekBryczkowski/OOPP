@@ -123,3 +123,8 @@
     -fx-background-radius: 6;
     -fx-visible-amount: 100;
 }
+
+.progress-bar > .track {
+    -fx-text-box-border: #D2EC7E;
+    -fx-control-inner-background: #D2EC7E;
+}

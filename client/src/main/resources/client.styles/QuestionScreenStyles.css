@@ -91,3 +91,8 @@
     -fx-prompt-text-fill: #000000;
     -fx-accent: #C7CFA9;
 }
+
+.progress-bar > .track {
+    -fx-text-box-border: #D2EC7E;
+    -fx-control-inner-background: #D2EC7E;
+}

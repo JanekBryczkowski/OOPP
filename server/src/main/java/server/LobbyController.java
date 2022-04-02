@@ -106,6 +106,8 @@ public class LobbyController {
      */
     public void showLeaderBoard(String destination, Lobby lobby) {
         WebsocketMessage websocketMessage = new WebsocketMessage("LEADERBOARD");
+        websocketMessage.setUserList(lobby.getUserList());
+
         msgs.convertAndSend(destination, websocketMessage);
 
         if(!(lobby.roundNumber == 6)) {
@@ -126,8 +128,8 @@ public class LobbyController {
         }
     }
 
-    /*
-    In this function a question gets generated and send to the given destination.
+    /**
+     * In this function a question gets generated and send to the given destination.
      */
     public void generateAndSendQuestion(String destination) {
         Question question = questionController.getActivities();

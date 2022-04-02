@@ -16,18 +16,32 @@
 package client.scenes;
 
 import commons.Question;
+import commons.Score;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 import org.springframework.messaging.simp.stomp.StompSession;
 
+import java.awt.*;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class GameCtrl {
 
-    private Stage primaryStage;
+    public Stage primaryStage;
 
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splashScreenScene;
@@ -60,6 +74,8 @@ public class GameCtrl {
 
     public StompSession.Subscription subscription = null;
     public boolean multiplayer;
+
+    private DialogPane dialogPane;
 
     /**
      * This is for the multiplayer game, since there is a half-time Leaderboard set in the 11th round,
@@ -100,6 +116,30 @@ public class GameCtrl {
 
         showSplashScreen();
         primaryStage.show();
+        primaryStage.setResizable(false);
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to exit the application?");
+                Toolkit.getDefaultToolkit().beep();
+                primaryStage.getScene().getRoot().setEffect(new GaussianBlur(200));
+                dialogPane = alert.getDialogPane();
+                dialogPane.getScene().setFill(Color.TRANSPARENT);
+                alert.initStyle(StageStyle.TRANSPARENT);
+                alert.initStyle(StageStyle.UNDECORATED);
+                ImageView imageView = new ImageView("client.images/earthLogo.png");
+                imageView.setFitWidth(72);
+                imageView.setFitHeight(74);
+                alert.setGraphic(imageView);
+                dialogPane.getStylesheets().add("client.styles/AlertBox.css");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() != ButtonType.OK) {
+                    event.consume();
+                    primaryStage.getScene().getRoot().setEffect(null);
+                }
+            }
+        });
     }
 
     /**
@@ -179,10 +219,16 @@ public class GameCtrl {
     public void oneActivityQuestion(Question question) {
         questionCtrl.startOneActivityQuestion(question);
         primaryStage.setTitle("Game screen - 1 activity question");
+        if (getMode() == 1) primaryStage.setTitle("Game screen - 1 activities question - Multiplayer");
+        else primaryStage.setTitle("Game screen - 1 activities question - Single player");
         primaryStage.setScene(questionScreen);
         questionCtrl.setOneActivity();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
         checkJokers(questionCtrl);
+    }
+
+    public void refreshPlayers() {
+        waitingRoomCtrl.refreshTable();
     }
 
     /**
@@ -193,7 +239,8 @@ public class GameCtrl {
      */
     public void twoActivityQuestion(Question question) {
         questionCtrl.startTwoActivityQuestion(question);
-        primaryStage.setTitle("Game screen - 2 activities question");
+        if (getMode() == 1) primaryStage.setTitle("Game screen - 2 activities question - Multiplayer");
+        else primaryStage.setTitle("Game screen - 2 activities question - Single player");
         primaryStage.setScene(questionScreen);
         questionCtrl.setTwoActivities();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
@@ -208,7 +255,8 @@ public class GameCtrl {
      */
     public void threeActivityQuestion(Question question) throws MalformedURLException {
         questionCtrl.startThreeActivityQuestion(question);
-        primaryStage.setTitle("Game screen - 3 activities question");
+        if (getMode() == 1) primaryStage.setTitle("Game screen - 3 activities question - Multiplayer");
+        else primaryStage.setTitle("Game screen - 3 activities question - Single player");
         primaryStage.setScene(questionScreen);
         questionCtrl.setThreeActivities();
         questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
@@ -287,6 +335,8 @@ public class GameCtrl {
         leaderBoardCtrl.backToWaitingRoomButton();
         leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
         primaryStage.setScene(leaderBoardScreen);
+        if (getMode() == 1) primaryStage.setTitle("LeaderBoard Screen - Multiplayer");
+        else primaryStage.setTitle("LeaderBoard Screen - Single player");
     }
 
     /**
