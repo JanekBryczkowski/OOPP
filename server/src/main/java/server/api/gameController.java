@@ -13,9 +13,19 @@ import server.Main;
 public class gameController {
 
     private final LobbyController lobbyController;
+
     private final QuestionRepository repo;
+
     private SimpMessagingTemplate msgs;
 
+    /**
+     * Constructor for the game controller class
+     *
+     * @param mainGame        - game controller class
+     * @param repo            - repository.
+     * @param msgs            - messaging template.
+     * @param lobbyController - lobby controller provided.
+     */
     public gameController(Main mainGame, QuestionRepository repo, SimpMessagingTemplate msgs, LobbyController lobbyController) {
         this.repo = repo;
         this.msgs = msgs;
@@ -35,11 +45,11 @@ public class gameController {
     /**
      * When a player joins the lobby from the Splash Screen, they need to be added to question web socket
      * of that lobby. For this, the player needs the current lobby number which they get from this request.
+     *
      * @return the lobby number associated to the current open lobby.
      */
     @GetMapping("/currentOpenLobby")
     public int currentOpenLobby() {
         return lobbyController.currentLobbyNumber;
     }
-
 }

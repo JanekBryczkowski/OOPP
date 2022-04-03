@@ -1,18 +1,3 @@
-/*
- * Copyright 2021 Delft University of Technology
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package commons;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
@@ -26,21 +11,29 @@ import java.util.List;
 
 public class Question {
 
-//    public long id;
-
     public List<Activity> activityList;
 
     public int correctAnswer;
 
+    /**
+     * Constructor for the question object.
+     */
     public Question() {
         this.activityList = new ArrayList<>();
-        // for object mappers
     }
 
+    /**
+     * Method for adding the activity to the activity list.
+     *
+     * @param activity - activity to be added to the list of activities.
+     */
     public void addActivity(Activity activity) {
         activityList.add(activity);
     }
 
+    /**
+     * Method responsible for setting the correct answer of the given question.
+     */
     public void setCorrectAnswer() {
         if (this.activityList.size() == 1) {
             correctAnswer = this.activityList.get(0).consumption_in_wh;
@@ -48,23 +41,43 @@ public class Question {
             correctAnswer = findRatio();
         } else if (this.activityList.size() == 3) {
             correctAnswer = findLargest(this.activityList);
-        } else {
-            System.out.println("ERROR");
         }
     }
 
+    /**
+     * Equals method checking if the provided object is equal to the question object.
+     *
+     * @param obj - object to be checked.
+     * @return - returns true if the objects are equal to each other.
+     */
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    /**
+     * Method generating the hashcode for the question object.
+     *
+     * @return - returns the integer representing the generated hashcode.
+     */
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    /**
+     * Method generating the string representation of the object question.
+     *
+     * @return - returns a string representation of the question object.
+     */
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
     }
 
+    /**
+     * Method for finding the largest value in the list of the activities.
+     *
+     * @param list - provided list of activities to find the largest value in.
+     * @return - returns the largest value found in the list.
+     */
     private int findLargest(List<Activity> list) {
         int index = -1;
         int maxValue = Integer.MIN_VALUE;
@@ -78,6 +91,11 @@ public class Question {
         return index + 1;
     }
 
+    /**
+     * Method responsible for finding the ratio.
+     *
+     * @return - returns the ratio.
+     */
     private int findRatio() {
         return (int) (Math.random() * 3 + 1);
     }

@@ -2,9 +2,13 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import jakarta.ws.rs.WebApplicationException;
+
 import commons.Score;
 import commons.User;
-import jakarta.ws.rs.WebApplicationException;
+
+import java.util.*;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -19,15 +23,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.util.Duration;
 
-import java.util.*;
-
 public class LeaderBoardCtrl {
 
     private final ServerUtils server;
     private final GameCtrl gameCtrl;
-    private Score first;
-    private Score second;
-    private Score third;
 
     @FXML
     private Text firstName;
@@ -64,6 +63,9 @@ public class LeaderBoardCtrl {
 
     Timeline bar;
 
+    /**
+     * List containing colors for the timer in the half-time leaderboard.
+     */
     List<Color> colorsForClockMultiPlayer = Arrays.asList(new Color(0, 0.3, 0.15, 1),
             new Color(0.28, 0.75, 0.33, 1),
             new Color(0.57, 0.94, 0.53, 1),
@@ -84,8 +86,8 @@ public class LeaderBoardCtrl {
     /**
      * Constructor for the Leader Board.
      *
-     * @param server
-     * @param mainCtrl
+     * @param server   - server provided for the current game.
+     * @param mainCtrl - game controller of the entire game for single or multiplayer mode.
      */
     @Inject
     public LeaderBoardCtrl(ServerUtils server, GameCtrl mainCtrl) {
@@ -102,8 +104,8 @@ public class LeaderBoardCtrl {
         try {
             if (gameCtrl.getMode() == 0) server.addScore(new Score(gameCtrl.username, gameCtrl.points));
             else {
-                for(User user : WaitingRoomCtrl.userList) {
-                    if(user.getUsername().equals(gameCtrl.username)) {
+                for (User user : WaitingRoomCtrl.userList) {
+                    if (user.getUsername().equals(gameCtrl.username)) {
                         user.setScore(gameCtrl.points);
                     }
                 }
@@ -216,7 +218,7 @@ public class LeaderBoardCtrl {
      * from the scoreList parameter and create a label for each one. All labels are added to the ranking list.
      * The user who is currently playing will see their own score in bold.
      *
-     * @param scoreList
+     * @param scoreList - the list of scores that needs to be displayed in the scroll pane.
      */
     private void uploadScoresIntoTheRanking(List<Score> scoreList) {
         VBox vbox = new VBox();
@@ -261,7 +263,7 @@ public class LeaderBoardCtrl {
             bar.setMaxHeight(6);
             bar.setPrefWidth(6);
             double ratio = (double) score.score / highestScore;
-            if(gameCtrl.round< 5)
+            if (gameCtrl.round < 5)
                 ratio = (double) score.score / 2000;
             double finalWidth = ratio * 317;
             bar.setPrefWidth(finalWidth);
@@ -278,11 +280,21 @@ public class LeaderBoardCtrl {
         leaderBoardScrollPane.setContent(vbox);
     }
 
+    /**
+     * Method responsible for finding the highest score in the list of scores provided.
+     *
+     * @param scoreList - input list containing scores to search for the highest one.
+     * @return - returns the highest score in the list.
+     */
     private int findHighestScore(List<Score> scoreList) {
-        int max = scoreList.stream().mapToInt(score -> score.score).max().orElse(Integer.MIN_VALUE);
-        return max;
+        return scoreList.stream().mapToInt(score -> score.score).max().orElse(Integer.MIN_VALUE);
     }
 
+    /**
+     * Method responsible for getting random color from the list of colors.
+     *
+     * @return - string representation of the random color taken from the list of colors.
+     */
     public String getRandomColor() {
         int random = (int) (Math.random() * colors.size() - 1);
         return colors.get(random);
@@ -294,7 +306,7 @@ public class LeaderBoardCtrl {
      */
     public void halfTimeLeaderBoard() {
         List<Score> scores = new ArrayList<>();
-        for(User u : WaitingRoomCtrl.userList) {
+        for (User u : WaitingRoomCtrl.userList) {
             scores.add(new Score(u.getUsername(), u.getScore()));
         }
         uploadScoresIntoTheRanking(scores);
@@ -310,6 +322,9 @@ public class LeaderBoardCtrl {
         playTimerMultiPlayer();
     }
 
+    /**
+     * Method that shows the correct timer for the half-time leaderboard.
+     */
     private void playTimerMultiPlayer() {
         nope.setStyle("-fx-accent: black;");
         double[] timer = {1};
@@ -352,6 +367,13 @@ public class LeaderBoardCtrl {
         bar.play();
     }
 
+    /**
+     * Method that's responsible for converting java color class into the string representation of the color
+     * in the hexadecimal system.
+     *
+     * @param color - provided color with java class color.
+     * @return - hexadecimal string number representation.
+     */
     public String translateColor(Color color) {
         return String.format("#%02X%02X%02X",
                 (int) (color.getRed() * 255),
@@ -367,7 +389,7 @@ public class LeaderBoardCtrl {
         splash.setVisible(true);
         splash.setManaged(true);
         backButton.setVisible(false);
-        if (SplashScreenCtrl.mode == 0){
+        if (SplashScreenCtrl.mode == 0) {
             leaderBoardScrollPane.setMinHeight(535);
             leaderBoardScrollPane.setMaxHeight(535);
             leaderBoardScrollPane.setPrefHeight(535);
@@ -388,7 +410,7 @@ public class LeaderBoardCtrl {
      * directed back to the Splash Screen.
      */
     public void backToSplash() {
-        if (SplashScreenCtrl.mode == 1){
+        if (SplashScreenCtrl.mode == 1) {
             gameCtrl.subscription.unsubscribe();
         }
         gameCtrl.points = 0;
@@ -412,7 +434,6 @@ public class LeaderBoardCtrl {
         } else {
             waitingRoom.setVisible(true);
             waitingRoom.setManaged(true);
-            //splash.setTranslateY(-94);
         }
     }
 

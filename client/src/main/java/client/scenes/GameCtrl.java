@@ -1,21 +1,7 @@
-/*
- * Copyright 2021 Delft University of Technology
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package client.scenes;
 
 import commons.Question;
+
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -85,11 +71,11 @@ public class GameCtrl {
      * The game starts in the Splash Screen, so we call showSplashScreen to make it visible
      * We show the Primary Stage.
      *
-     * @param primaryStage
-     * @param splash
-     * @param questionCtrl
-     * @param leaderBoardCtrl
-     * @param waitingRoomCtrl
+     * @param primaryStage    - main stage used for the application.
+     * @param splash          - splash screen controller provided for the constructor.
+     * @param questionCtrl    - question screen controller provided for the constructor.
+     * @param leaderBoardCtrl - leaderboard screen controller provided for the constructor.
+     * @param waitingRoomCtrl - waiting room screen controller provided for the constructor.
      */
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splash, Pair<QuestionCtrl, Parent> questionCtrl, Pair<LeaderBoardCtrl, Parent> leaderBoardCtrl, Pair<WaitingRoomCtrl, Parent> waitingRoomCtrl, Pair<AdminCtrl, Parent> adminCtrl) {
         this.primaryStage = primaryStage;
@@ -150,9 +136,9 @@ public class GameCtrl {
     }
 
     /**
-     * Get the mode of the game (single player/ multiplayer).
+     * Get the mode of the game (single player / multiplayer).
      *
-     * @return
+     * @return - returning integer indicating the mode of the game (single / multiplayer).
      */
     public int getMode() {
         return splashScreenCtrl.mode;
@@ -161,15 +147,17 @@ public class GameCtrl {
     /**
      * Set the mode of the game. If it's single player, it's 0, otherwise 1.
      *
-     * @param mode
+     * @param mode - setting the mode of the game to either single (0) or multiplayer (1).
      */
 
-    public void setMode(int mode) { splashScreenCtrl.mode = mode; }
+    public void setMode(int mode) {
+        splashScreenCtrl.mode = mode;
+    }
 
     /**
      * Setter for username.
      *
-     * @param username
+     * @param username - username provided for specific user in the game controller.
      */
     public void setUsername(String username) {
         this.username = username;
@@ -208,10 +196,10 @@ public class GameCtrl {
     }
 
     /**
-     * Setup for a question with three activities.
+     * Setup for a question with one activity.
      * The setOneActivity function is called.
      *
-     * @param question
+     * @param question - input question with the list of one activity.
      */
     public void oneActivityQuestion(Question question) {
         questionCtrl.startOneActivityQuestion(question);
@@ -224,15 +212,18 @@ public class GameCtrl {
         checkJokers(questionCtrl);
     }
 
+    /**
+     * Method refreshing the waiting room scroll pane in the waiting room controller class.
+     */
     public void refreshPlayers() {
         waitingRoomCtrl.refreshTable();
     }
 
     /**
-     * Setup for a question with three activities
+     * Setup for a question with two activities.
      * The setTwoActivities function is called.
      *
-     * @param question
+     * @param question - input question with the list of two activities.
      */
     public void twoActivityQuestion(Question question) {
         questionCtrl.startTwoActivityQuestion(question);
@@ -248,7 +239,7 @@ public class GameCtrl {
      * Setup for a question with three activities
      * The setThreeActivities function is called.
      *
-     * @param question
+     * @param question - input question with the list of three activities.
      */
     public void threeActivityQuestion(Question question) throws MalformedURLException {
         questionCtrl.startThreeActivityQuestion(question);
@@ -285,7 +276,7 @@ public class GameCtrl {
      * to the question screen and on the question controller, the setup function is called with
      * the question, which will set up the question properly.
      *
-     * @param question
+     * @param question - question provided for the multiplayer round, containing either 1, 2, or 3 activities.
      */
     public void startMultiPlayerQuestion(Question question) {
         questionCtrl.setupEmoji();
@@ -303,7 +294,6 @@ public class GameCtrl {
             questionCtrl.setUpMultiPlayerQuestion(question);
         }
         round++;
-        System.out.println("#########################" + round);
     }
 
     /**
@@ -326,16 +316,29 @@ public class GameCtrl {
         leaderBoardCtrl.backToWaitingRoomButton();
         leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
         primaryStage.setScene(leaderBoardScreen);
-        if (getMode() == 1) primaryStage.setTitle("LeaderBoard Screen - Multiplayer");
-        else primaryStage.setTitle("LeaderBoard Screen - Single player");
+        if (getMode() == 1) {
+            primaryStage.setTitle("LeaderBoard Screen - Multiplayer");
+            for (int i = 0; i < WaitingRoomCtrl.userList.size(); i++) {
+                if (WaitingRoomCtrl.userList.get(i).username.equals(username)) {
+                    WaitingRoomCtrl.userList.get(i).setScore(points);
+                    break;
+                }
+            }
+        } else primaryStage.setTitle("LeaderBoard Screen - Single player");
     }
 
     /**
      * The half-time Leader Board Scene is set, this is called during the Multiplayer game.
      */
-
     public void showHalfTimeLeaderBoard() {
-        leaderBoardCtrl.storePoints();;
+        for (int i = 0; i < WaitingRoomCtrl.userList.size(); i++) {
+            if (WaitingRoomCtrl.userList.get(i).username.equals(username)) {
+                WaitingRoomCtrl.userList.get(i).setScore(points);
+                break;
+            }
+        }
+
+        leaderBoardCtrl.storePoints();
         leaderBoardCtrl.setLeaderBoard();
         leaderBoardCtrl.setList();
         leaderBoardCtrl.halfTimeLeaderBoard();
@@ -354,16 +357,22 @@ public class GameCtrl {
      * This function will check if the jokers have been used by the user playing.
      * If a user has been used, then that joker will be disabled for the remaining of the game.
      *
-     * @param questionCtrl
+     * @param questionCtrl - provided question controller class to check jokers for.
      */
     public void checkJokers(QuestionCtrl questionCtrl) {
         if (firstJokerSinglePlayerUsed) questionCtrl.jokerOneSinglePlayer.setDisable(true);
         if (secondJokerSinglePlayerUsed) questionCtrl.jokerTwoSinglePlayer.setDisable(true);
     }
 
+    /**
+     * Method responsible for sending the accurate message to show the correct emoji for all
+     * multiplayer users.
+     *
+     * @param emojiNumber - number indicating which emoji was clicked.
+     * @param username    - username of the user who clicked certain emoji.
+     */
     public void showEmoji(int emojiNumber, String username) {
         switch (emojiNumber) {
-
             case (1):
                 questionCtrl.showEmojiOne(username);
                 break;
@@ -378,6 +387,10 @@ public class GameCtrl {
         }
     }
 
+    /**
+     * Method adding the admin screen to the main primary stage, that's responsible for allowing
+     * users to add and modify existing activities.
+     */
     public void showAdminScreen() {
         primaryStage.setTitle("Admin Screen");
         admin.getStylesheets().add("client.styles/AdminScreenStyle.css");
@@ -385,9 +398,13 @@ public class GameCtrl {
         adminCtrl.setTable();
     }
 
+    /**
+     * Method indicating which joker has been used by what user in the multiplayer game.
+     *
+     * @param username - username of the user who used certain joker.
+     * @param joker    - number indicating the joker user used.
+     */
     public void jokerUsed(String username, int joker) {
         questionCtrl.showUsedJoker(username, joker);
     }
-
-
 }

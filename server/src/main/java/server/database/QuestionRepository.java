@@ -17,16 +17,26 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface QuestionRepository extends JpaRepository<Activity, Long>{
+public interface QuestionRepository extends JpaRepository<Activity, Long> {
 
+    /**
+     * Query for getting one random activity from the database.
+     *
+     * @return - returns one random activity from the database.
+     */
     @Query(value = "SELECT * FROM Activity ORDER BY RAND() LIMIT 1", nativeQuery = true)
     List<Activity> getThreeRandom();
 
+    /**
+     * Query for deleting the activity table.
+     */
     @Query(value = "DROP TABLE ACTIVITY", nativeQuery = true)
     void dropTable();
 
+    /**
+     * Query for creating the activity table.
+     */
     @Query(value = "CREATE TABLE ACTIVITY (id varchar(255)), image_path varchar(255), title varchar(255), consumption_in_wh int, source varchar(255), consumption int", nativeQuery = true)
     void createTable();
-
 }
 

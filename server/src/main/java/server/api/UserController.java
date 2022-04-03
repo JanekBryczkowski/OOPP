@@ -15,6 +15,7 @@ import java.util.Locale;
 public class UserController {
 
     private final LobbyController lobbyController;
+
     private final SimpMessagingTemplate msgs;
 
     /**
@@ -37,8 +38,8 @@ public class UserController {
     @GetMapping("/isValidUsername/{username}")
     public boolean isValidUsername(@PathVariable("username") String username) {
         List<User> userList = lobbyController.openLobby.getUserList();
-        for(User user : userList)
-            if(user.username.toLowerCase(Locale.ROOT).equals(username))
+        for (User user : userList)
+            if (user.username.toLowerCase(Locale.ROOT).equals(username))
                 return false;
         return true;
     }
@@ -49,19 +50,23 @@ public class UserController {
      * @param user to add to the open lobby User List
      * @return user
      */
-    @PostMapping(path = { "", "/" })
+    @PostMapping(path = {"", "/"})
     public User postUserToOpenLobby(@RequestBody User user) {
-            lobbyController.getOpenLobby().addUser(user);
-            String destination = "/topic/question" + String.valueOf(lobbyController.currentLobbyNumber);
-            WebsocketMessage websocketMessage = new WebsocketMessage("NEWPLAYER");
-            msgs.convertAndSend(destination, websocketMessage);
-            return user;
+        lobbyController.getOpenLobby().addUser(user);
+        String destination = "/topic/question" + String.valueOf(lobbyController.currentLobbyNumber);
+        WebsocketMessage websocketMessage = new WebsocketMessage("NEWPLAYER");
+        msgs.convertAndSend(destination, websocketMessage);
+        return user;
     }
 
+    /**
+     * Method for updating the score of the specific user.
+     * @param user - user which we need to update the score for.
+     */
     @PostMapping("/updateScore")
     public void updateScore(@RequestBody User user) {
-        for(User u : lobbyController.getOpenLobby().getUserList()) {
-            if(u.getUsername().equals(user.getUsername())) {
+        for (User u : lobbyController.getOpenLobby().getUserList()) {
+            if (u.getUsername().equals(user.getUsername())) {
                 u.setScore(user.getScore());
             }
         }
@@ -76,7 +81,7 @@ public class UserController {
     @DeleteMapping("/removePlayer/{username}/{lobbyNumber}")
     public void removeUser(@PathVariable("username") String username, @PathVariable int lobbyNumber) {
         Lobby lobby = (Lobby) lobbyController.getAllLobbies().
-                stream().filter(x -> x.lobbyNumber==lobbyNumber);
+                stream().filter(x -> x.lobbyNumber == lobbyNumber);
         lobby.getUserList().removeIf(user -> user.getUsername().equals(username));
     }
 
@@ -92,18 +97,20 @@ public class UserController {
 
     /**
      * Gets the list of users associated to this lobby number.
+     *
      * @param lobbyNumber The Lobby we are looking for
      * @return The list of users playing in this lobby
      */
     @GetMapping("/lobby/{lobbyNumber}")
     public List<User> getUsersOfLobby(@PathVariable int lobbyNumber) {
-        for(Lobby lobby : lobbyController.getAllLobbies()) {
-            if(lobby.lobbyNumber == lobbyNumber) {
+        for (Lobby lobby : lobbyController.getAllLobbies()) {
+            if (lobby.lobbyNumber == lobbyNumber) {
                 return lobby.getUserList();
             }
         }
         return null;
     }
+
     /**
      * Get mapping used to fetch all the lobbies that have been created.
      *
@@ -113,5 +120,4 @@ public class UserController {
     public List<Lobby> getAllLobbies() {
         return (List<Lobby>) lobbyController.getAllLobbies();
     }
-
 }
