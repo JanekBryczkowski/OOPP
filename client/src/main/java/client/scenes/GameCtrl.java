@@ -67,7 +67,7 @@ public class GameCtrl {
     public boolean secondJokerMultiPlayerUsed = false;
     public boolean thirdJokerMultiPlayerUsed = false;
 
-    private final int ROUNDS = 2;
+    private final int ROUNDS = 20;
 
     public StompSession.Subscription subscription = null;
     public boolean multiplayer;
@@ -78,7 +78,7 @@ public class GameCtrl {
      * This is for the multiplayer game, since there is a half-time Leaderboard set in the 11th round,
      * we need 21 rounds all together.
      */
-    public final int MULTIROUNDS = 5;
+    public final int MULTIROUNDS = 21;
 
     /**
      * Initializes all the controllers and all the scenes that are used throughout the game.

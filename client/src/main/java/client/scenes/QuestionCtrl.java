@@ -45,7 +45,7 @@ public class QuestionCtrl {
     Timer myTimer = new Timer();
     TimerTask task;
 
-    private final int ROUNDS = 2;
+    private final int ROUNDS = 20;
 
     private boolean emojiOneCurrentlyBeingChanged = false;
     private boolean emojiTwoCurrentlyBeingChanged = false;

@@ -45,7 +45,7 @@ public class LobbyController {
      */
     public List<Lobby> getAllLobbies() {
         List<Lobby> lobbyList = new ArrayList<>();
-        for(Lobby lobby : this.lobbyList)
+        for (Lobby lobby : this.lobbyList)
             lobbyList.add(lobby);
         lobbyList.add(openLobby);
         return lobbyList;
@@ -80,14 +80,17 @@ public class LobbyController {
             @Override
             public void run() {
                 secondsPassed[0]--;
-                if(secondsPassed[0] == 0) {
-                    if(currentRound == 3) {
+                if (secondsPassed[0] == 0) {
+                    /*if(currentRound == 11) {
                         showLeaderBoard(destination, lobby);
-                    } else if (currentRound == 6) {
+                    } else if (currentRound == 21) {
                         myTimer.cancel();
                         showLeaderBoard(destination, lobby);
-                    } else {
+                    } else*/
+                    if (currentRound < 20) {
                         instantiateMultiGame(lobby);
+                    } else {
+                        showLeaderBoard(destination, lobby);
                     }
                 }
             }
@@ -95,7 +98,7 @@ public class LobbyController {
 
         generateAndSendQuestion(destination);
 
-        myTimer.scheduleAtFixedRate(task, 1000,1000);
+        myTimer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
     /**
@@ -110,7 +113,7 @@ public class LobbyController {
 
         msgs.convertAndSend(destination, websocketMessage);
 
-        if(!(lobby.roundNumber == 6)) {
+        if (!(lobby.roundNumber == 6)) {
             int[] secondsPassed = {15};
             Timer myTimer = new Timer();
 
@@ -124,7 +127,7 @@ public class LobbyController {
                 }
 
             };
-            myTimer.scheduleAtFixedRate(task, 1000,1000);
+            myTimer.scheduleAtFixedRate(task, 1000, 1000);
         }
     }
 
