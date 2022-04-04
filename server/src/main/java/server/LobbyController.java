@@ -77,7 +77,7 @@ public class LobbyController {
     /**
      * This function gets called whenever one player in the lobby clicks on PLAY.
      * The current lobby gets added to the lobby list and a new current lobby is created.
-     * The functions cals instantiateMultiGame in which a multiplayer game gets started.
+     * The function calls instantiateMultiGame in which a multiplayer game gets started.
      */
     public void startGame() {
         Lobby playingLobby = openLobby;
@@ -151,7 +151,7 @@ public class LobbyController {
 
 
     /**
-     * In this function a question gets generated and send to the given destination.
+     * In this function a question gets generated and sent to the given destination.
      */
     public void generateAndSendQuestion(String destination) {
         Question question = questionController.getActivities();

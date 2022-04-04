@@ -86,7 +86,7 @@ public class LeaderBoardCtrl {
     /**
      * Constructor for the Leader Board.
      *
-     * @param server   - server provided for the current game.
+     * @param server - server provided for the current game.
      * @param mainCtrl - game controller of the entire game for single or multiplayer mode.
      */
     @Inject

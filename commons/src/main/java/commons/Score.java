@@ -33,7 +33,7 @@ public class Score {
      * Constructor for the Score object.
      *
      * @param username - username of the user who has a score.
-     * @param score    - score of the user.
+     * @param score - score of the user.
      */
     public Score(String username, int score) {
         this.username = username;

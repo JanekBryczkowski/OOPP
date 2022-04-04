@@ -35,8 +35,8 @@ public class User {
     /**
      * Constructor for the user object.
      *
-     * @param username    - username of the user.
-     * @param score       - score of the user.
+     * @param username - username of the user.
+     * @param score - score of the user.
      * @param lobbyNumber - lobby number of the user.
      */
     public User(String username, int score, int lobbyNumber) {

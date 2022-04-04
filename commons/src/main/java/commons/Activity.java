@@ -36,12 +36,12 @@ public class Activity {
     /**
      * Constructor for the activity object.
      *
-     * @param id                - id of the activity.
-     * @param image_path        - image path for the activity.
-     * @param title             - title of the activity.
-     * @param consumption_in_wh - consumption in watt hours of the activity.
-     * @param source            - internet source for the activity.
-     * @param consumption       - consumption of the activity.
+     * @param id - id of the activity.
+     * @param image_path - image path for the activity.
+     * @param title - title of the activity.
+     * @param consumption_in_wh - energy consumption of the activity in watt hours.
+     * @param source - internet source of the activity.
+     * @param consumption - consumption of the activity.
      */
     public Activity(String id, String image_path, String title, int consumption_in_wh, String source, int consumption) {
         this.id = id;
@@ -64,7 +64,7 @@ public class Activity {
     /**
      * Getter of the title.
      *
-     * @return + string title.
+     * @return - string title.
      */
     public String getTitle() {
         return this.title;

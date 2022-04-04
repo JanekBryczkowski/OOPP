@@ -206,7 +206,7 @@ public class QuestionCtrl {
     /**
      * Constructor for QuestionCtrl and instantiation of the server and the gameCtrl.
      *
-     * @param server   - server provided for the game.
+     * @param server - server provided for the game.
      * @param gameCtrl - game controller provided for the game that is either single or multiplayer.
      */
     @Inject
@@ -412,7 +412,7 @@ public class QuestionCtrl {
      * showing the half-time Leaderboard.
      * A question is given as input and this question is displayed on the screen.
      *
-     * @param question is the question that will be set up in the Scene.
+     * @param question - the question that will be set up in the Scene.
      */
     public void startThreeActivityQuestion(Question question) {
         nameText.setText("Name: " + gameCtrl.username);
@@ -492,7 +492,7 @@ public class QuestionCtrl {
      * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
      * showing the half-time Leaderboard.
      *
-     * @param question : A question is given as input and this question is displayed on the screen.
+     * @param question - a question is given as input and this question is displayed on the screen.
      */
     public void startTwoActivityQuestion(Question question) {
         nameText.setText("Name: " + gameCtrl.username);
@@ -579,7 +579,7 @@ public class QuestionCtrl {
      * question title to the title of the first activity. This needs to be changed so that it checks how long
      * the question is. This function will also have to instantiate a timer.
      *
-     * @param question given as input and this question is displayed on the screen.
+     * @param question - given as input and this question is displayed on the screen.
      */
     public void setUpMultiPlayerQuestion(Question question) {
         System.out.println("MP question size" + question.activityList.size());
@@ -652,7 +652,7 @@ public class QuestionCtrl {
      * The function is counting the rounds, and if it's in multiplayer mode it subtracts one, because for one round it's
      * showing the half-time Leaderboard.
      *
-     * @param question given as input and this question is displayed on the screen.
+     * @param question - given as input and this question is displayed on the screen.
      */
     public void startOneActivityQuestion(Question question) {
         nameText.setText("Name: " + gameCtrl.username);
@@ -724,8 +724,8 @@ public class QuestionCtrl {
     /**
      * Correct format of a number as an int.
      *
-     * @param number that will be formatted.
-     * @return String of formatted number.
+     * @param number - that will be formatted.
+     * @return String - formatted number in String form.
      */
     private String formatNumber(int number) {
         NumberFormat myFormat = NumberFormat.getInstance();
@@ -736,8 +736,8 @@ public class QuestionCtrl {
     /**
      * Correct format of a number as a String.
      *
-     * @param number that will be formatted.
-     * @return String of correctly formatted number.
+     * @param number - that will be formatted.
+     * @return String - formatted number in String form.
      */
     private String formatNumberString(String number) {
         if (number.equals("")) return "";
@@ -971,8 +971,8 @@ public class QuestionCtrl {
     /**
      * Formats numbers so that large numbers do contain ',' every 3 integers from the right.
      *
-     * @param number as a String.
-     * @return a number.
+     * @param number - number in String form.
+     * @return int - the actual number.
      */
     public int formatNumberBack(String number) {
         if (number.equals("")) return 0;
@@ -1374,7 +1374,7 @@ public class QuestionCtrl {
      * a certain moment.
      *
      * @param username - username of the user who used certain joker.
-     * @param joker    - integer indicating the joker number used by a certain user.
+     * @param joker - integer indicating the joker number used by a certain user.
      */
     public void showUsedJoker(String username, int joker) {
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2.2));

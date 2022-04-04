@@ -30,9 +30,9 @@ public class MyFXML {
     /**
      * Loading generic method for the loading pair of scenes and it's controllers
      *
-     * @param c     - class that has to be loaded.
+     * @param c - class that has to be loaded.
      * @param parts - parts of the URL to get to the correct file.
-     * @param <T>   - generic type.
+     * @param <T> - generic type.
      * @return - returns the generic type of the thing used in the function.
      */
     public <T> Pair<T, Parent> load(Class<T> c, String... parts) {

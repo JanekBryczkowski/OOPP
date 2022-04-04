@@ -13,6 +13,12 @@ public class ActivityTest {
     }
 
     @Test
+    public void idTest() {
+        Activity activity = new Activity("abc", "abc", "abc", 123, "abc", 123);
+        assertEquals("abc", activity.id);
+    }
+
+    @Test
     public void titleTest() {
         Activity activity = new Activity("abc", "abc", "abc", 123, "abc", 123);
         assertEquals("abc", activity.title);
@@ -22,6 +28,12 @@ public class ActivityTest {
     public void consumptionTest() {
         Activity activity = new Activity("abc", "abc", "abc", 123, "abc", 123);
         assertEquals(123, activity.consumption);
+    }
+
+    @Test
+    public void getIdTest() {
+        Activity activity = new Activity("abc", "abc", "abc", 123, "abc", 123);
+        assertEquals("abc", activity.getId());
     }
 
     @Test
@@ -50,6 +62,14 @@ public class ActivityTest {
         Activity a = new Activity("adefbc", "abc", "abc", 123, "abc", 123);
         assertNotEquals(a, b);
         assertNotEquals(a.hashCode(), b.hashCode());
+    }
+
+    @Test
+    public void hasToString() {
+        String actual = new Activity("abc", "abc", "abc", 123, "abc", 123).toString();
+        assertTrue(actual.contains(Activity.class.getTypeName()));
+        assertTrue(actual.contains("a"));
+        assertTrue(actual.contains("2"));
     }
 
 

@@ -37,7 +37,7 @@ public class WaitingRoomCtrl {
      * Constructor for the WaitingRoomCtrl. We also initialize the gameCtrl, and text number of because these
      * scenes will be set from this class.
      *
-     * @param server   - specific server provided for the game.
+     * @param server - specific server provided for the game.
      * @param mainCtrl - game controller for the game inside the constructor class.
      * @param numberOf - text indicating the number of users that are currently in the lobby of the game.
      */

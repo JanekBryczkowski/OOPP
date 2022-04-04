@@ -53,8 +53,6 @@ public class GameCtrl {
     public boolean secondJokerMultiPlayerUsed = false;
     public boolean thirdJokerMultiPlayerUsed = false;
 
-    private final int ROUNDS = 20;
-
     public StompSession.Subscription subscription = null;
     public boolean multiplayer;
 
@@ -66,14 +64,16 @@ public class GameCtrl {
      */
     public final int MULTIROUNDS = 21;
 
+    private final int ROUNDS = 20;
+
     /**
      * Initializes all the controllers and all the scenes that are used throughout the game.
      * The game starts in the Splash Screen, so we call showSplashScreen to make it visible
      * We show the Primary Stage.
      *
-     * @param primaryStage    - main stage used for the application.
-     * @param splash          - splash screen controller provided for the constructor.
-     * @param questionCtrl    - question screen controller provided for the constructor.
+     * @param primaryStage - main stage used for the application.
+     * @param splash - splash screen controller provided for the constructor.
+     * @param questionCtrl - question screen controller provided for the constructor.
      * @param leaderBoardCtrl - leaderboard screen controller provided for the constructor.
      * @param waitingRoomCtrl - waiting room screen controller provided for the constructor.
      */
@@ -138,7 +138,7 @@ public class GameCtrl {
     /**
      * Get the mode of the game (single player / multiplayer).
      *
-     * @return - returning integer indicating the mode of the game (single / multiplayer).
+     * @return - returning integer indicating the mode of the game (single player / multiplayer).
      */
     public int getMode() {
         return splashScreenCtrl.mode;
@@ -149,7 +149,6 @@ public class GameCtrl {
      *
      * @param mode - setting the mode of the game to either single (0) or multiplayer (1).
      */
-
     public void setMode(int mode) {
         splashScreenCtrl.mode = mode;
     }
@@ -213,7 +212,7 @@ public class GameCtrl {
     }
 
     /**
-     * Method refreshing the waiting room scroll pane in the waiting room controller class.
+     * Method for refreshing the waiting room scroll pane in the waiting room controller class.
      */
     public void refreshPlayers() {
         waitingRoomCtrl.refreshTable();
@@ -369,7 +368,7 @@ public class GameCtrl {
      * multiplayer users.
      *
      * @param emojiNumber - number indicating which emoji was clicked.
-     * @param username    - username of the user who clicked certain emoji.
+     * @param username - username of the user who clicked certain emoji.
      */
     public void showEmoji(int emojiNumber, String username) {
         switch (emojiNumber) {
@@ -402,7 +401,7 @@ public class GameCtrl {
      * Method indicating which joker has been used by what user in the multiplayer game.
      *
      * @param username - username of the user who used certain joker.
-     * @param joker    - number indicating the joker user used.
+     * @param joker - number indicating the joker user used.
      */
     public void jokerUsed(String username, int joker) {
         questionCtrl.showUsedJoker(username, joker);

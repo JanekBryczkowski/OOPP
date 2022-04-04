@@ -76,7 +76,7 @@ public class SplashScreenCtrl {
      * Constructor for the SplashScreenCtrl. We also initialize the gameCtrl and questionCtrl because these
      * scenes will be set from this class.
      *
-     * @param server   - server provided for the game either single or multiplayer.
+     * @param server - server provided for the game either single or multiplayer.
      * @param gameCtrl - game controller for the specific game int the constructor.
      */
     @Inject
@@ -119,7 +119,7 @@ public class SplashScreenCtrl {
      * This function gets called whenever a player presses join to start a multiplayer game.
      * First a User is made and this user gets send to the server. The server will add this user to the
      * current lobby.
-     * <p>
+     *
      * Then, the user GETs the number of the current open lobby. With this number, the player registers
      * for the web socket channel of that lobby. Everytime the player receives a question from this channel,
      * the startMultiPlayerQuestion function in the gameCtrl is called and the question gets past. In this
@@ -228,7 +228,7 @@ public class SplashScreenCtrl {
     /**
      * This will get a random question from the Activity database
      *
-     * @return random question from the serverUtils.
+     * @return question - a random question from the ServerUtils.
      */
     public Question getRandomQuestion() {
         return server.getQuestion();
