@@ -26,19 +26,26 @@ public class WaitingRoomCtrl {
      * This List of users will store the users playing throughout the game.
      */
     public static List<User> userList = new ArrayList<>();
+
     @FXML
     private Text numberOf;
 
     @FXML
     private ScrollPane waitingScroll;
 
-
+    /**
+     * Constructor for the WaitingRoomCtrl. We also initialize the gameCtrl, and text number of because these
+     * scenes will be set from this class.
+     *
+     * @param server   - specific server provided for the game.
+     * @param mainCtrl - game controller for the game inside the constructor class.
+     * @param numberOf - text indicating the number of users that are currently in the lobby of the game.
+     */
     @Inject
     public WaitingRoomCtrl(ServerUtils server, GameCtrl mainCtrl, Text numberOf) {
         this.mainCtrl = mainCtrl;
         this.server = server;
         this.numberOf = numberOf;
-
     }
 
     /**
@@ -50,17 +57,19 @@ public class WaitingRoomCtrl {
         server.startGame();
     }
 
-    //IMPORTANT NOTATION
-    //When fixing the table in the waiting room
-    //make sure to implement to this method the removal of the player
-    //from the table when pressing the back button
-
+    /**
+     * The functionality for the back button to go back to the splash screen.
+     */
     public void backButton() {
         server.removeUser(mainCtrl.username, server.getCurrentLobby());
         mainCtrl.showSplashScreen();
         mainCtrl.subscription.unsubscribe();
     }
 
+    /**
+     * Method responsible for setting the list of users in the waiting room scroll pane,
+     * as well as the number of players currently waiting in the lobby.
+     */
     public void setWaitingRoomTable() {
         userList = new ArrayList<>();
         userList.addAll(server.getUsersInLobby());
@@ -73,11 +82,17 @@ public class WaitingRoomCtrl {
         showInWaitingRoomTable();
     }
 
+    /**
+     * Method responsible for automatically refreshing the waiting room table.
+     */
     public void refreshTable() {
-            userList.clear();
-            setWaitingRoomTable();
+        userList.clear();
+        setWaitingRoomTable();
     }
 
+    /**
+     * Method responsible for setting the list of users in the waiting room scroll pane.
+     */
     public void showInWaitingRoomTable() {
         VBox vbox = new VBox();
         for (User user : userList) {
@@ -106,10 +121,15 @@ public class WaitingRoomCtrl {
         waitingScroll.setContent(vbox);
     }
 
+    /**
+     * Method responsible for doing the same thing as the JOIN button in splash screen,
+     * when ENTER is clocked.
+     *
+     * @param event - keyboard event when ENTER is clicked.
+     */
     @FXML
     void keyPressed(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
-            System.out.println("Chicken");
             play();
         }
     }

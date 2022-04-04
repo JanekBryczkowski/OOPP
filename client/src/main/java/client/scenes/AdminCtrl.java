@@ -8,7 +8,6 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +20,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class AdminCtrl {
 
     private final ServerUtils server;
@@ -31,21 +29,24 @@ public class AdminCtrl {
 
     @FXML
     private ScrollPane scroll;
+
     @FXML
     private TextField idText;
+
     @FXML
     private TextField activityText;
+
     @FXML
     private TextField consumptionText;
+
     @FXML
     private Text alert;
 
-
-
     /**
      * Connecting the page with the server and the GameCtrl.
-     * @param server
-     * @param gameCtrl
+     *
+     * @param server   - server provided for the AdminCtrl class.
+     * @param gameCtrl - main game controller class for the game.
      */
     @Inject
     public AdminCtrl(ServerUtils server, GameCtrl gameCtrl) {
@@ -57,14 +58,17 @@ public class AdminCtrl {
      * Adds all the activities to the table and calls the function showAllActivities.
      */
     public void setTable() {
-        System.out.println("xd");
+        idText.setText("");
+        activityText.setText("");
+        consumptionText.setText("");
         activityList.addAll(server.showAll());
         showAllActivities(activityList);
     }
 
     /**
      * Sets the table where all the activities are going to appear in the AdminScreen.
-     * @param activityList
+     *
+     * @param activityList - input variable for the scroll pane in the admin screen.
      */
     public void showAllActivities(List<Activity> activityList) {
         VBox vbox = new VBox();
@@ -121,7 +125,9 @@ public class AdminCtrl {
         scroll.setContent(vbox);
     }
 
-    //Giving the option to the Admin to edit an activity by entering its id.
+    /**
+     * Method editing the existing activity in the database, when appropriate fields are provided.
+     */
     public void editActivity() {
         if (idText.getText() == null || idText.getText().equals("")) {
             alert.setFill(Color.RED);
@@ -164,56 +170,19 @@ public class AdminCtrl {
                     });
                 }
             }
-            /*Activity activity = server.getByID("38-coffee");
-            System.out.println(activity);
-            System.out.println("activity created");
-            server.deleteQuestion(idText.getText());
-            System.out.println("activity deleted");*/
-//        boolean done = false;
-//        for (Activity act : activityList) {
-//            if (idText.getText().equals(act.getId())) {
-//                Activity activity = act;
-//                server.deleteQuestion(act.getId());
-//                done = true;
-//            }
-//            if (done) {
-//                break;
-//            }
-//        }
         }
-
     }
 
+    /**
+     * Method changing screen to the splash screen, when the back button is pressed.
+     */
     public void backToSplash() {
         gameCtrl.showSplashScreen();
     }
 
-    public void deleteActivity() {
-        if (idText.getText().equals("") || idText.getText() == null) {
-            alert.setFill(Color.RED);
-            alert.setText("Input ID of the activity");
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-            pauseTransition.play();
-            pauseTransition.setOnFinished(event -> {
-                alert.setText("");
-            });
-        } else {
-            for (Activity activity : activityList) {
-                if (activity.getId().equals(idText.getText())) {
-                    server.deleteQuestion(activity.getId());
-                    System.out.println(activity.getId());
-                    alert.setFill(Color.GREEN);
-                    alert.setText("Activity deleted");
-                    PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-                    pauseTransition.play();
-                    pauseTransition.setOnFinished(event -> {
-                        alert.setText("");
-                    });
-                }
-            }
-        }
-    }
-
+    /**
+     * Method adding new activity in the database, when appropriate fields are provided.
+     */
     public void addActivity() {
         if (idText.getText() == null || idText.getText().equals("")) {
             alert.setFill(Color.RED);
@@ -243,6 +212,4 @@ public class AdminCtrl {
             });
         }
     }
-
-
 }

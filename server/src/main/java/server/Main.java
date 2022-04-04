@@ -33,35 +33,42 @@ import java.io.InputStream;
 import java.util.List;
 
 @SpringBootApplication
-@EntityScan(basePackages = { "commons", "server" })
+@EntityScan(basePackages = {"commons", "server"})
 public class Main {
 
+    /**
+     * Main method for the server side.
+     *
+     * @param args - parameters of the main method.
+     */
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
 
+    /**
+     * Runner method
+     *
+     * @param questionRepository - specifying the question repository.
+     * @return - returns a command line runner.
+     */
     @Bean
     CommandLineRunner runner(QuestionController questionRepository) {
         return args -> {
-            // read json and write to db
-//            questionRepository.dropTable();
 
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-            TypeReference<List<Activity>> typeReference = new TypeReference<List<Activity>>(){};
-//            InputStream inputStream = TypeReference.class.getResourceAsStream("server/src/main/java/server/activities.json");
+            TypeReference<List<Activity>> typeReference = new TypeReference<List<Activity>>() {
+            };
             InputStream inputStream = new FileInputStream(new File("server/src/main/java/server/activities.json"));
             try {
-                List<Activity> users = mapper.readValue(inputStream,typeReference);
-                questionRepository.save((List<Activity>)users);
+                List<Activity> users = mapper.readValue(inputStream, typeReference);
+                questionRepository.save((List<Activity>) users);
                 System.out.println("Users Saved!");
-            } catch (IOException e){
+            } catch (IOException e) {
                 System.out.println("Unable to save users: " + e.getMessage());
             }
         };
     }
-
-
 }

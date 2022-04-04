@@ -16,8 +16,16 @@ import java.util.List;
 public class QuestionController {
 
     private final QuestionRepository repo;
+
     private SimpMessagingTemplate msgs;
 
+    /**
+     * Constructor for the question controller class
+     *
+     * @param mainGame - game controller class
+     * @param repo     - repository.
+     * @param msgs     - messaging template.
+     */
     public QuestionController(Main mainGame, QuestionRepository repo, SimpMessagingTemplate msgs) {
         this.repo = repo;
         this.msgs = msgs;
@@ -28,8 +36,8 @@ public class QuestionController {
      * This function gets called at the start of running
      * the server to store every activity from the json file.
      *
-     * @param   activities a list of activities to store in the database.
-     * @return  A iterable list of all activities in the database.
+     * @param activities a list of activities to store in the database.
+     * @return A iterable list of all activities in the database.
      */
     public Iterable<Activity> save(List<Activity> activities) {
         return repo.saveAll(activities);
@@ -39,7 +47,7 @@ public class QuestionController {
      * This functions gets called to see all the activities
      * that are present in the database.
      *
-     * @return  A list of all activities in the database.
+     * @return A list of all activities in the database.
      */
     @GetMapping("/")
     public List<Activity> getAllActivities() {
@@ -50,7 +58,7 @@ public class QuestionController {
      * This functions gets called whenever a client needs a question
      * in a solo player game.
      *
-     * @return  A random question with 1,2 or 3 activities
+     * @return A random question with 1,2 or 3 activities
      */
     @GetMapping("/getQuestion")
     public Question getActivities() {
@@ -64,15 +72,15 @@ public class QuestionController {
             List<Activity> random2 = repo.getThreeRandom();
             int secondConsumption = random2.get(0).consumption;
             do {
-                if (firstConsumption  > 10 * secondConsumption
-                        || secondConsumption  > 10 * firstConsumption) {
+                if (firstConsumption > 10 * secondConsumption
+                        || secondConsumption > 10 * firstConsumption) {
                     currentList.addAll(random2);
                     break;
                 } else {
                     random2 = repo.getThreeRandom();
                     secondConsumption = random2.get(0).consumption;
                 }
-            } while (firstConsumption  < 10 * secondConsumption
+            } while (firstConsumption < 10 * secondConsumption
                     && secondConsumption < firstConsumption * 10);
         } else {
             while (counter > 0) {
@@ -92,8 +100,8 @@ public class QuestionController {
      * The function does not get called by the client but can be used
      * for debugging through the localhost.
      *
-     * @param id    The id of the question.
-     * @return      The requested question.
+     * @param id The id of the question.
+     * @return The requested question.
      */
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getById(@PathVariable("id") long id) {
@@ -103,12 +111,23 @@ public class QuestionController {
         return ResponseEntity.ok(repo.getById(id));
     }
 
+    /**
+     * Method indicating whether it's null or not.
+     *
+     * @param s - parameter to be checked.
+     * @return - returns true if it's null.
+     */
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
     }
 
 
-
+    /**
+     * Adding question to the repository database.
+     *
+     * @param activity - activity to be added.
+     * @return - response after the method.
+     */
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Activity> add(@RequestBody Activity activity) {
 
@@ -123,11 +142,10 @@ public class QuestionController {
     /**
      * This mapping is for deleting an activity from the database
      *
-     * @param id    The id of the activity that needs to be deleted
+     * @param id The id of the activity that needs to be deleted
      */
     @DeleteMapping("/{id}")
     public void deleteQuestion(@PathVariable("id") long id) {
         repo.deleteById(id);
     }
-
 }

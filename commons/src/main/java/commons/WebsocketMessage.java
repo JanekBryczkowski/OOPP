@@ -6,13 +6,13 @@ public class WebsocketMessage {
 
     /**
      * The typOfMessage could have the following values:
-     *      QUESTION    Whenever a question gets send
-     *      EMOJIONE    Whenever someone has clicked on emoji one
-     *      EMOJITWO    Whenever someone has clicked on emoji two
-     *      EMOJITHREE  Whenever someone has clicked on emoji three
-     *      LEADERBOARD Whenever it is time to show the leaderboard
-     *      JOKERTHREE  Whenever someone has pressed joker three
-     *      JOKERUSED   Whenever another player uses a joker
+     * QUESTION    Whenever a question gets send
+     * EMOJIONE    Whenever someone has clicked on emoji one
+     * EMOJITWO    Whenever someone has clicked on emoji two
+     * EMOJITHREE  Whenever someone has clicked on emoji three
+     * LEADERBOARD Whenever it is time to show the leaderboard
+     * JOKERTHREE  Whenever someone has pressed joker three
+     * JOKERUSED   Whenever another player uses a joker
      */
     public String typeOfMessage;
     public Question question;
@@ -20,24 +20,46 @@ public class WebsocketMessage {
     public List<User> userList;
     public int jokerUsed;
 
+    /**
+     * Empty constructor for the web socket message.
+     */
     public WebsocketMessage() {
 
     }
 
+    /**
+     * Constructor for the web socket message.
+     *
+     * @param typeOfMessage - string representing the type of the web socket message.
+     */
     public WebsocketMessage(String typeOfMessage) {
         this.typeOfMessage = typeOfMessage;
     }
 
+    /**
+     * Setter of the question.
+     *
+     * @param question - question to be set to the object.
+     */
     public void setQuestion(Question question) {
         this.question = question;
     }
 
+    /**
+     * Setter of the emoji username.
+     *
+     * @param emojiUsername - string indicating which emoji has been used.
+     */
     public void setEmojiUsername(String emojiUsername) {
         this.emojiUsername = emojiUsername;
     }
 
+    /**
+     * Setter for the list of users.
+     *
+     * @param userList - user list that needs to be set.
+     */
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
-
 }

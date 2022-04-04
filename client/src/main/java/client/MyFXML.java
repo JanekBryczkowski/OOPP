@@ -1,18 +1,3 @@
-/*
- * Copyright 2021 Delft University of Technology
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package client;
 
 import java.io.IOException;
@@ -33,10 +18,23 @@ public class MyFXML {
 
     private Injector injector;
 
+    /**
+     * FXML injection constructor
+     *
+     * @param injector - injector parameter.
+     */
     public MyFXML(Injector injector) {
         this.injector = injector;
     }
 
+    /**
+     * Loading generic method for the loading pair of scenes and it's controllers
+     *
+     * @param c     - class that has to be loaded.
+     * @param parts - parts of the URL to get to the correct file.
+     * @param <T>   - generic type.
+     * @return - returns the generic type of the thing used in the function.
+     */
     public <T> Pair<T, Parent> load(Class<T> c, String... parts) {
         try {
             var loader = new FXMLLoader(getLocation(parts), null, null, new MyFactory(), StandardCharsets.UTF_8);
@@ -48,6 +46,12 @@ public class MyFXML {
         }
     }
 
+    /**
+     * Method responsible for getting the location of the file with specific parts provided.
+     *
+     * @param parts - parts provided in the load method.
+     * @return - returns an URL that is composed.
+     */
     private URL getLocation(String... parts) {
         var path = Path.of("", parts).toString();
         return MyFXML.class.getClassLoader().getResource(path);
@@ -55,10 +59,20 @@ public class MyFXML {
 
     private class MyFactory implements BuilderFactory, Callback<Class<?>, Object> {
 
+        /**
+         * Getter for the builder thing.
+         *
+         * @param type - type of the builder.
+         * @return - returns a builder.
+         */
         @Override
         @SuppressWarnings("rawtypes")
         public Builder<?> getBuilder(Class<?> type) {
             return new Builder() {
+                /**
+                 * Build method for the specific injector.
+                 * @return - returns an object of injector type.
+                 */
                 @Override
                 public Object build() {
                     return injector.getInstance(type);
@@ -66,6 +80,11 @@ public class MyFXML {
             };
         }
 
+        /**
+         * Call method for the specific injector.
+         *
+         * @return - returns an object of injector type.
+         */
         @Override
         public Object call(Class<?> type) {
             return injector.getInstance(type);

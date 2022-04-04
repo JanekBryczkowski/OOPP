@@ -1,18 +1,3 @@
-/*
- * Copyright 2021 Delft University of Technology
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package commons;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
@@ -34,46 +19,94 @@ public class User {
     public long id;
 
     public String username;
+
     public int score;
+
     public int lobbyNumber;
 
+    /**
+     * Empty constructor for the user object.
+     */
     @SuppressWarnings("unused")
     private User() {
-        // for object mappers
+
     }
 
+    /**
+     * Constructor for the user object.
+     *
+     * @param username    - username of the user.
+     * @param score       - score of the user.
+     * @param lobbyNumber - lobby number of the user.
+     */
     public User(String username, int score, int lobbyNumber) {
         this.username = username;
         this.score = score;
         this.lobbyNumber = lobbyNumber;
     }
 
+    /**
+     * Getter for the username.
+     *
+     * @return - returns a string username.
+     */
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     * Getter for the score.
+     *
+     * @return - returns int score.
+     */
     public int getScore() {
         return this.score;
     }
 
+    /**
+     * Getter for the lobby number.
+     *
+     * @return - returns int lobby number.
+     */
     public int getLobbyNumber() {
         return this.lobbyNumber;
     }
 
+    /**
+     * Setter for the score.
+     *
+     * @param score - score to be set.
+     */
     public void setScore(int score) {
         this.score = this.score + score;
     }
 
+    /**
+     * Equals method checking if the provided object is equal to the user object.
+     *
+     * @param obj - object to be checked.
+     * @return - returns true if the objects are equal to each other.
+     */
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    /**
+     * Method generating the hashcode for the user object.
+     *
+     * @return - returns the integer representing the generated hashcode.
+     */
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    /**
+     * Method generating the string representation of the object user.
+     *
+     * @return - returns a string representation of the user object.
+     */
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
