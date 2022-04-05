@@ -138,6 +138,7 @@ public class SplashScreenCtrl {
                 switch (q.typeOfMessage) {
                     case "QUESTION":
                         System.out.println("CLIENT RECEIVED QUESTION OVER WEBSOCKET");
+                        server.updateScore(new User(gameCtrl.username, gameCtrl.points, gameCtrl.joinedLobby));
                         gameCtrl.startMultiPlayerQuestion(q.question);
                         break;
                     case "EMOJIONE":

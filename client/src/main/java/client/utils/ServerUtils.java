@@ -125,6 +125,20 @@ public class ServerUtils {
     }
 
     /**
+     * Method that is one part of the endpoint for remove a specific user in the server
+     * database. NOTE: not used, might be used.
+     *
+     * @param user - user for which the score needs to be updated in the server database.
+     */
+    public void removeUser(User user) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/user/removePlayer") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(user, APPLICATION_JSON), User.class);
+    }
+
+    /**
      * Method that is one part of the endpoint for getting the list of users in the current lobby from
      * the server database.
      *

@@ -415,6 +415,7 @@ public class LeaderBoardCtrl {
     public void backToSplash() {
         if (SplashScreenCtrl.mode == 1) {
             gameCtrl.subscription.unsubscribe();
+            server.removeUser(new User(gameCtrl.username, gameCtrl.points, gameCtrl.joinedLobby));
         }
         gameCtrl.points = 0;
         gameCtrl.round = 1;
@@ -446,6 +447,7 @@ public class LeaderBoardCtrl {
      * the socket for that client.
      */
     public void backToWaitingRoom() {
+        server.removeUser(new User(gameCtrl.username, gameCtrl.points, gameCtrl.joinedLobby));
         gameCtrl.subscription.unsubscribe();
         gameCtrl.points = 0;
         gameCtrl.round = 1;
