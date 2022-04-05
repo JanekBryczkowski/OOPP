@@ -581,15 +581,6 @@ public class QuestionCtrl {
         }
     }
 
-    public void sendJokerThree() {
-        WebsocketMessage websocketMessage = new WebsocketMessage("JOKERUSED");
-        websocketMessage.emojiUsername = gameCtrl.username;
-        websocketMessage.jokerUsed = 3;
-        server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
-        secondsPassed[0] += 5;
-        WebsocketMessage websocketMessagee = new WebsocketMessage("JOKERTHREE");
-        server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessagee);
-    }
 
     public void setupEmoji() {
         emojiOne.setOnMouseClicked(event -> {
@@ -1071,6 +1062,27 @@ public class QuestionCtrl {
         } else {
             jokerOneMultiPlayer.setDisable(true);
         }
+    }
+
+    /**
+     * Function for when a player uses joker three in multiplayer
+     */
+    public void sendJokerThree() {
+        if (!gameCtrl.thirdJokerMultiPlayerUsed) {
+            WebsocketMessage websocketMessage = new WebsocketMessage("JOKERUSED");
+            websocketMessage.emojiUsername = gameCtrl.username;
+            websocketMessage.jokerUsed = 3;
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
+            secondsPassed[0] += 5;
+            WebsocketMessage websocketMessagee = new WebsocketMessage("JOKERTHREE");
+            server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessagee);
+            jokerOneMultiPlayer.setDisable(true);
+            jokerTwoMultiPlayer.setDisable(true);
+            jokerThreeMultiPlayer.setDisable(true);
+            gameCtrl.thirdJokerMultiPlayerUsed = true;
+        } else {
+        jokerOneMultiPlayer.setDisable(true);
+    }
     }
 
     /**
