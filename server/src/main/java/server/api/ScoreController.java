@@ -79,6 +79,10 @@ public class ScoreController {
         return ResponseEntity.ok(saved);
     }
 
+    /**
+     * Method for deleting the score from the database.
+     * @param id - id of the score.
+     */
     @DeleteMapping("/{id}")
     public void deleteScore(@PathVariable("id") long id) {
         repository.deleteById(id);

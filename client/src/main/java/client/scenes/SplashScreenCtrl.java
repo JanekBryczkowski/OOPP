@@ -2,9 +2,13 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import com.google.inject.Stage;
+import org.springframework.messaging.simp.stomp.StompSession;
+
+import java.net.MalformedURLException;
+
 import commons.Question;
 import commons.User;
+
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -18,15 +22,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import org.springframework.messaging.simp.stomp.StompSession;
-
-import java.net.MalformedURLException;
 
 public class SplashScreenCtrl {
 
     private final ServerUtils server;
     private final GameCtrl gameCtrl;
-    private Stage primaryStage;
 
     /**
      * If mode is set to 0, then single player is active.
@@ -36,34 +36,37 @@ public class SplashScreenCtrl {
 
     @FXML
     private AnchorPane Big;
-    @FXML
-    private AnchorPane SplashScreen;
+
     @FXML
     private Button joinButton;
+
     @FXML
     public TextField usernameInput;
-    @FXML
-    private Label logoLabel;
-    //    @FXML
-//    private AnchorPane modeSwitch;
+
     @FXML
     private AnchorPane modeOne;
+
     @FXML
     private Label modeText;
-    @FXML
-    private Label setUsername;
+
     @FXML
     private Text alert;
+
     @FXML
     private AnchorPane gameRules;
+
     @FXML
     private Button rulesButton;
+
     @FXML
     private ImageView singlePlayerImageView;
+
     @FXML
     private ImageView multiPlayerImageView;
+
     @FXML
     private AnchorPane setServerNameAnchorPane;
+
     @FXML
     private TextField serverNameTextField;
 
@@ -73,13 +76,11 @@ public class SplashScreenCtrl {
      * Constructor for the SplashScreenCtrl. We also initialize the gameCtrl and questionCtrl because these
      * scenes will be set from this class.
      *
-     * @param server
-     * @param gameCtrl
-     * @param questionCtrl
-     * @throws MalformedURLException
+     * @param server   - server provided for the game either single or multiplayer.
+     * @param gameCtrl - game controller for the specific game int the constructor.
      */
     @Inject
-    public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl, QuestionCtrl questionCtrl) throws MalformedURLException {
+    public SplashScreenCtrl(ServerUtils server, GameCtrl gameCtrl) {
         this.server = server;
         this.gameCtrl = gameCtrl;
     }
@@ -129,40 +130,46 @@ public class SplashScreenCtrl {
         User user = new User(gameCtrl.username, 0, currentOpenLobby);
         server.addUser(user);
         gameCtrl.joinedLobby = currentOpenLobby;
-        String destination = "/topic/question" + String.valueOf(currentOpenLobby);
+        String destination = "/topic/question" + currentOpenLobby;
         System.out.println("Subscribing for " + destination);
         StompSession.Subscription subscription = server.registerForMessages(destination, q -> {
 
             Platform.runLater(() -> {
-                if (q.typeOfMessage.equals("QUESTION")) {
-                    System.out.println("CLIENT RECEIVED QUESTION OVER WEBSOCKET");
-                    gameCtrl.startMultiPlayerQuestion(q.question);
-                } else if (q.typeOfMessage.equals("EMOJIONE")) {
-                    System.out.println("CLIENT RECEIVED EMOJIONE OVER WEBSOCKET");
-                    gameCtrl.showEmoji(1, q.emojiUsername);
-                } else if (q.typeOfMessage.equals("EMOJITWO")) {
-                    System.out.println("CLIENT RECEIVED EMOJITWO OVER WEBSOCKET");
-                    gameCtrl.showEmoji(2, q.emojiUsername);
-                } else if (q.typeOfMessage.equals("EMOJITHREE")) {
-                    System.out.println("CLIENT RECEIVED EMOJITHREE OVER WEBSOCKET");
-                    gameCtrl.showEmoji(3, q.emojiUsername);
-                } else if (q.typeOfMessage.equals("LEADERBOARD")) {
-                    System.out.println("TIME FOR LEADERBOARD!");
-                    gameCtrl.showLeaderBoard();
-                } else if (q.typeOfMessage.equals("NEWPLAYER")) {
-                    gameCtrl.refreshPlayers();
-                } else if(q.typeOfMessage.equals("JOKERTHREE")) {
-                    gameCtrl.jokerThree();
-                } else if(q.typeOfMessage.equals("JOKERUSED")) {
-                    gameCtrl.jokerUsed(q.emojiUsername, q.jokerUsed);
+                switch (q.typeOfMessage) {
+                    case "QUESTION":
+                        System.out.println("CLIENT RECEIVED QUESTION OVER WEBSOCKET");
+                        gameCtrl.startMultiPlayerQuestion(q.question);
+                        break;
+                    case "EMOJIONE":
+                        System.out.println("CLIENT RECEIVED EMOJIONE OVER WEBSOCKET");
+                        gameCtrl.showEmoji(1, q.emojiUsername);
+                        break;
+                    case "EMOJITWO":
+                        System.out.println("CLIENT RECEIVED EMOJITWO OVER WEBSOCKET");
+                        gameCtrl.showEmoji(2, q.emojiUsername);
+                        break;
+                    case "EMOJITHREE":
+                        System.out.println("CLIENT RECEIVED EMOJITHREE OVER WEBSOCKET");
+                        gameCtrl.showEmoji(3, q.emojiUsername);
+                        break;
+                    case "LEADERBOARD":
+                        System.out.println("TIME FOR LEADERBOARD!");
+                        gameCtrl.showLeaderBoard();
+                        break;
+                    case "NEWPLAYER":
+                        gameCtrl.refreshPlayers();
+                        break;
+                    case "JOKERTHREE":
+                        gameCtrl.jokerThree();
+                        break;
+                    case "JOKERUSED":
+                        gameCtrl.jokerUsed(q.emojiUsername, q.jokerUsed);
+                        break;
                 }
-
             });
-
         });
         gameCtrl.subscription = subscription;
         gameCtrl.joinCurrentLobby();
-
     }
 
     /**
@@ -190,6 +197,9 @@ public class SplashScreenCtrl {
         Big.setEffect(null);
     }
 
+    /**
+     * Method responsible for indicating the server name of which users want to connect to.
+     */
     public void exitServerName() {
         usernameInput.setText(gameCtrl.username);
         gameRules.setVisible(false);
@@ -264,10 +274,19 @@ public class SplashScreenCtrl {
         }
     }
 
+    /**
+     * Method responsible for showing the admin screen.
+     */
     public void toAdminScreen() {
         gameCtrl.showAdminScreen();
     }
 
+    /**
+     * Method responsible for doing the same thing as the JOIN button in splash screen,
+     * when ENTER is clocked.
+     *
+     * @param event - keyboard event when ENTER is clicked.
+     */
     @FXML
     void keyPressed(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
