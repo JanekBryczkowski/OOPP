@@ -154,7 +154,7 @@ public class SplashScreenCtrl {
                         break;
                     case "LEADERBOARD":
                         System.out.println("TIME FOR LEADERBOARD!");
-                        gameCtrl.showLeaderBoard();
+                        gameCtrl.showLeaderBoard(q.userList);
                         break;
                     case "NEWPLAYER":
                         gameCtrl.refreshPlayers();

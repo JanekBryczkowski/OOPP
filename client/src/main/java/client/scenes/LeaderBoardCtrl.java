@@ -99,12 +99,13 @@ public class LeaderBoardCtrl {
      * This function is called when the Leader Board scene is going to show.
      * The usernames along with their scores will be stored in the database for solo player.
      * Surrounded by a try catch block in case an exception is raised during this process.
+     * @param userList
      */
-    public void storePoints() {
+    public void storePoints(List<User> userList) {
         try {
             if (gameCtrl.getMode() == 0) server.addScore(new Score(gameCtrl.username, gameCtrl.points));
             else {
-                for (User user : WaitingRoomCtrl.userList) {
+                for (User user : userList) {
                     if (user.getUsername().equals(gameCtrl.username)) {
                         user.setScore(gameCtrl.points);
                     }
@@ -124,15 +125,16 @@ public class LeaderBoardCtrl {
      * It will retrieve all the Scores from the database and check the length of this List.
      * Depending on the size of the List we can either set up the first player, the first two players or
      * the first three players.
+     * @param userList
      */
-    public void setLeaderBoard() {
+    public void setLeaderBoard(List<User> userList) {
         scoreList = new ArrayList<>();
         topThreeList = new ArrayList<>();
         if (gameCtrl.getMode() == 0) {
             scores = FXCollections.observableArrayList();
             topThreeList.addAll(server.getTopScores());
         } else {
-            topThreeList.addAll(getThreeMultiplayer(WaitingRoomCtrl.userList));
+            topThreeList.addAll(getThreeMultiplayer(userList));
         }
 
         if (topThreeList.size() == 1) {
@@ -199,10 +201,11 @@ public class LeaderBoardCtrl {
      * If the game is in multiplayer, it will store the scores of the users in the current lobby,
      * if the game is in solo player, it will store the user's username and score in the database and
      * then fetch all the scores from the database to create the leader board.
+     * @param userList
      */
-    public void setList() {
+    public void setList(List<User> userList) {
         if (gameCtrl.getMode() == 1) {
-            for (User u : WaitingRoomCtrl.userList) {
+            for (User u : userList) {
                 scoreList.add(new Score(u.getUsername(), u.getScore()));
             }
         } else {

@@ -2,6 +2,7 @@ package client.scenes;
 
 import commons.Question;
 
+import commons.User;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,6 +21,8 @@ import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.awt.*;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class GameCtrl {
@@ -174,7 +177,7 @@ public class GameCtrl {
         setMode(0);
         if (round > ROUNDS) {
             questionCtrl.resetPoints();
-            showLeaderBoard();
+            showLeaderBoard(new ArrayList<>());
         } else {
             Question question = splashScreenCtrl.getRandomQuestion();
             switch (question.activityList.size()) {
@@ -282,7 +285,8 @@ public class GameCtrl {
         setMode(1);
 
         if (round == MULTIROUNDS / 2 + 1) {
-            showHalfTimeLeaderBoard();
+           // showHalfTimeLeaderBoard(q.userList);
+            showSplashScreen();
         } else {
             questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
             primaryStage.setScene(questionScreen);
@@ -299,16 +303,17 @@ public class GameCtrl {
      * Function for storing the user and their points in the database is called.
      * The Leader Board Scene is set, and we create a list with all the users in the database
      * to output to the scroll pane when the scene is set as the Primary Stage.
+     * @param userList
      */
-    public void showLeaderBoard() {
+    public void showLeaderBoard(List<User> userList) {
         questionCtrl.resetPoints();
         questionCtrl.resetJokers();
         leaderBoardCtrl.endLeaderBoard();
 
-        leaderBoardCtrl.storePoints();
-        leaderBoardCtrl.setLeaderBoard();
+        leaderBoardCtrl.storePoints(userList);
+        leaderBoardCtrl.setLeaderBoard(userList);
 
-        leaderBoardCtrl.setList();
+        leaderBoardCtrl.setList(userList);
         questionCtrl.jokerOneMultiPlayer.setBorder(null);
         questionCtrl.jokerTwoSinglePlayer.setBorder(null);
         questionCtrl.jokerThreeMultiPlayer.setBorder(null);
@@ -317,9 +322,9 @@ public class GameCtrl {
         primaryStage.setScene(leaderBoardScreen);
         if (getMode() == 1) {
             primaryStage.setTitle("LeaderBoard Screen - Multiplayer");
-            for (int i = 0; i < WaitingRoomCtrl.userList.size(); i++) {
-                if (WaitingRoomCtrl.userList.get(i).username.equals(username)) {
-                    WaitingRoomCtrl.userList.get(i).setScore(points);
+            for (int i = 0; i < userList.size(); i++) {
+                if (userList.get(i).username.equals(username)) {
+                    userList.get(i).setScore(points);
                     break;
                 }
             }
@@ -329,17 +334,17 @@ public class GameCtrl {
     /**
      * The half-time Leader Board Scene is set, this is called during the Multiplayer game.
      */
-    public void showHalfTimeLeaderBoard() {
-        for (int i = 0; i < WaitingRoomCtrl.userList.size(); i++) {
-            if (WaitingRoomCtrl.userList.get(i).username.equals(username)) {
-                WaitingRoomCtrl.userList.get(i).setScore(points);
+    public void showHalfTimeLeaderBoard(List<User> userList) {
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).username.equals(username)) {
+                userList.get(i).setScore(points);
                 break;
             }
         }
 
-        leaderBoardCtrl.storePoints();
-        leaderBoardCtrl.setLeaderBoard();
-        leaderBoardCtrl.setList();
+        leaderBoardCtrl.storePoints(userList);
+        leaderBoardCtrl.setLeaderBoard(userList);
+        leaderBoardCtrl.setList(userList);
         leaderBoardCtrl.halfTimeLeaderBoard();
         leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
         primaryStage.setScene(leaderBoardScreen);

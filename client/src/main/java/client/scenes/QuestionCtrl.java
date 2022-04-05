@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Stage;
 
 import commons.Question;
+import commons.User;
 import commons.WebsocketMessage;
 
 import javafx.animation.*;
@@ -995,8 +996,9 @@ public class QuestionCtrl {
             public void run() {
                 Platform.runLater(() -> {
                     removeBorders();
+                    ++gameCtrl.round;
                     if (gameCtrl.round > ROUNDS) {
-                        gameCtrl.showLeaderBoard();
+                        gameCtrl.showLeaderBoard(new ArrayList<>());
                     } else {
                         try {
                             gameCtrl.SoloGameRound();
