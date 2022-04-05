@@ -65,7 +65,7 @@ public class UserController {
      */
     @PostMapping("/updateScore")
     public void updateScore(@RequestBody User user) {
-        for (User u : lobbyController.getOpenLobby().getUserList()) {
+        for (User u : lobbyController.lobbyList.get(user.getLobbyNumber()).getUserList()) {
             if (u.getUsername().equals(user.getUsername())) {
                 u.setScore(user.getScore());
             }
@@ -73,16 +73,17 @@ public class UserController {
     }
 
     /**
-     * Get mapping to remove a User from the current open lobby User List when
-     * they unsubscribe from the web socket question channel.
+     * Post mapping for deleting a user.
      *
-     * @param username used to identify User that should be removed
+     * @param user used to identify User that should be removed
      */
-    @DeleteMapping("/removePlayer/{username}/{lobbyNumber}")
-    public void removeUser(@PathVariable("username") String username, @PathVariable int lobbyNumber) {
-        Lobby lobby = (Lobby) lobbyController.getAllLobbies().
-                stream().filter(x -> x.lobbyNumber == lobbyNumber);
-        lobby.getUserList().removeIf(user -> user.getUsername().equals(username));
+    @PostMapping("/removePlayer")
+    public void removeUser(@RequestBody User user) {
+        Lobby lobby = lobbyController.lobbyList.get(user.getLobbyNumber());
+        for(User u : lobby.getUserList()) {
+            if(u.getUsername().equals(user.username))
+                lobby.getUserList().remove(u);
+        }
     }
 
     /**

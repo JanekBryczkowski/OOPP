@@ -19,7 +19,7 @@ public class LobbyController {
      * This class is the main controller of the multiplayer game. A Lobby holds a list of players in the lobby.
      * The current
      */
-    private List<Lobby> lobbyList = new ArrayList<>();
+    public List<Lobby> lobbyList = new ArrayList<>();
 
     public Lobby openLobby = new Lobby(0);
 
@@ -109,7 +109,7 @@ public class LobbyController {
                     if (currentRound < 20) {
                         instantiateMultiGame(lobby);
                     } else {
-                        showLeaderBoard(destination, lobby);
+                        showLeaderBoard(destination, lobby); 
                     }
                 }
             }
