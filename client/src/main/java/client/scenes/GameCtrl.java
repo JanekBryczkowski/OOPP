@@ -284,10 +284,6 @@ public class GameCtrl {
         questionCtrl.setupEmoji();
         setMode(1);
 
-        if (round == MULTIROUNDS / 2 + 1) {
-           // showHalfTimeLeaderBoard(q.userList);
-            showSplashScreen();
-        } else {
             questionScreen.getStylesheets().add("client.styles/QuestionScreenStyles.css");
             primaryStage.setScene(questionScreen);
             primaryStage.setTitle("Question");
@@ -295,8 +291,7 @@ public class GameCtrl {
             checkJokers(questionCtrl);
             setMode(1);
             questionCtrl.setUpMultiPlayerQuestion(question);
-        }
-        round++;
+            round++;
     }
 
     /**
@@ -348,6 +343,7 @@ public class GameCtrl {
         leaderBoardCtrl.halfTimeLeaderBoard();
         leaderBoardScreen.getStylesheets().add("client.styles/LeaderBoardScreenStyles.css");
         primaryStage.setScene(leaderBoardScreen);
+
     }
 
     /**

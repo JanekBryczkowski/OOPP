@@ -106,10 +106,13 @@ public class LobbyController {
             public void run() {
                 secondsPassed[0]--;
                 if (secondsPassed[0] == 0) {
-                    if (currentRound < 20) {
-                        instantiateMultiGame(lobby);
-                    } else {
+                    if (currentRound == 9){
                         showLeaderBoard(destination, lobby);
+                    } else if (currentRound == 19) {
+                        showLeaderBoard(destination, lobby);
+                        lobbyList.remove(lobby);
+                    } else {
+                        instantiateMultiGame(lobby);
                     }
                 }
             }
@@ -118,6 +121,8 @@ public class LobbyController {
         generateAndSendQuestion(destination);
 
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
+        System.out.println(lobby.roundNumber);
+        System.out.println(currentRound);
     }
 
     /**
@@ -132,7 +137,38 @@ public class LobbyController {
 
         msgs.convertAndSend(destination, websocketMessage);
 
-        /*if (!(lobby.roundNumber == 6)) {
+        if(lobby.roundNumber == 10){
+
+            int[] secondsPassed = {15};
+            Timer myTimer = new Timer();
+
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    secondsPassed[0]--;
+                    if (secondsPassed[0] == 0) {
+                            instantiateMultiGame(lobby);
+                    }
+                }
+            };
+            myTimer.scheduleAtFixedRate(task, 1000, 1000);
+        }
+
+    }
+
+    /**
+     * This functions sends a websocket message to the client
+     * saying that it is time for the leaderboard
+     *
+     * @param destination - destination of the websocket message.
+     */
+    public void showHalftimeLeaderboard(String destination, Lobby lobby) {
+        WebsocketMessage websocketMessage = new WebsocketMessage("LEADERBOARD");
+        websocketMessage.setUserList(lobby.getUserList());
+
+        msgs.convertAndSend(destination, websocketMessage);
+
+
             int[] secondsPassed = {15};
             Timer myTimer = new Timer();
 
@@ -144,9 +180,9 @@ public class LobbyController {
                         instantiateMultiGame(lobby);
                     }
                 }
-
             };
-            myTimer.scheduleAtFixedRate(task, 1000, 1000);*/
+
+
     }
 
 
