@@ -612,19 +612,6 @@ public class QuestionCtrl {
     }
 
     /**
-     * Method sending the websocket for the time when joker three is used (shorter time for other players).
-     */
-    public void sendJokerThree() {
-        WebsocketMessage websocketMessage = new WebsocketMessage("JOKERUSED");
-        websocketMessage.emojiUsername = gameCtrl.username;
-        websocketMessage.jokerUsed = 3;
-        server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessage);
-        secondsPassed[0] += 5;
-        WebsocketMessage websocketMessagee = new WebsocketMessage("JOKERTHREE");
-        server.send("/topic/question" + gameCtrl.joinedLobby, websocketMessagee);
-    }
-
-    /**
      * Method sending the websocket for the time when user uses one out of three emojis available for the
      * multiplayer game.
      */
