@@ -86,7 +86,7 @@ public class LeaderBoardCtrl {
     /**
      * Constructor for the Leader Board.
      *
-     * @param server   - server provided for the current game.
+     * @param server - server provided for the current game.
      * @param mainCtrl - game controller of the entire game for single or multiplayer mode.
      */
     @Inject
@@ -99,12 +99,13 @@ public class LeaderBoardCtrl {
      * This function is called when the Leader Board scene is going to show.
      * The usernames along with their scores will be stored in the database for solo player.
      * Surrounded by a try catch block in case an exception is raised during this process.
+     * @param userList
      */
-    public void storePoints() {
+    public void storePoints(List<User> userList) {
         try {
             if (gameCtrl.getMode() == 0) server.addScore(new Score(gameCtrl.username, gameCtrl.points));
             else {
-                for (User user : WaitingRoomCtrl.userList) {
+                for (User user : userList) {
                     if (user.getUsername().equals(gameCtrl.username)) {
                         user.setScore(gameCtrl.points);
                     }
@@ -124,15 +125,16 @@ public class LeaderBoardCtrl {
      * It will retrieve all the Scores from the database and check the length of this List.
      * Depending on the size of the List we can either set up the first player, the first two players or
      * the first three players.
+     * @param userList
      */
-    public void setLeaderBoard() {
+    public void setLeaderBoard(List<User> userList) {
         scoreList = new ArrayList<>();
         topThreeList = new ArrayList<>();
         if (gameCtrl.getMode() == 0) {
             scores = FXCollections.observableArrayList();
             topThreeList.addAll(server.getTopScores());
-        } else {
-            topThreeList.addAll(getThreeMultiplayer(WaitingRoomCtrl.userList));
+        } else if (gameCtrl.getMode() == 1) {
+            topThreeList.addAll(getThreeMultiplayer(userList));
         }
 
         if (topThreeList.size() == 1) {
@@ -167,19 +169,21 @@ public class LeaderBoardCtrl {
      * @return a list of the top three scores.
      */
     public ArrayList<Score> getThreeMultiplayer(List<User> userList) {
+        System.out.println("The userlist gotten is" + userList.toString());
         User first = userList.get(0);
         User second = null;
         User third = null;
-        if (userList.size() > 2) {
+        if (userList.size() >= 2) {
             second = userList.get(1);
-            third = userList.get(2);
+            if(userList.size() > 2)
+                third = userList.get(2);
 
             for (User user : userList) {
                 if (user.getScore() > first.getScore()) {
                     first = user;
-                } else if (user.getScore() > second.getScore() && user.getScore() <= first.getScore()) {
+                } else if (user.getScore() > second.getScore() && (user.getScore() <= first.getScore() && !(user.username.equals(first.username) ))) {
                     second = user;
-                } else if (user.getScore() > third.getScore() && user.getScore() <= second.getScore()) {
+                } else if (third != null && user.getScore() > third.getScore() && (user.getScore() <= second.getScore() && !(user.username.equals(second.username)))) {
                     third = user;
                 }
             }
@@ -199,10 +203,11 @@ public class LeaderBoardCtrl {
      * If the game is in multiplayer, it will store the scores of the users in the current lobby,
      * if the game is in solo player, it will store the user's username and score in the database and
      * then fetch all the scores from the database to create the leader board.
+     * @param userList
      */
-    public void setList() {
+    public void setList(List<User> userList) {
         if (gameCtrl.getMode() == 1) {
-            for (User u : WaitingRoomCtrl.userList) {
+            for (User u : userList) {
                 scoreList.add(new Score(u.getUsername(), u.getScore()));
             }
         } else {
@@ -412,6 +417,7 @@ public class LeaderBoardCtrl {
     public void backToSplash() {
         if (SplashScreenCtrl.mode == 1) {
             gameCtrl.subscription.unsubscribe();
+            server.removeUser(new User(gameCtrl.username, gameCtrl.points, gameCtrl.joinedLobby));
         }
         gameCtrl.points = 0;
         gameCtrl.round = 1;
@@ -443,6 +449,7 @@ public class LeaderBoardCtrl {
      * the socket for that client.
      */
     public void backToWaitingRoom() {
+        server.removeUser(new User(gameCtrl.username, gameCtrl.points, gameCtrl.joinedLobby));
         gameCtrl.subscription.unsubscribe();
         gameCtrl.points = 0;
         gameCtrl.round = 1;

@@ -35,8 +35,8 @@ public class User {
     /**
      * Constructor for the user object.
      *
-     * @param username    - username of the user.
-     * @param score       - score of the user.
+     * @param username - username of the user.
+     * @param score - score of the user.
      * @param lobbyNumber - lobby number of the user.
      */
     public User(String username, int score, int lobbyNumber) {
@@ -78,7 +78,7 @@ public class User {
      * @param score - score to be set.
      */
     public void setScore(int score) {
-        this.score = this.score + score;
+        this.score = score;
     }
 
     /**

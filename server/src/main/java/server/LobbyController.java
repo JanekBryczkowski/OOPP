@@ -19,7 +19,7 @@ public class LobbyController {
      * This class is the main controller of the multiplayer game. A Lobby holds a list of players in the lobby.
      * The current
      */
-    private List<Lobby> lobbyList = new ArrayList<>();
+    public List<Lobby> lobbyList = new ArrayList<>();
 
     public Lobby openLobby = new Lobby(0);
 
@@ -77,7 +77,7 @@ public class LobbyController {
     /**
      * This function gets called whenever one player in the lobby clicks on PLAY.
      * The current lobby gets added to the lobby list and a new current lobby is created.
-     * The functions cals instantiateMultiGame in which a multiplayer game gets started.
+     * The function calls instantiateMultiGame in which a multiplayer game gets started.
      */
     public void startGame() {
         Lobby playingLobby = openLobby;
@@ -96,7 +96,7 @@ public class LobbyController {
      */
     public void instantiateMultiGame(Lobby lobby) {
         String destination = "/topic/question" + lobby.lobbyNumber;
-        int currentRound = lobby.roundNumber++;
+        final int[] currentRound = {lobby.roundNumber++};
 
         int[] secondsPassed = {15};
         Timer myTimer = new Timer();
@@ -106,10 +106,14 @@ public class LobbyController {
             public void run() {
                 secondsPassed[0]--;
                 if (secondsPassed[0] == 0) {
-                    if (currentRound < 20) {
-                        instantiateMultiGame(lobby);
-                    } else {
+                    if (currentRound[0] == 9) {
+                        currentRound[0]++;
                         showLeaderBoard(destination, lobby);
+                    } else if (currentRound[0] == 19) {
+                        showLeaderBoard(destination, lobby);
+                        lobbyList.remove(lobby);
+                    } else {
+                        instantiateMultiGame(lobby);
                     }
                 }
             }
@@ -118,6 +122,8 @@ public class LobbyController {
         generateAndSendQuestion(destination);
 
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
+        System.out.println(lobby.roundNumber);
+        System.out.println(currentRound[0]);
     }
 
     /**
@@ -132,7 +138,8 @@ public class LobbyController {
 
         msgs.convertAndSend(destination, websocketMessage);
 
-        /*if (!(lobby.roundNumber == 6)) {
+        if(lobby.roundNumber == 10){
+
             int[] secondsPassed = {15};
             Timer myTimer = new Timer();
 
@@ -141,17 +148,19 @@ public class LobbyController {
                 public void run() {
                     secondsPassed[0]--;
                     if (secondsPassed[0] == 0) {
-                        instantiateMultiGame(lobby);
+                            instantiateMultiGame(lobby);
                     }
                 }
-
             };
-            myTimer.scheduleAtFixedRate(task, 1000, 1000);*/
+            myTimer.scheduleAtFixedRate(task, 1000, 1000);
+        }
+
     }
 
 
+
     /**
-     * In this function a question gets generated and send to the given destination.
+     * In this function a question gets generated and sent to the given destination.
      */
     public void generateAndSendQuestion(String destination) {
         Question question = questionController.getActivities();

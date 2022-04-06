@@ -15,7 +15,7 @@ public class Message {
     /**
      * Constructor for the message object.
      *
-     * @param lobby    - lobby of the message.
+     * @param lobby - lobby of the message.
      * @param question - question of the message.
      */
     public Message(Lobby lobby, Question question) {

@@ -21,7 +21,7 @@ public class GameMain extends Application {
      *
      * @param args - arguments for the main functions.
      * @throws URISyntaxException - URI exception.
-     * @throws IOException        - Input, output exception.
+     * @throws IOException - Input, output exception.
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         launch();

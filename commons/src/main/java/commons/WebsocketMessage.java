@@ -6,13 +6,13 @@ public class WebsocketMessage {
 
     /**
      * The typOfMessage could have the following values:
-     * QUESTION    Whenever a question gets send
-     * EMOJIONE    Whenever someone has clicked on emoji one
-     * EMOJITWO    Whenever someone has clicked on emoji two
-     * EMOJITHREE  Whenever someone has clicked on emoji three
-     * LEADERBOARD Whenever it is time to show the leaderboard
-     * JOKERTHREE  Whenever someone has pressed joker three
-     * JOKERUSED   Whenever another player uses a joker
+     * QUESTION     - Whenever a question gets send
+     * EMOJIONE     - Whenever someone has clicked on emoji one
+     * EMOJITWO     - Whenever someone has clicked on emoji two
+     * EMOJITHREE   - Whenever someone has clicked on emoji three
+     * LEADERBOARD  - Whenever it is time to show the leaderboard
+     * JOKERTHREE   - Whenever someone has pressed joker three
+     * JOKERUSED    - Whenever another player uses a joker
      */
     public String typeOfMessage;
     public Question question;

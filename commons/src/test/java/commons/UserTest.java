@@ -26,6 +26,12 @@ public class UserTest {
     }
 
     @Test
+    public void lobbyTest() {
+        User user = new User("abc", 123, 2);
+        assertEquals(2, user.lobbyNumber);
+    }
+
+    @Test
     public void getUsernameTest() {
         User user = new User("abc", 123, 0);
         assertEquals("abc", user.getUsername());
@@ -35,6 +41,12 @@ public class UserTest {
     public void getScoreTest() {
         User user = new User("abc", 123, 0);
         assertEquals(123, user.getScore());
+    }
+
+    @Test
+    public void getLobbyNumberTest() {
+        User user = new User("abc", 123, 3);
+        assertEquals(3, user.getLobbyNumber());
     }
 
     @Test

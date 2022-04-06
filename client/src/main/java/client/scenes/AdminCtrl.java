@@ -45,7 +45,7 @@ public class AdminCtrl {
     /**
      * Connecting the page with the server and the GameCtrl.
      *
-     * @param server   - server provided for the AdminCtrl class.
+     * @param server - server provided for the AdminCtrl class.
      * @param gameCtrl - main game controller class for the game.
      */
     @Inject
@@ -146,7 +146,6 @@ public class AdminCtrl {
                 alert.setText("");
             });
         } else {
-            //System.out.println(server.getByID(idText.getText()));
             List<Activity> activtiyList = server.showAll();
             for (Activity act : activityList) {
                 if (act.getId().equals(idText.getText())) {

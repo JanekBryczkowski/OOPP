@@ -20,11 +20,11 @@ public class QuestionController {
     private SimpMessagingTemplate msgs;
 
     /**
-     * Constructor for the question controller class
+     * Constructor for the question controller class.
      *
      * @param mainGame - game controller class
-     * @param repo     - repository.
-     * @param msgs     - messaging template.
+     * @param repo - repository.
+     * @param msgs - messaging template.
      */
     public QuestionController(Main mainGame, QuestionRepository repo, SimpMessagingTemplate msgs) {
         this.repo = repo;
@@ -32,7 +32,7 @@ public class QuestionController {
     }
 
     /**
-     * This function stores a list of type Activity inside the database.
+     * This function stores the list of Activities inside the database.
      * This function gets called at the start of running
      * the server to store every activity from the json file.
      *
@@ -112,7 +112,7 @@ public class QuestionController {
     }
 
     /**
-     * Method indicating whether it's null or not.
+     * Method indicating whether a string is null or not.
      *
      * @param s - parameter to be checked.
      * @return - returns true if it's null.
@@ -123,7 +123,7 @@ public class QuestionController {
 
 
     /**
-     * Adding question to the repository database.
+     * Adding an activity to the repository database.
      *
      * @param activity - activity to be added.
      * @return - response after the method.
@@ -140,7 +140,7 @@ public class QuestionController {
     }
 
     /**
-     * This mapping is for deleting an activity from the database
+     * This mapping is for deleting an activity from the database.
      *
      * @param id The id of the activity that needs to be deleted
      */
