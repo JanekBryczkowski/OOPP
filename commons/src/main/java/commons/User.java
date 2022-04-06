@@ -78,7 +78,7 @@ public class User {
      * @param score - score to be set.
      */
     public void setScore(int score) {
-        this.score = this.score + score;
+        this.score = score;
     }
 
     /**

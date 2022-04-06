@@ -476,16 +476,8 @@ public class QuestionCtrl {
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         jokerTwoSinglePlayer.setText("Eliminate one wrong answer");
         jokerTwoMultiPlayer.setText("Eliminate one wrong answer");
-        if (gameCtrl.getMode() == 1) {
-            if (gameCtrl.round > 11) {
-                int current = gameCtrl.round - 1;
-                answersGiven.setText(current + " / 20 rounds");
-            } else {
-                answersGiven.setText(gameCtrl.round + " / 20 rounds");
-            }
-        } else {
-            answersGiven.setText(gameCtrl.round + " / 20 rounds");
-        }
+
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**
@@ -563,16 +555,8 @@ public class QuestionCtrl {
         instantiateTimer();
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         enableButtons();
-        if (gameCtrl.getMode() == 1) {
-            if (gameCtrl.round > 11) {
-                int current = gameCtrl.round - 1;
-                answersGiven.setText(current + " / 20 rounds");
-            } else {
-                answersGiven.setText(gameCtrl.round + " / 20 rounds");
-            }
-        } else {
-            answersGiven.setText(gameCtrl.round + " / 20 rounds");
-        }
+
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**
@@ -696,16 +680,7 @@ public class QuestionCtrl {
         jokerTwoMultiPlayer.setText("Narrow down the boundaries");
         setUpTheBoundaries();
 
-        if (gameCtrl.getMode() == 1) {
-            if (gameCtrl.round > 11) {
-                int current = gameCtrl.round - 1;
-                answersGiven.setText(current + " / 20 rounds");
-            } else {
-                answersGiven.setText(gameCtrl.round + " / 20 rounds");
-            }
-        } else {
-            answersGiven.setText(gameCtrl.round + " / 20 rounds");
-        }
+        answersGiven.setText(gameCtrl.round + " / 20 rounds");
     }
 
     /**

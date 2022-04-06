@@ -133,7 +133,7 @@ public class LeaderBoardCtrl {
         if (gameCtrl.getMode() == 0) {
             scores = FXCollections.observableArrayList();
             topThreeList.addAll(server.getTopScores());
-        } else {
+        } else if (gameCtrl.getMode() == 1) {
             topThreeList.addAll(getThreeMultiplayer(userList));
         }
 
@@ -169,19 +169,21 @@ public class LeaderBoardCtrl {
      * @return a list of the top three scores.
      */
     public ArrayList<Score> getThreeMultiplayer(List<User> userList) {
+        System.out.println("The userlist gotten is" + userList.toString());
         User first = userList.get(0);
         User second = null;
         User third = null;
-        if (userList.size() > 2) {
+        if (userList.size() >= 2) {
             second = userList.get(1);
-            third = userList.get(2);
+            if(userList.size() > 2)
+                third = userList.get(2);
 
             for (User user : userList) {
                 if (user.getScore() > first.getScore()) {
                     first = user;
-                } else if (user.getScore() > second.getScore() && user.getScore() <= first.getScore()) {
+                } else if (user.getScore() > second.getScore() && (user.getScore() <= first.getScore() && !(user.username.equals(first.username) ))) {
                     second = user;
-                } else if (user.getScore() > third.getScore() && user.getScore() <= second.getScore()) {
+                } else if (third != null && user.getScore() > third.getScore() && (user.getScore() <= second.getScore() && !(user.username.equals(second.username)))) {
                     third = user;
                 }
             }

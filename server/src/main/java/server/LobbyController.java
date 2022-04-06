@@ -96,7 +96,7 @@ public class LobbyController {
      */
     public void instantiateMultiGame(Lobby lobby) {
         String destination = "/topic/question" + lobby.lobbyNumber;
-        int currentRound = lobby.roundNumber++;
+        final int[] currentRound = {lobby.roundNumber++};
 
         int[] secondsPassed = {15};
         Timer myTimer = new Timer();
@@ -106,9 +106,10 @@ public class LobbyController {
             public void run() {
                 secondsPassed[0]--;
                 if (secondsPassed[0] == 0) {
-                    if (currentRound == 9){
+                    if (currentRound[0] == 9) {
+                        currentRound[0]++;
                         showLeaderBoard(destination, lobby);
-                    } else if (currentRound == 19) {
+                    } else if (currentRound[0] == 19) {
                         showLeaderBoard(destination, lobby);
                         lobbyList.remove(lobby);
                     } else {
@@ -122,7 +123,7 @@ public class LobbyController {
 
         myTimer.scheduleAtFixedRate(task, 1000, 1000);
         System.out.println(lobby.roundNumber);
-        System.out.println(currentRound);
+        System.out.println(currentRound[0]);
     }
 
     /**
@@ -156,34 +157,6 @@ public class LobbyController {
 
     }
 
-    /**
-     * This functions sends a websocket message to the client
-     * saying that it is time for the leaderboard
-     *
-     * @param destination - destination of the websocket message.
-     */
-    public void showHalftimeLeaderboard(String destination, Lobby lobby) {
-        WebsocketMessage websocketMessage = new WebsocketMessage("LEADERBOARD");
-        websocketMessage.setUserList(lobby.getUserList());
-
-        msgs.convertAndSend(destination, websocketMessage);
-
-
-            int[] secondsPassed = {15};
-            Timer myTimer = new Timer();
-
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    secondsPassed[0]--;
-                    if (secondsPassed[0] == 0) {
-                        instantiateMultiGame(lobby);
-                    }
-                }
-            };
-
-
-    }
 
 
     /**
