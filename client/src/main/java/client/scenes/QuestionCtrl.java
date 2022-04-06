@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import com.google.inject.Stage;
 
 import commons.Question;
-import commons.User;
 import commons.WebsocketMessage;
 
 import javafx.animation.*;
