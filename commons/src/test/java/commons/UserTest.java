@@ -72,4 +72,17 @@ public class UserTest {
         assertTrue(actual.contains("a"));
         assertTrue(actual.contains("2"));
     }
+
+    @Test
+    public void emptyConstructorTest(){
+        User user = new User();
+        assertNotNull(user);
+    }
+
+    @Test
+    public void setScoreTest(){
+        User user = new User();
+        user.setScore(12);
+        assertEquals(12, user.getScore());
+    }
 }

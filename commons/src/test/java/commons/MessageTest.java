@@ -19,4 +19,11 @@ public class MessageTest {
         assertNotEquals(a, b);
         assertNotEquals(a.hashCode(), b.hashCode());
     }
+
+    @Test
+    public void toStringTest() {
+        Message a = new Message(new Lobby(2), new Question());
+        String b = a.toString();
+        assertEquals(b, a.toString());
+    }
 }

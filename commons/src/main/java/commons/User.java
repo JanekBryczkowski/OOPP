@@ -28,7 +28,7 @@ public class User {
      * Empty constructor for the user object.
      */
     @SuppressWarnings("unused")
-    private User() {
+    public User() {
 
     }
 

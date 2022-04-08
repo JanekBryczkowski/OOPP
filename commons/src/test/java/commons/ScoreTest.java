@@ -9,7 +9,9 @@ public class ScoreTest {
     @Test
     public void constructorTest() {
     Score score = new Score("abc", 123);
+    Score score1 = new Score();
     assertNotNull(score);
+    assertNotNull(score1);
 }
 
     @Test

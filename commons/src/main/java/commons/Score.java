@@ -25,7 +25,7 @@ public class Score {
     /**
      * Empty constructor for the Score object.
      */
-    private Score() {
+    public Score() {
 
     }
 

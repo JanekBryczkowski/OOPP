@@ -23,15 +23,6 @@ public class Question {
     }
 
     /**
-     * Method for adding the activity to the activity list.
-     *
-     * @param activity - activity to be added to the list of activities.
-     */
-    public void addActivity(Activity activity) {
-        activityList.add(activity);
-    }
-
-    /**
      * Method responsible for setting the correct answer of the given question.
      */
     public void setCorrectAnswer() {

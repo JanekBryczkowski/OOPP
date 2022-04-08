@@ -29,7 +29,7 @@ public class Activity {
      * Empty constructor for the activity object.
      */
     @SuppressWarnings("unused")
-    private Activity() {
+    public Activity() {
 
     }
 

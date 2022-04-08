@@ -24,5 +24,12 @@ public class LobbyTest {
         assertNotNull(lobby.getUserList());
     }
 
+    @Test
+    public void addUserTest() {
+        Lobby lobby = new Lobby(1);
+        User user = new User("username", 1, 1);
+        lobby.addUser(user);
+        assertTrue(lobby.getUserList().contains(user));
+    }
 
 }

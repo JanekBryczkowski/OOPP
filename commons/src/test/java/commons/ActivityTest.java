@@ -13,6 +13,12 @@ public class ActivityTest {
     }
 
     @Test
+    public void emptyConstructorTest() {
+        Activity activity = new Activity();
+        assertNotNull(activity);
+    }
+
+    @Test
     public void idTest() {
         Activity activity = new Activity("abc", "abc", "abc", 123, "abc", 123);
         assertEquals("abc", activity.id);
@@ -72,5 +78,17 @@ public class ActivityTest {
         assertTrue(actual.contains("2"));
     }
 
+    @Test
+    public void setTitleTest() {
+        Activity actual = new Activity("abc", "abc", "abc", 123, "abc", 123);
+        actual.setTitle("hehe");
+        assertEquals("hehe", actual.getTitle());
+    }
 
+    @Test
+    public void setConsumption() {
+        Activity actual = new Activity("abc", "abc", "abc", 123, "abc", 123);
+        actual.setConsumption_in_wh(999);
+        assertEquals(999, actual.getConsumption());
+    }
 }

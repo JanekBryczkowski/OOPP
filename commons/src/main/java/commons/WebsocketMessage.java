@@ -46,6 +46,30 @@ public class WebsocketMessage {
     }
 
     /**
+     * Getter of the question.
+     * @return - returns a question.
+     */
+    public Question getQuestion() {
+        return question;
+    }
+
+    /**
+     * Getter of the emoji username.
+     * @return - string emoji username.
+     */
+    public String getEmojiUsername() {
+        return emojiUsername;
+    }
+
+    /**
+     * Getter of the user list.
+     * @return - returns a user list.
+     */
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    /**
      * Setter of the emoji username.
      *
      * @param emojiUsername - string indicating which emoji has been used.
