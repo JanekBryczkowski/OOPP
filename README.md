@@ -6,14 +6,16 @@ Add your own name (do not add the names for others!) to the section below.
 
 ## Description of project
 
+## Disclaimer
+Disclaimer: I was the leader of the project, however, the deadlines were strict, and thus the quality of the code is not the standard of code I would write myself.
 ## Group members
 
 | Profile Picture | Name | Email |
 |---|---|---|
+| | Jan Bryczkowski | J.M.Bryczkowski@student.tudelft.nl |
 | | Hanna Heinczinger | H.Heinczinger-1@student.tudelft.nl |
 | | Daniël Franke | D.T.L.Franke@student.tudelft.nl|
 | | Pavlos Markesinis | P.Markesinis@student.tudelft.nl |
-| | Janek Bryczkowski | J.M.Bryczkowski@student.tudelft.nl |
 | | Marina Escribano | M.EscribanoEsteban@student.tudelft.nl |
 | | Liviu Moanta | I.L.Moanta-1@student.tudelft.nl |
 
